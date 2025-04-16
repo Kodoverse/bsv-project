@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->foreignId('article_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('page_section_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('article_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('page_section_id')->nullable()->constrained()->cascadeOnDelete();
         });
     }
 
@@ -23,7 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->dropForeign(['article_id', 'page_section_id']);
+            $table->dropForeign(['article_id']);
+            $table->dropForeign(['page_section_id']);
+
             $table->dropColumn('article_id');
             $table->dropColumn('page_section_id');
         });
