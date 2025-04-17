@@ -43,7 +43,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $article = Article::with('comments')->findOrFail($article->id);
+        $article = Article::with(['images', 'comments', 'tags'])->findOrFail($article->id);
         return view('articles.show', compact("article"));
     }
 
