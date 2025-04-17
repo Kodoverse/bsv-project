@@ -12,7 +12,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('comments.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('comments.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        return view('comments.show');
     }
 
     /**
@@ -44,7 +44,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return view('comments.edit');
     }
 
     /**
