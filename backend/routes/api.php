@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiSectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiArticleController;
@@ -11,3 +12,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/articles', [ApiArticleController::class ,'index']);
 Route::post('/comments', [ApiCommentController::class ,'sendComment']);
+Route::get('/sections', [ApiSectionController::class, 'index']);

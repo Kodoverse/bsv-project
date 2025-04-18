@@ -9,6 +9,6 @@ class Section extends Model
     protected $fillable = ['title'];
 
     public function page_sections() {
-        return $this->hasMany(Section::class);
+        return $this->hasMany(PageSection::class);
     }
 }
