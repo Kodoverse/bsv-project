@@ -1,7 +1,7 @@
 <template>
   <div class="wscreen">
     <HeaderComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
-   <MainComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
+   <router-view></router-view>
     <FooterComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
  
  
@@ -13,6 +13,7 @@
 import FooterComponent from './components/FooterComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import MainComponent from './components/MainComponent.vue';
+import { router } from './router';
 
 
   export default {

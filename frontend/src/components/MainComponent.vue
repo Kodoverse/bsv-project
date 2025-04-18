@@ -1,6 +1,6 @@
 <template>
     <main class="debug">
-        <router-view></router-view>
+       
     </main>
 </template>
 
