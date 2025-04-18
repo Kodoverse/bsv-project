@@ -1,29 +1,29 @@
 <template>
     <main class="debug">
-        <div id="articles" class="flex justify-content-center">
-
-        </div>
+        <router-view></router-view>
     </main>
 </template>
 
 <script>
 
     export default {
-        name: "MainComponent"
-        
+        name: "MainComponent",
+       
     }
 </script>
 
-<style>
-.debug{
-    border: 1px solid rgb(255, 247, 0);
 
-}
+<style scoped>
 
-#articles{
-    width: 500px;
-    aspect-ratio: 1 / 1;
-    border: 1px solid rgb(0, 255, 81);
-}
+    h1 {
+        color: rgb(255, 0, 0);
+    }
+
+    .debug {
+        border: 1px solid rgb(255, 247, 0);
+
+    }
+
+  
 
 </style>

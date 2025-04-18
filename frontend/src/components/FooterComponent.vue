@@ -10,7 +10,7 @@
     }
 </script>
 
-<style>
+<style scoped>
 .debug{
     border: 1px solid red;
 }

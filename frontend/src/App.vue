@@ -1,19 +1,19 @@
 <template>
   <div class="wscreen">
-  
-      <HeaderComponent />
-  
-      <MainComponent />
+    <HeaderComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
+   <MainComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
+    <FooterComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
  
-      <FooterComponent />
  
   </div>
 </template>
 
 <script>
-  import HeaderComponent from './components/HeaderComponent.vue';
-  import MainComponent from './components/MainComponent.vue';
-  import FooterComponent from './components/FooterComponent.vue';
+
+import FooterComponent from './components/FooterComponent.vue';
+import HeaderComponent from './components/HeaderComponent.vue';
+import MainComponent from './components/MainComponent.vue';
+
 
   export default {
     name: 'App',
@@ -22,6 +22,7 @@
       MainComponent,
       FooterComponent
     }
+   
 
   }
 </script>
