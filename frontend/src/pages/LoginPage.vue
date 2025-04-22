@@ -116,12 +116,14 @@ export default {
 
         // Esegui la richiesta di login
         const response = await axios.post(
-          "http://localhost:8000/login",
+          "http://localhost:8000/api/login",
           {
             email: this.email,
             password: this.password,
           },
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
 
         // Controlla la risposta e redirigi
