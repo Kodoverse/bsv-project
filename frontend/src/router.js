@@ -3,6 +3,7 @@ import ArticlesPage from "./pages/ArticlesPage.vue";
 import Home from "./pages/Home.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
+import axios from "axios";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,8 +27,28 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: ProfilePage,
+      meta: { requiresAuth: true },
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    axios
+      .get("http://localhost:8000/api/user", { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          next();
+        } else {
+          next("/login");
+        }
+      })
+      .catch(() => {
+        next("/login");
+      });
+  } else {
+    next();
+  }
 });
 
 export { router };
