@@ -1,5 +1,5 @@
 <template>
-    <footer class="debug">
+    <footer>
 <h1>Footer</h1>
     </footer>
 </template>
@@ -11,7 +11,5 @@
 </script>
 
 <style scoped>
-.debug{
-    border: 1px solid red;
-}
+
 </style>

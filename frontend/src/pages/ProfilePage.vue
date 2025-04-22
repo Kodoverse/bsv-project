@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="profile">
 <h1 class="text-3xl text-center">LOGGATO</h1>
     </div>
 </template>

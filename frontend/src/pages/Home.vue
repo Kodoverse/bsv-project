@@ -1,19 +1,16 @@
 <template>
-    <div>
+    <div class="w-full flex justify-center">
 
-        <MainComponent />
+       <h1 class="text-3xl">HOME</h1>
 
     </div>
 </template>
 
 <script>
-import MainComponent from '../components/MainComponent.vue';
+
     export default {
         name: "Home",
-        components: {
-            MainComponent,
-        
-        }
+       
     }
 </script>
 

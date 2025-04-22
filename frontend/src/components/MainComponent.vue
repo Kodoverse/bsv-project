@@ -1,11 +1,13 @@
 <template>
-    <main class="debug">
+    <main>
+
+        <router-view></router-view>
        
     </main>
 </template>
 
 <script>
-
+  import { router } from '../router';
     export default {
         name: "MainComponent",
        
@@ -19,10 +21,6 @@
         color: rgb(255, 0, 0);
     }
 
-    .debug {
-        border: 1px solid rgb(255, 247, 0);
-
-    }
 
   
 

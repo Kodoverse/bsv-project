@@ -1,6 +1,6 @@
 <template>
-    <Header class="debug">
-        <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 w-full">
+    <Header>
+        <nav class="bg-white border-gray-200 dark:bg-black dark:border-gray-700 w-full">
             <div class="flex flex-wrap items-center justify-between p-4 w-full">
                 <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="/biblioteca_logo.png" class="h-8" alt="Logo" />
@@ -84,7 +84,5 @@
 </script>
 
 <style scoped>
-    .debug {
-        border: 1px solid red;
-    }
+    
 </style>
