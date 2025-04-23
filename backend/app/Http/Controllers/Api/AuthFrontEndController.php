@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthFrontEndController extends Controller
 {
-    public function login(Request $request){
+       public function login(Request $request){
+
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
         $request->session()->regenerate();
-
         return response()->json(['message' => 'Login successful']);
     }
 
