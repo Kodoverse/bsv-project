@@ -3,6 +3,7 @@ import ArticlesPage from "./pages/ArticlesPage.vue";
 import Home from "./pages/Home.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
+import AboutUsPage from "./pages/AboutUsPage.vue";
 import axios from "axios";
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginPage,
+    },
+    {
+      path: "/aboutus",
+      name: "aboutus",
+      component: AboutUsPage,
     },
     {
       path: "/profile",
