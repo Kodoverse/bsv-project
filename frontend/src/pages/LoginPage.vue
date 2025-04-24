@@ -100,6 +100,7 @@
 
 <script>
 import axios from "axios";
+import { store } from "../store.js";
 export default {
   name: "LoginPage",
   data() {
@@ -132,6 +133,9 @@ export default {
         // Controlla la risposta e redirigi
         if (response.status === 200) {
           this.$router.push("/profile");
+          store.isLoggedIn = true;
+          localStorage.setItem("isLoggedIn", "true");
+          this.$router.push("/");
         } else {
           this.error = "Errore durante il login";
         }

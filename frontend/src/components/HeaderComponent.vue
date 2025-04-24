@@ -33,7 +33,7 @@
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
           <ul
-            class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+            class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700"
           >
             <li>
               <router-link
@@ -48,7 +48,7 @@
                 :to="{ name: 'aboutus' }"
                 class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
                 aria-current="page"
-                >About us</router-link
+                >Chi siamo</router-link
               >
             </li>
             <li>
@@ -118,22 +118,37 @@
               <a
                 href="#"
                 class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Services</a
+                >Eventi</a
               >
             </li>
             <li>
               <router-link
                 :to="{ name: 'articles' }"
                 class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Articles</router-link
+                >News</router-link
               >
             </li>
             <li>
               <a
                 href="#"
                 class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Contact</a
+                >Contatti</a
               >
+            </li>
+            <li v-if="!store.isLoggedIn">
+              <router-link
+                :to="{ name: 'login' }"
+                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Login</router-link
+              >
+            </li>
+            <li v-else>
+              <button
+                @click="handleLogout"
+                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                esci
+              </button>
             </li>
           </ul>
         </div>
@@ -150,8 +165,38 @@
 </template>
 
 <script>
+import axios from "axios";
+import { store } from "../store.js";
 export default {
   name: "HeaderComponent",
+  data() {
+    return {
+      store,
+    };
+  },
+
+  mounted() {
+    const storedLoginStatus = localStorage.getItem("isLoggedIn");
+    if (storedLoginStatus === "true") {
+      store.isLoggedIn = true;
+    }
+    console.log("refreshed");
+  },
+  methods: {
+    handleLogout() {
+      axios
+        .post("http://localhost:8000/api/logout", {}, { withCredentials: true })
+        .then(() => {
+          store.isLoggedIn = false;
+          localStorage.setItem("isLoggedIn", "false");
+          console.log(store.isLoggedIn);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.error("Errore durante il logout", error);
+        });
+    },
+  },
 };
 </script>
 
