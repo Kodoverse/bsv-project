@@ -1,11 +1,12 @@
 <template>
   <div class="wscreen">
-    <HeaderComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
-    <div id="separatore">
-      <img class="w-full h-16 absolute top-12" src="/BSV-linee.png" alt="separatore" />
-    </div>
+    <HeaderComponent
+      v-if="$route.name !== 'login' && $route.name !== 'register'"
+    />
     <MainComponent />
-    <FooterComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
+    <FooterComponent
+      v-if="$route.name !== 'login' && $route.name !== 'register'"
+    />
   </div>
 </template>
 
@@ -13,7 +14,6 @@
 import FooterComponent from "./components/FooterComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
 import MainComponent from "./components/MainComponent.vue";
-
 
 export default {
   name: "App",
