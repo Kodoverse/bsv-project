@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\AuthFrontEndController;
 
 Route::post('/login', [AuthFrontEndController::class, 'login']);
 Route::post('/logout', [AuthFrontEndController::class, 'logout']);
+Route::post('/register', [AuthFrontEndController::class, 'register']);
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
