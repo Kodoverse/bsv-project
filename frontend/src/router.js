@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import ArticlesPage from "./pages/ArticlesPage.vue";
 import Home from "./pages/Home.vue";
 import LoginPage from "./pages/LoginPage.vue";
+import RegisterPage from "./pages/RegisterPage.vue";  
 import ProfilePage from "./pages/ProfilePage.vue";
 import AboutUsPage from "./pages/AboutUsPage.vue";
 import axios from "axios";
@@ -23,6 +24,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginPage,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterPage,
     },
     {
       path: "/aboutus",

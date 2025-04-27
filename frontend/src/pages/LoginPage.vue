@@ -85,11 +85,10 @@
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?
-              <a
-                href="#"
+              <router-link
+                to="/register"
                 class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >Sign up</a
-              >
+                >Register</router-link>
             </p>
           </form>
         </div>
@@ -101,6 +100,7 @@
 <script>
 import axios from "axios";
 import { store } from "../store.js";
+import { router } from "../router.js";
 export default {
   name: "LoginPage",
   data() {
