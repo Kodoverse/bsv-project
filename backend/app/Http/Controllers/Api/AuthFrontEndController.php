@@ -19,7 +19,7 @@ class AuthFrontEndController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', Password::min(8)],
+            'password' => ['required', 'string', 'confirmed', Password::min(8)],
         ]);
 
         if ($validator->fails()) {
@@ -33,7 +33,6 @@ class AuthFrontEndController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Puoi opzionalmente restituire un token per l'autenticazione, se usi Sanctum
         // $token = $user->createToken('UserRegistrationToken')->plainTextToken;
 
         // Risposta di successo
