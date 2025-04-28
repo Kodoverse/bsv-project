@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['title', 'subtitle', 'article'];
+    protected $fillable = ['title', 'subtitle', 'article','is_featured'];
 
     public function comments() {
         return $this->hasMany(Comment::class);

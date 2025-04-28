@@ -5,8 +5,14 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ProfilePage",
+  data() {
+    return {};
+  },
+  methods: {},
+  mounted() {},
 };
 </script>
 
