@@ -25,17 +25,49 @@
           >
             <div>
               <label
-                for="name"
+                for="user_name"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Your name</label
               >
               <input
                 type="text"
-                name="name"
-                id="name"
-                v-model="formData.name"
+                name="user_name"
+                id="user_name"
+                v-model="formData.user_name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Mario Rossi"
+                placeholder="Mario"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="user_lastname"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Your lastname</label
+              >
+              <input
+                type="text"
+                name="user_lastname"
+                id="las"
+                v-model="formData.user_lastname"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Rossi"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="birthday"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Your Birthday</label
+              >
+              <input
+                type="date"
+                name="birthday"
+                id="birthday"
+                v-model="formData.birthday"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="01/01/2000"
                 required
               />
             </div>
@@ -85,6 +117,20 @@
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
+              />
+            </div>
+            <div>
+              <label
+                for="profile_img"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Your image</label
+              >
+              <input
+                type="text"
+                name="profile_img"
+                id="profile_img"
+                v-model="formData.profile_img"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
             <div class="flex items-start">
@@ -139,10 +185,13 @@ export default {
   data() {
     return {
       formData: {
-        name: "",
         email: "",
         password: "",
         password_confirmation: "",
+        user_name: "",
+        user_lastname: "",
+        birthday: "",
+        profile_img: "",
       },
       errorMessage: null,
     };
@@ -150,6 +199,10 @@ export default {
   methods: {
     async handleRegister() {
       try {
+        await axios.get("http://localhost:8000/sanctum/csrf-cookie", {
+          withCredentials: true,
+        });
+
         const response = await axios.post(
           "http://localhost:8000/api/register",
           this.formData,

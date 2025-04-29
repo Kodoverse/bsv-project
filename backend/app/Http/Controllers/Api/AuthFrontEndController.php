@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UsersInfo;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\DB;
 
 class AuthFrontEndController extends Controller
 {
@@ -17,7 +19,6 @@ class AuthFrontEndController extends Controller
     {
         // Validazione dei dati
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'confirmed', Password::min(8)],
         ]);
@@ -28,9 +29,16 @@ class AuthFrontEndController extends Controller
 
         // Crea l'utente
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        $user_info = UsersInfo::create([
+            'name' => $request->user_name,
+            'lastname'=> $request->user_lastname,
+            'birthday' => $request->birthday,
+            'profile_img' => $request->profile_img,
+            'user_id'=> $user->id,
         ]);
 
         // $token = $user->createToken('UserRegistrationToken')->plainTextToken;
@@ -40,6 +48,7 @@ class AuthFrontEndController extends Controller
             'success' => true,
             'message' => 'Registrazione riuscita!',
             'user' => $user,
+            'user_info' => $user_info,
             // 'token' => $token, // Ritorna il token per la sessione dell'utente
         ]);
     }
