@@ -1,5 +1,6 @@
+
 <template>
-    <div class="w-full flex justify-center">
+    <div class="flex justify-center w-full">
 
        <h1 class="text-3xl">HOME</h1>
 

@@ -155,19 +155,59 @@
       </div>
     </nav>
   </Header>
-  <div id="separatore" class="z-1">
-    <img
-      class="absolute w-full h-16 top-12"
-      src="/BSV-linee.png"
-      alt="separatore"
-    />
-  </div>
+  <swiper
+    :modules="modules"
+    :loop="true"
+    :autoplay="{ delay: 3000 }" 
+    :slides-per-view="1"
+    :space-between="50"
+    navigation
+    :pagination="{ clickable: true }"
+    @swiper="onSwiper"
+    @slideChange="onSlideChange"
+    
+  class="h-96 swiper">
+    <swiper-slide><img src="https://www.youontour.it/wp-content/uploads/2017/11/1biblioteca-lucchesiana-agrigento-1920x900.jpg"></swiper-slide>
+    <swiper-slide><img src="https://m.media-amazon.com/images/I/51HvGQYNsML._AC_UF894,1000_QL80_.jpg"></swiper-slide>
+    <swiper-slide><img src="https://images.squarespace-cdn.com/content/v1/58c22624f5e231655c4c4dad/da9d4833-420c-4248-a514-a56a3b7feeeb/ESTUDIO+C+BAJA.jpg"></swiper-slide>
+  </swiper>
+
 </template>
 
 <script>
+  // import Swiper core and required modules
+  import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+
+  // Import Swiper Vue.js components
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+
+  // Import Swiper styles
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+  import 'swiper/css/scrollbar';
+
+
 import axios from "axios";
 import { store } from "../store.js";
 export default {
+  components: {
+      Swiper,
+      SwiperSlide,
+    },
+    setup() {
+      const onSwiper = (swiper) => {
+        console.log(swiper);
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
+      return {
+        onSwiper,
+        onSlideChange,
+        modules: [Navigation, Pagination, A11y, Autoplay],
+      };
+    },
   name: "HeaderComponent",
   data() {
     return {
@@ -200,4 +240,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.swiper {
+  --swiper-navigation-color: #df9a04;
+  --swiper-pagination-color: #df9a04;
+  --swiper-navigation-sides-offset: 5%;
+  --swiper-navigation-size: 30px;
+}
+
+</style>
