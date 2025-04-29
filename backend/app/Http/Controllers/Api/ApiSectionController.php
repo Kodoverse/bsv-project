@@ -7,13 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\Section;
 class ApiSectionController extends Controller
 {
-    public function index(Request $request)
-    {
-        $sections = Section::with('page_sections.images')->get();
-        
-        return response([
-            'success'=> true,
-            'results'=> $sections,
+    public function index(Request $request){
+        $query = Section::query()->with('page_sections.images');
+    
+        if ($request->has('title')) {
+            $title = strtolower(str_replace(' ', '', trim($request->query('title'))));
+            $query->whereRaw('REPLACE(LOWER(title), " ", "") = ?', [$title]);
+        }
+    
+        $sections = $query->get();
+    
+        return response()->json([
+            'success' => true,
+            'results' => $sections
         ]);
     }
 }
