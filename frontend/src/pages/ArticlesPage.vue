@@ -1,11 +1,18 @@
 <template>
     <div id="articles">
         <h1 class="text-3xl text-center">Articles</h1>
-        <div id="article" class="" v-for="article in articles" :key="article.id">
+    <div class="d-flex  justify-center">
+        <div id="article" class="d-flex flex-col" v-for="article in articles" :key="article.id">
             <h1 class="text-3xl text-center mb-2">{{ article.title }}</h1>
             <h2 class="text-2xl text-center mb-2">{{ article.subtitle }}</h2>
             <p>{{ article.article }}</p>
+
+            <router-link :to="{ name: 'singlearticle', params: { id: article.id } }">
+                <button>Read more</button>
+            </router-link>
         </div>
+    </div>
+        
     </div>
 
 </template>
@@ -37,8 +44,7 @@
 
 <style scoped>
     #article {
-        display: flex;
-        justify-content: center;
+ 
         width: 500px;
         aspect-ratio: 1 / 1;
         border: 1px solid rgb(0, 255, 81);

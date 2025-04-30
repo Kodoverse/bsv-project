@@ -11,9 +11,7 @@ class ApiArticleController extends Controller
     public function index(Request $request)
     {
         $articles = Article::with([
-            'comments' => function ($query) {
-                $query->where('is_approved', true);
-            },
+            'comments',
             'images',
             'tags',
         ])->paginate(5);
@@ -23,5 +21,19 @@ class ApiArticleController extends Controller
             'result' => $articles,
         ]);
     }
-    
+
+    public function show($id)
+    {
+        $article = Article::with([
+            'comments',
+            'images',
+            'tags',
+        ])->find($id);
+
+        return response([
+            'success' => true,
+            'result' => $article
+        ]);
+
+    }
 }

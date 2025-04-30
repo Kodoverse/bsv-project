@@ -18,7 +18,7 @@
                 </button>
             </form>
 
-            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900" v-for="comment in item ">
                 <footer class="flex justify-between items-center mb-2">
                     <div class="flex items-center">
                         <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -30,10 +30,7 @@
                                 title="February 8th, 2022">Feb. 8, 2022</time></p>
                     </div>
                 </footer>
-                <p class="text-gray-500 dark:text-gray-400">Very straight-to-point article. Really worth time reading.
-                    Thank you! But tools are just the
-                    instruments for the UX designers. The knowledge of the design tools are as important as the
-                    creation of the design strategy.</p>
+                <p class="text-gray-500 dark:text-gray-400">{{ comment.comment}}</p>
                 <div class="flex items-center justify-between mt-4 space-x-4 ">
                     <div class="flex items-center space-x-4">
                         <button type="button"
@@ -82,8 +79,11 @@
 
 <script>
     export default {
-        name: "CommentComponent"
+        name: "CommentComponent",
+        props: {
+            item: Array
+        }
     }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
