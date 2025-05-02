@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('flagged_comments', function (Blueprint $table) {
             $table->id();
-            $table->text('comment')->nullable();
-            $table->integer('like');
-            $table->boolean('is_flagged');
-            $table->enum('predefinite_comment', ['very good', 'very bad'])->nullable();
+            $table->string('reason');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('flagged_comments');
     }
 };
