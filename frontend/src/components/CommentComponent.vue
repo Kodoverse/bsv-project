@@ -18,7 +18,7 @@
                 </button>
             </form>
 
-            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900" v-for="comment in item ">
+            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900" v-for="comment in item" :key="comment.id">
                 <footer class="flex justify-between items-center mb-2">
                     <div class="flex items-center">
                         <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -30,7 +30,7 @@
                                 title="February 8th, 2022">Feb. 8, 2022</time></p>
                     </div>
                 </footer>
-                <p class="text-gray-500 dark:text-gray-400">{{ comment.comment}}</p>
+                <p class="text-gray-500 dark:text-gray-400">{{ comment.comment }}</p>
                 <div class="flex items-center justify-between mt-4 space-x-4 ">
                     <div class="flex items-center space-x-4">
                         <button type="button"
@@ -58,6 +58,7 @@
 
                     <div>
                         <button type="button"
+                            @click="openFlagModal(comment.id, comment.comment, comment.reason)"
                             class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
                             <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 20 18">
@@ -68,22 +69,79 @@
                             Flag
                         </button>
                     </div>
-
-
                 </div>
             </article>
 
+            <!-- Modal -->
+            <div v-if="showModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-sm w-full">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Flagged Comment</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{{ selectedComment }}</p>
+
+                    <label for="reason" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Reason</label>
+                    <textarea id="reason" v-model="selectedReason" rows="3"
+                              class="w-full p-2 border rounded text-sm dark:bg-gray-700 dark:text-white mb-4"></textarea>
+
+                    <div class="flex justify-end space-x-2">
+                        <button @click="submitFlag"
+                            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                            Submit
+                        </button>
+                        <button @click="closeModal"
+                            class="bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-500">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </template>
 
 <script>
-    export default {
-        name: "CommentComponent",
-        props: {
-            item: Array
+import axios from 'axios';
+
+export default {
+    name: "CommentComponent",
+    props: {
+        item: Array
+    },
+    data() {
+        return {
+            showModal: false,
+            selectedReason: '',
+            selectedComment: '',
+            selectedCommentId: null
+        };
+    },
+    methods: {
+        openFlagModal(commentId, commentText, reason) {
+            this.selectedCommentId = commentId;
+            this.selectedComment = commentText;
+            this.selectedReason = reason || '';
+            this.showModal = true;
+        },
+        closeModal() {
+            this.showModal = false;
+            this.selectedReason = '';
+            this.selectedComment = '';
+            this.selectedCommentId = null;
+        },
+        async submitFlag() {
+            try {
+                await axios.post('http://localhost:8000/flagcomment', {
+                    comment_id: this.selectedCommentId,
+                    reason: this.selectedReason
+                });
+                alert('Flag submitted successfully!');
+                this.closeModal();
+            } catch (error) {
+                console.error('Error submitting flag:', error);
+                alert('There was an error submitting the flag.');
+            }
         }
     }
+}
 </script>
 
 <style scoped></style>
