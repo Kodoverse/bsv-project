@@ -14,7 +14,7 @@
             </button>
             
             <!-- Dropdown menu -->
-            <div id="dropdownArticles"class="space-y-2 hidden divide-y divide-gray-100 rounded-lg shadow-md w-56 bg-gray-900">
+            <div id="dropdownArticles"class="space-y-2 mb-3  hidden divide-y divide-gray-100 rounded-lg shadow-md w-56 bg-gray-900">
                 <ul class="py-2 text-md font-semibold text-white" aria-labelledby="dropdownBottomButton">
                     <li>
                         <x-dropdown-link :href="route('articles.create')">
@@ -42,7 +42,7 @@
             </button>
             
             <!-- Dropdown menu -->
-            <div id="dropdownTags"class="space-y-2 hidden divide-y divide-gray-100 rounded-lg shadow-md w-56 bg-gray-900">
+            <div id="dropdownTags"class="space-y-2 mb-3  hidden divide-y divide-gray-100 rounded-lg shadow-md w-56 bg-gray-900">
                 <ul class="py-2 text-md font-semibold text-white" aria-labelledby="dropdownBottomButton">
                     <li>
                         <x-dropdown-link :href="route('tags.create')">
