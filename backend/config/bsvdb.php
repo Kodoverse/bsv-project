@@ -39,7 +39,7 @@ return [
             'comment' => 'Great read!',
             'like' => 10, 
             'article_id' => 1,
-            'is_approved' => true, 
+            'is_flagged' => false, 
             'predefinite_comment' => null
         ],
         [
@@ -47,14 +47,15 @@ return [
             'comment' => null,
             'like' => 2,
             'article_id' => 1,
-            'is_approved' => false, 
+            'is_flagged' => false, 
             'predefinite_comment' => 'very good'
         ],
         [
             'id' => 3, 
             'comment' => 'Love this topic.', 
-            'like' => 5, 'article_id' => 2, 
-            'is_approved' => true, 
+            'like' => 5, 
+            'article_id' => 2, 
+            'is_flagged' => true, 
             'predefinite_comment' => null
         ],
     ],
