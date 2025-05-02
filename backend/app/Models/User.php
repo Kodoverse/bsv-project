@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function user_info(){
         return $this->hasOne(UsersInfo::class);
     }
+
+    public function flagged_comments() {
+        return $this->hasMany(FlaggedComment::class);
+    }
 }

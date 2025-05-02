@@ -18,7 +18,7 @@ class CommentSeeder extends Seeder
             $newComment = new Comment();
             $newComment->comment = $comment['comment'];
             $newComment->like = $comment['like'];
-            $newComment->is_approved = $comment['is_approved'];
+            $newComment->is_flagged = $comment['is_flagged'];
             $newComment->predefinite_comment = $comment['predefinite_comment'];
             $newComment->article_id = $comment['article_id'];
             $newComment->save();
