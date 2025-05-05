@@ -1,6 +1,16 @@
 <?php
 
 return [
+
+    'users' => [
+        [
+            'id' => 1, 
+            'email' => 'prova@gmail.com',
+            'password' => '12345678',
+            'user_role' => 'admin',
+        ],
+    ],
+
     'tags' => [
         [
             'id' => 1, 
