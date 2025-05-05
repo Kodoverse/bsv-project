@@ -1,5 +1,6 @@
 @extends('layouts.mystyle')
 @section('content')
+
 <x-app-layout>
 
     

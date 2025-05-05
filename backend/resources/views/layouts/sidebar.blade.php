@@ -30,13 +30,29 @@
                 </ul>
             </div>
 
-            <a href="{{ route('comments.index') }}"
-               class="flex items-center p-2 mb-3 rounded-md {{ request()->routeIs('comments.index') ? 'bg-gray-900 font-semibold' : 'hover:bg-gray-900' }}">
+            <button aria-controls="dropdownComments" data-collapse-toggle="dropdownComments" class="inline-flex items-center mb-3 w-full focus:bg-gray-900 hover:bg-gray-900 rounded-md p-2" type="button">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7M5 11h.01M19 11h.01"></path></svg>
                 <span>Comments</span>
-            </a>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownComments" class="space-y-2 mb-3  hidden divide-y divide-gray-100 rounded-lg shadow-md w-56 bg-gray-900">
+                <ul class="py-2 text-md font-semibold text-white" aria-labelledby="dropdownBottomButton">
+                    <li>
+                        <x-dropdown-link :href="route('comments.index')">
+                            {{ __('All Comments') }}
+                        </x-dropdown-link>
+                    </li>
+                    <li>
+                        <x-dropdown-link :href="route('flagged_comments.index')">
+                            {{ __('Flagged Comments') }}
+                        </x-dropdown-link>
+                    </li>
+                    
+                </ul>
+            </div>
             
-            <button aria-controls="dropdownTags" data-collapse-toggle="dropdownTags" class="inline-flex items-center mb-3 w-full focus:bg-gray-900 hover:bg-gray-900 rounded-md p-2" type="button">
+            <button aria-controls="dropdownTag" data-collapse-toggle="dropdownTags" class="inline-flex items-center mb-3 w-full focus:bg-gray-900 hover:bg-gray-900 rounded-md p-2" type="button">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7M5 11h.01M19 11h.01"></path></svg>
                 <span>Tags</span>
             </button>

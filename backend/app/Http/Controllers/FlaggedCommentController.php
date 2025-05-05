@@ -12,7 +12,7 @@ class FlaggedCommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('flagged_comments.index');
     }
 
     /**

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tags', TagController::class);
 
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
 });
     /*
 
