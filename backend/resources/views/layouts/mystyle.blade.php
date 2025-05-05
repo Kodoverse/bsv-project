@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="w-full font-sans h-full antialiased">
+    <body class="w-full font-sans antialiased">
       <div class="flex h-screen bg-white">
          <div class="flex-shrink-0 text-white bg-gray-700 md:w-64 h-screen">
              @include('layouts.sidebar')
