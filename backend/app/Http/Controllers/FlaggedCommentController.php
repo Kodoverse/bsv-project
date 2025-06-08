@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FlaggedComment;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class FlaggedCommentController extends Controller
@@ -12,7 +13,8 @@ class FlaggedCommentController extends Controller
      */
     public function index()
     {
-        return view('flagged_comments.index');
+        $flagged_comments = FlaggedComment::with('comment','user')->get();
+        return view('flagged_comments.index', compact('flagged_comments'));
     }
 
     /**

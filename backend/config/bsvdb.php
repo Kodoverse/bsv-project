@@ -9,6 +9,18 @@ return [
             'password' => '12345678',
             'user_role' => 'admin',
         ],
+        [
+            'id' => 2, 
+            'email' => 'villasetaregna@gmail.com',
+            'password' => '12345678',
+            'user_role' => 'user',
+        ],
+        [
+            'id' => 3, 
+            'email' => 'vendoerba@gmail.com',
+            'password' => '12345678',
+            'user_role' => 'user',
+        ],
     ],
 
     'tags' => [
@@ -115,4 +127,30 @@ return [
             'page_section_id' => 2
         ],
     ],
+    'flagged_comments'=> [
+        [
+            'id' => 1,
+            'reason'=> 'ha offeso il mio cane',
+            'user_id'=> 1,
+            'comment_id' => 1,
+        ],
+        [
+            'id'=> 2,
+            'reason' => 'mi ha dato del secchione',
+            'user_id' => 1,
+            'comment_id' => 1,
+        ],
+        [
+            'id'=> 3,
+            'reason' => 'ha offeso tutta la mia famiglia',
+            'user_id' => 2,
+            'comment_id' => 3,
+        ],
+        [
+            'id'=> 3,
+            'reason' => 'mi ha chiamato cassone',
+            'user_id' => 2,
+            'comment_id' => 3,
+        ],
+    ]
 ];

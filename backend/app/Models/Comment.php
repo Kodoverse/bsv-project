@@ -13,6 +13,6 @@ class Comment extends Model
     }
 
     public function flagged_comment() {
-        return $this->belongsTo(Comment::class);
+        return $this->hasOne(FlaggedComment::class);
     }
 }

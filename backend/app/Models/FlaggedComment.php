@@ -9,11 +9,11 @@ class FlaggedComment extends Model
     protected $fillable = ['reason', 'user_id', 'comment_id'];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(['email']);
     }
 
     public function comment() {
-        return $this->hasOne(FlaggedComment::class);
+        return $this->belongsTo(Comment::class);
     }
 }
 
