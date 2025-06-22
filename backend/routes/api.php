@@ -20,3 +20,4 @@ Route::get('/articles', [ApiArticleController::class ,'index']);
 Route::get('/article/{id}', [ApiArticleController::class ,'show']);
 Route::post('/comments', [ApiCommentController::class ,'sendComment']);
 Route::get('/sections', [ApiSectionController::class, 'index']);
+Route::post('/flagcomments', [ApiCommentController::class, 'flagComment']);

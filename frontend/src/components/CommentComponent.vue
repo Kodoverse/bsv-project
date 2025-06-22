@@ -129,7 +129,7 @@ export default {
         },
         async submitFlag() {
             try {
-                await axios.post('http://localhost:8000/flagcomment', {
+                await axios.post('http://localhost:8000/api/flagcomments', {
                     comment_id: this.selectedCommentId,
                     reason: this.selectedReason
                 });
