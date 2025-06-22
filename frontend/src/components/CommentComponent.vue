@@ -45,8 +45,7 @@
               />Michael Gough
             </p>
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <time pubdate datetime="2022-02-08" title="February 8th, 2022"
-                >Feb. 8, 2022</time
+              <div>{{ timeAgo(comment.created_at) }}</div
               >
             </p>
           </div>
@@ -177,6 +176,7 @@
 
 <script>
 import axios from "axios";
+import { formatDistanceToNow } from "date-fns";
 
 export default {
   name: "CommentComponent",
@@ -249,6 +249,12 @@ export default {
         console.error("Error submitting flag:", error);
         alert("There was an error submitting the flag.");
       }
+    },
+    timeAgo(date) {
+      return formatDistanceToNow(new Date(date), {
+        addSuffix: true,
+        locale: undefined,
+      });
     },
   },
   mounted() {
