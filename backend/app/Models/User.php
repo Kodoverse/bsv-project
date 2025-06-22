@@ -34,6 +34,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['display_name'];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -53,5 +55,15 @@ class User extends Authenticatable
 
     public function flagged_comments() {
         return $this->hasMany(FlaggedComment::class);
+    }
+
+    public function getDisplayNameAttribute(): string
+    {
+        if(!$this->user_info){
+            return $this->email;
+        }
+
+        return trim($this->user_info->firstname . ' ' . $this->user_info->lastname);
+
     }
 }
