@@ -18,6 +18,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('/articles', [ApiArticleController::class ,'index']);
 Route::get('/article/{id}', [ApiArticleController::class ,'show']);
-Route::post('/comments', [ApiCommentController::class ,'sendComment']);
+Route::get('/comments', [ApiCommentController::class ,'index']);
+Route::post('/add_comment', [ApiCommentController::class ,'addComment']);
 Route::get('/sections', [ApiSectionController::class, 'index']);
 Route::post('/flagcomments', [ApiCommentController::class, 'flagComment']);

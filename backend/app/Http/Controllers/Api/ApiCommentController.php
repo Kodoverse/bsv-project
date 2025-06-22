@@ -9,6 +9,12 @@ use App\Models\Comment;
 
 class ApiCommentController extends Controller
 {
+    public function addComment(Request $request){
+        Comment::create([
+            'comment' => $request->comment,
+            'article_id' => $request->article_id,
+        ]);
+    }
     public function flagComment(Request $request)
     {
 

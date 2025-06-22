@@ -16,6 +16,15 @@ class CommentController extends Controller
         return view('comments.index', compact('comments'));
     }
 
+     public function addComment(Request $request){
+        Comment::create([
+            'comment' => $request->comment,
+            'article_id' => $request->article_id,
+            'like' => 0,
+            'is_flagged' => 0
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
