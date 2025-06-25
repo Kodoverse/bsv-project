@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
 });
 
-    // Route::middleware(['web', 'auth'])->post('/comments', [CommentController::class, 'addComment']);
+    Route::middleware(['web', 'auth'])->post('/comments', [CommentController::class, 'addComment']);
 
     /*
 
