@@ -16,7 +16,8 @@ class CommentController extends Controller
         return view('comments.index', compact('comments'));
     }
 
-     public function addComment(Request $request){
+    public function addComment(Request $request)
+    {
         Comment::create([
             'comment' => $request->comment,
             'article_id' => $request->article_id,
@@ -70,6 +71,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return response()->json(['message' => 'Commento eliminato con successo']);
     }
+
 }

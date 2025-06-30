@@ -44,7 +44,7 @@
 
 <style scoped>
     #article {
- 
+        
         width: 500px;
         aspect-ratio: 1 / 1;
         border: 1px solid rgb(0, 255, 81);

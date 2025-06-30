@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full container m-auto mb-5">
     <div id="single-article">
       <div>
         <h1 class="text-3xl text-center">{{ article.title }}</h1>
@@ -57,6 +57,8 @@ export default {
   height: 100%;
   width: 100%;
   border: 3px solid red;
+  padding: 0px 20px;
+  margin-bottom: 100px;
 }
 
 #comments {
