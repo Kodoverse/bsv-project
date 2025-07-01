@@ -11,9 +11,12 @@ class ApiArticleController extends Controller
     public function index(Request $request)
     {
         $articles = Article::with([
+            'user.info',
+            'comments.user.info',
             'comments',
             'images',
             'tags',
+
         ])->paginate(5);
 
         return response([
@@ -25,6 +28,7 @@ class ApiArticleController extends Controller
     public function show($id)
     {
         $article = Article::with([
+            'user.info',
             'comments',
             'images',
             'tags',

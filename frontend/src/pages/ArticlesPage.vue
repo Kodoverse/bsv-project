@@ -1,18 +1,21 @@
 <template>
     <div id="articles">
         <h1 class="text-3xl text-center">Articles</h1>
-    <div class="d-flex  justify-center">
-        <div id="article" class="d-flex flex-col" v-for="article in articles" :key="article.id">
-            <h1 class="text-3xl text-center mb-2">{{ article.title }}</h1>
-            <h2 class="text-2xl text-center mb-2">{{ article.subtitle }}</h2>
-            <p>{{ article.article }}</p>
+        <div class="d-flex  justify-center">
+            <div id="article" class="d-flex flex-col" v-for="article in articles" :key="article.id">
+                <h1 class="text-3xl text-center mb-2">{{ article.title }}</h1>
+                <h2 class="text-2xl text-center mb-2">{{ article.subtitle }}</h2>
+                <h3>AUTORE: {{ article.user.info.firstname }} {{ article.user.info.lastname }}</h3>
+                <p class="my-3">{{ article.article }}</p>
+              
+                    <router-link :to="{ name: 'singlearticle', params: { id: article.id } }">
+                        <button id="readmore">Read more</button>
+                    </router-link>
+               
 
-            <router-link :to="{ name: 'singlearticle', params: { id: article.id } }">
-                <button>Read more</button>
-            </router-link>
+            </div>
         </div>
-    </div>
-        
+
     </div>
 
 </template>
@@ -44,10 +47,20 @@
 
 <style scoped>
     #article {
-        
+
         width: 500px;
         aspect-ratio: 1 / 1;
         border: 1px solid rgb(0, 255, 81);
+    }
+
+    #readmore {
+        background-color: rgb(252, 252, 252);
+        color: orange;
+        border: 2px solid orange;
+        border-radius: 20px;
+        padding: 10px;
+        cursor: pointer;
+        
     }
 
 </style>

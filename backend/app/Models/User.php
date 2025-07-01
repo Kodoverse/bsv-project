@@ -49,21 +49,33 @@ class User extends Authenticatable
         ];
     }
 
-    public function user_info(){
+    public function info()
+    {
         return $this->hasOne(UsersInfo::class);
     }
 
-    public function flagged_comments() {
+    public function flagged_comments()
+    {
         return $this->hasMany(FlaggedComment::class);
     }
 
     public function getDisplayNameAttribute(): string
     {
-        if(!$this->user_info){
+        if (!$this->info) {
             return $this->email;
         }
 
-        return trim($this->user_info->firstname . ' ' . $this->user_info->lastname);
+        return trim($this->info->firstname . ' ' . $this->info->lastname);
 
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

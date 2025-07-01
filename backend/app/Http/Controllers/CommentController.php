@@ -23,7 +23,8 @@ class CommentController extends Controller
             'comment' => $request->comment,
             'article_id' => $request->article_id,
             'like' => 0,
-            'is_flagged' => 0
+            'is_flagged' => 0,
+            'user_id' => auth()->user()->id
         ]);
     }
 

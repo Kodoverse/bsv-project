@@ -19,6 +19,7 @@ class ArticleSeeder extends Seeder
             $newArticle->title = $article['title'];
             $newArticle->subtitle = $article['subtitle'];
             $newArticle->article = $article['article'];
+            $newArticle->user_id = 1;
             $newArticle->save();
         }
     }

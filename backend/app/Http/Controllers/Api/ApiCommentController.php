@@ -13,6 +13,9 @@ class ApiCommentController extends Controller
         Comment::create([
             'comment' => $request->comment,
             'article_id' => $request->article_id,
+            'like' => 0,
+            'is_flagged' => 0,
+            'user_id' => auth()->user()->id
         ]);
     }
     public function flagComment(Request $request)
