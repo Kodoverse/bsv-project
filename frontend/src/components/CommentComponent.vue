@@ -27,7 +27,14 @@
               <img class="w-6 h-6 mr-2 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                 alt="Michael Gough" />Michael Gough
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+            <p v-if="comment.updated_at !== comment.created_at" class="text-sm text-gray-600 dark:text-gray-400 flex items-center space-x-2">
+              <span 
+                class="text-xs text-yellow-600 dark:text-yellow-400 font-medium">
+                comment edited
+              </span>
+              <span>{{ timeAgo(comment.updated_at) }}</span>
+            </p>
+            <p v-else class="text-sm text-gray-600 dark:text-gray-400">
             <div>{{ timeAgo(comment.created_at) }}</div>
             </p>
           </div>
@@ -238,7 +245,7 @@
           console.log("Commento aggiornato:", response.data);
           this.editId = null;
           this.editOldComment = '';
-          this.loadComments();  
+          this.loadComments();
         } catch (error) {
           console.error("Errore nell'aggiornamento:", error);
         }
