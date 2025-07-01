@@ -32,16 +32,15 @@
             </p>
           </div>
         </footer>
-        <p v-if="!isEdit" class="text-gray-500 dark:text-gray-400">{{ comment.comment }}</p>
+        <p v-if="editId !== comment.id" class="text-gray-500 dark:text-gray-400">{{ comment.comment }}</p>
         <div v-else>
-          <textarea id="comment" v-model="newComment" rows="6"
+          <textarea id="comment" v-model="editOldComment" rows="6"
             class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-            required> {{ comment.comment }}</textarea>
+            required></textarea>
           <button type="button" @click="editComment(comment.id)"
             class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-            Edit
+            Save
           </button>
-
         </div>
 
         <div class="flex items-center justify-between mt-4 space-x-4">
@@ -68,7 +67,7 @@
 
             <button type="button"
               class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
-              @click="showTextarea()">
+              @click="showTextArea(comment)">
               <i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit
             </button>
             <button type="button"
@@ -137,9 +136,10 @@
         selectedReason: "",
         selectedComment: "",
         selectedCommentId: null,
-        newComment: "",
+        newComment: "",//quando scrivi un nuovo commento
+        editOldComment: "", //serve per l'edit. altrimenti la modifica spunta anche nella textarea del new comment.
         comments: [],
-        isEdit: false,
+        editId: null,//fa aprire la textarea per l'edit in base al suo ID
       };
     },
 
@@ -231,19 +231,23 @@
 
           const response = await axios.put(
             `/comments/${commentId}`,
-            { comment: this.newComment },
+            { comment: this.editOldComment },
             { withCredentials: true }
           );
 
           console.log("Commento aggiornato:", response.data);
+          this.editId = null;
+          this.editOldComment = '';
+          this.loadComments();  
         } catch (error) {
           console.error("Errore nell'aggiornamento:", error);
         }
       },
 
-      showTextarea() {
-        this.isEdit = true;
-      }
+      showTextArea(comment) {
+        this.editId = comment.id;
+        this.editOldComment = comment.comment;
+      },
     },
     mounted() {
       this.loadComments();
