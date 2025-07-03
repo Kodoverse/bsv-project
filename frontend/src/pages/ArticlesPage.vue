@@ -6,6 +6,7 @@
                 <h1 class="text-3xl text-center mb-2">{{ article.title }}</h1>
                 <h2 class="text-2xl text-center mb-2">{{ article.subtitle }}</h2>
                 <h3>AUTORE: {{ article.user.info.firstname }} {{ article.user.info.lastname }}</h3>
+                <h3>NICKNAME: {{ article.user.info.username }}</h3>
                 <p class="my-3">{{ article.article }}</p>
               
                     <router-link :to="{ name: 'singlearticle', params: { id: article.id } }">

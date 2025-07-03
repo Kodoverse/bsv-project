@@ -12,11 +12,9 @@ class ApiArticleController extends Controller
     {
         $articles = Article::with([
             'user.info',
-            'comments.user.info',
             'comments',
             'images',
             'tags',
-
         ])->paginate(5);
 
         return response([
@@ -29,6 +27,7 @@ class ApiArticleController extends Controller
     {
         $article = Article::with([
             'user.info',
+            'comments.user.info',
             'comments',
             'images',
             'tags',
@@ -36,7 +35,8 @@ class ApiArticleController extends Controller
 
         return response([
             'success' => true,
-            'result' => $article
+            'result' => $article,
+            'current_user' => auth()->check() ? auth()->user()->load('info') : null
         ]);
 
     }

@@ -200,7 +200,7 @@ export default {
         console.log(swiper);
       };
       const onSlideChange = () => {
-        console.log('slide change');
+        //console.log('slide change');
       };
       return {
         onSwiper,

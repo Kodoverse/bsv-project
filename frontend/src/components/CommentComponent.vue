@@ -25,11 +25,12 @@
           <div class="flex items-center">
             <p class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white">
               <img class="w-6 h-6 mr-2 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                alt="Michael Gough" />Michael Gough
+                alt="Michael Gough" />
+              {{ comment.user.info.username }}
             </p>
-            <p v-if="comment.updated_at !== comment.created_at" class="text-sm text-gray-600 dark:text-gray-400 flex items-center space-x-2">
-              <span 
-                class="text-xs text-yellow-600 dark:text-yellow-400 font-medium">
+            <p v-if="comment.updated_at !== comment.created_at"
+              class="text-sm text-gray-600 dark:text-gray-400 flex items-center space-x-2">
+              <span class="text-xs text-yellow-600 dark:text-yellow-400 font-medium">
                 comment edited
               </span>
               <span>{{ timeAgo(comment.updated_at) }}</span>
@@ -72,16 +73,30 @@
               Like
             </button>
 
-            <button type="button"
-              class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
-              @click="showTextArea(comment)">
-              <i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit
-            </button>
-            <button type="button"
-              class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
-              @click="destroyComment(comment.id)">
-              <i class="fa-solid fa-trash-can" aria-hidden="true"></i>Delete
-            </button>
+
+
+            <!-- button edit and delete... just for user who created the comment -->
+
+
+            <div class="flex items-center space-x-4" v-if="comment.user.id === currentUser.id">
+              <button type="button"
+                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
+                @click="showTextArea(comment)">
+                <i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit
+              </button>
+              <button type="button"
+                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
+                @click="destroyComment(comment.id)">
+                <i class="fa-solid fa-trash-can" aria-hidden="true"></i>Delete
+              </button>
+            </div>
+
+
+
+
+
+
+
 
           </div>
 
@@ -147,6 +162,7 @@
         editOldComment: "", //serve per l'edit. altrimenti la modifica spunta anche nella textarea del new comment.
         comments: [],
         editId: null,//fa aprire la textarea per l'edit in base al suo ID
+        currentUser: null, //recupera l'utente loggato...
       };
     },
 
@@ -177,6 +193,9 @@
             `http://localhost:8000/api/article/${this.articleId}`
           );
           this.comments = response.data.result.comments;
+          this.currentUser = response.data.current_user;
+          console.log(this.currentUser);
+          console.log(this.comments);
         } catch (error) {
           console.error("Errore nel caricamento commenti:", error);
         }
@@ -258,6 +277,7 @@
     },
     mounted() {
       this.loadComments();
+      console.log(this.comments);
     },
   };
 </script>
