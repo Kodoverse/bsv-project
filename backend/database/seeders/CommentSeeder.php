@@ -21,6 +21,7 @@ class CommentSeeder extends Seeder
             $newComment->is_flagged = $comment['is_flagged'];
             $newComment->predefinite_comment = $comment['predefinite_comment'];
             $newComment->article_id = $comment['article_id'];
+            $newComment->user_id = $comment['user_id'];
             $newComment->save();
         }
     }

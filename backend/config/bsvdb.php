@@ -62,7 +62,8 @@ return [
             'like' => 10, 
             'article_id' => 1,
             'is_flagged' => false, 
-            'predefinite_comment' => null
+            'predefinite_comment' => null,
+            'user_id' => 1
         ],
         [
             'id' => 2,
@@ -70,7 +71,8 @@ return [
             'like' => 2,
             'article_id' => 1,
             'is_flagged' => false, 
-            'predefinite_comment' => 'very good'
+            'predefinite_comment' => 'very good',
+            'user_id' => 1
         ],
         [
             'id' => 3, 
@@ -78,7 +80,8 @@ return [
             'like' => 5, 
             'article_id' => 2, 
             'is_flagged' => true, 
-            'predefinite_comment' => null
+            'predefinite_comment' => null,
+            'user_id' => 1
         ],
     ],
     
