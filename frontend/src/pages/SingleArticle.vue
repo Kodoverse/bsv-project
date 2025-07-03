@@ -1,9 +1,11 @@
 <template>
-  <div class="flex flex-col w-full container m-auto mb-5">
+  <div class="container flex flex-col w-full m-auto mb-5">
     <div id="single-article">
       <div>
         <h1 class="text-3xl text-center">{{ article.title }}</h1>
-        <p class="text-center">by {{ article.user.display_name }}</p>
+        <p v-if="article.user" class="text-center">
+          by {{ article.user.display_name }}
+        </p>
       </div>
 
       <div class="my-3">

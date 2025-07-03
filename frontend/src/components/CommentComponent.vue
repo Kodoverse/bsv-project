@@ -29,8 +29,8 @@
               {{ comment.user.info.username }}
             </p>
             <p v-if="comment.updated_at !== comment.created_at"
-              class="text-sm text-gray-600 dark:text-gray-400 flex items-center space-x-2">
-              <span class="text-xs text-yellow-600 dark:text-yellow-400 font-medium">
+              class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+              <span class="text-xs font-medium text-yellow-600 dark:text-yellow-400">
                 comment edited
               </span>
               <span>{{ timeAgo(comment.updated_at) }}</span>
@@ -78,14 +78,14 @@
             <!-- button edit and delete... just for user who created the comment -->
 
 
-            <div class="flex items-center space-x-4" v-if="comment.user.id === currentUser.id">
+            <div class="flex items-center space-x-4" v-if="currentUser && comment.user.id === currentUser.id">
               <button type="button"
-                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
+                class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
                 @click="showTextArea(comment)">
                 <i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit
               </button>
               <button type="button"
-                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 gap-1"
+                class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
                 @click="destroyComment(comment.id)">
                 <i class="fa-solid fa-trash-can" aria-hidden="true"></i>Delete
               </button>
