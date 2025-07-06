@@ -34,7 +34,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = ['display_name'];
+    protected $appends = ['display_name', 'initials'];
 
     /**
      * Get the attributes that should be cast.
@@ -67,6 +67,18 @@ class User extends Authenticatable
 
         return trim($this->info->firstname . ' ' . $this->info->lastname);
 
+    }
+
+    public function getInitialsAttribute(): string
+    {
+        if (!$this->info || (!$this->info->firstname && !$this->info->lastname)) {
+            return '';
+        }
+
+        $first = $this->info->firstname ? substr($this->info->firstname, 0, 1) : '';
+        $last = $this->info->lastname ? substr($this->info->lastname, 0, 1) : '';
+
+        return strtoupper($first . $last);
     }
 
     public function articles()

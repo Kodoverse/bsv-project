@@ -43,12 +43,21 @@
           </li>
           <!-- dropdown -->
           <li v-else class="flex ">
-            <div id="userImg" class="overflow-hidden">
-              <img class=" w-100 "
-                src="https://media-assets.vanityfair.it/photos/614d7ee8e058226b8356775c/4:3/w_1144,h_858,c_limit/willem-p.jpg"
-                alt="">
+            <div>
+              <!-- mostra immagine -->
+              <div v-if="store.CurrentUser.info.profile_img" id="userImg" class="overflow-hidden image">
+                <img class=" w-100 "
+                  :src="store.CurrentUser.info.profile_img"
+                  :alt="store.CurrentUser.display_name">
+              </div>
+              <!-- oppure mostra iniziali -->
+              <div v-else>
+                <span id="userInitials" class="mr-4 text-2xl font-semibold text-gray-900 dark:text-white">
+                  {{ store.CurrentUser.initials }}
+                </span>
+              </div>
             </div>
-            <button  id="dropdownNavbarLink" data-dropdown-toggle="menuUser"
+            <button id="dropdownNavbarLink" data-dropdown-toggle="menuUser"
               class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
               {{ store.CurrentUser.display_name }}
               <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -96,11 +105,11 @@
 </template>
 
 <script>
-// import Swiper core and required modules
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+  // import Swiper core and required modules
+  import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
+  // Import Swiper Vue.js components
+  import { Swiper, SwiperSlide } from "swiper/vue";
 
   // Import Swiper styles
   import 'swiper/css';
@@ -142,17 +151,16 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 </script>
 
 <style scoped>
-  #userImg {
+  #userImg,
+ #userInitials  {
     border: #df9a04 2px solid;
     border-radius: 100%;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-
-
   }
 
   .swiper {

@@ -90,12 +90,12 @@
             store.isLoggedIn = true;
             localStorage.setItem("isLoggedIn", "true");
 
-            // 🔥 Nuova chiamata per ottenere i dati utente
+            //chiamata per ottenere i dati utente
             const userResponse = await axios.get("http://localhost:8000/api/user", {
               withCredentials: true,
             });
 
-            // Quando ricevi i dati dell'utente
+            // ricevi i dati dell'utente
             store.CurrentUser = userResponse.data;
             localStorage.setItem('CurrentUser', JSON.stringify(userResponse.data));
             console.log("Utente loggato:", store.CurrentUser);
