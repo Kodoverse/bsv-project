@@ -40,17 +40,33 @@ export default {
     };
   },
   methods: {
-    getArticle() {
-      axios
-        .get(`http://127.0.0.1:8000/api/article/${this.$route.params.id}`)
-        .then((res) => {
-          this.article = res.data.result;
-          console.log(this.article);
-        });
+    async getArticle() {
+      try {
+        const res = axios.get(
+          `http://127.0.0.1:8000/api/articles/${this.$route.params.id}`
+        );
+        this.article = res.data.result;
+      } catch (err) {
+        this.error = "Errore nel caricamento dell'articolo";
+      }
+    },
+    async getComments() {
+      try {
+        const res = await axios.get(
+          `/api/articles/${this.$route.params.id}/comments`
+        );
+        this.comments = res.data.data;
+      } catch (err) {
+        this.error = "Errore nel caricamento dei commenti.";
+        console.error(err);
+      }
     },
   },
-  mounted() {
-    this.getArticle();
+  async mounted() {
+    this.loading = true;
+    await this.getArticle();
+    await this.getComments();
+    this.loading = false;
   },
 };
 </script>
