@@ -72,7 +72,7 @@
                 >
                   comment edited
                 </span>
-                <span>{{ timeAgo(comment.updated_at) }}</span>
+                <span>{{ timeAgo(comment.created_at) }}</span>
               </p>
               <div v-else class="text-sm text-gray-600 dark:text-gray-400">
                 <div>{{ timeAgo(comment.created_at) }}</div>
@@ -105,6 +105,9 @@
           <div class="flex items-center justify-between mt-4 space-x-4">
             <div class="flex items-center space-x-4">
               <button
+                v-if="
+                  store.CurrentUser && comment.user.id !== store.CurrentUser.id
+                "
                 type="button"
                 class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
               >
@@ -127,6 +130,9 @@
               </button>
 
               <button
+                v-if="
+                  store.CurrentUser && comment.user.id !== store.CurrentUser.id
+                "
                 type="button"
                 class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
               >
@@ -153,10 +159,14 @@
               <div
                 class="flex items-center space-x-4"
                 v-if="
-                  store.currentUser && comment.user.id === store.currentUser.id
+                  store.CurrentUser && comment.user.id === store.CurrentUser.id
                 "
               >
                 <button
+                  v-if="
+                    comment.user.id === store.CurrentUser.id &&
+                    editId !== comment.id
+                  "
                   type="button"
                   class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
                   @click="showTextArea(comment)"

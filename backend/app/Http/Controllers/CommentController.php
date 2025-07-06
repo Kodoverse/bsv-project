@@ -66,8 +66,9 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $comment->comment = $request->comment;
-        $comment->update();
+        $comment->save();
         return response()->json(['message' => 'Commento modificato con successo']);
+
     }
 
     /**
