@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-#single-article {
+/* #single-article {
   height: 100%;
   width: 100%;
   border: 3px solid red;
@@ -85,5 +85,5 @@ export default {
   height: 100%;
   width: 100%;
   border: 3px solid green;
-}
+} */
 </style>
