@@ -1,5 +1,4 @@
 <template>
-
   <nav class="w-full bg-white border-gray-200 dark:bg-black dark:border-gray-700">
     <div class="flex flex-wrap items-center justify-between w-full p-4">
       <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -16,18 +15,16 @@
       </button>
       <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
         <ul
-          class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700">
+          class="flex items-center flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700">
           <li>
             <router-link :to="{ name: 'home' }"
-              class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-              aria-current="page">Home</router-link>
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</router-link>
           </li>
           <li>
             <router-link :to="{ name: 'aboutus' }"
-              class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-              aria-current="page">Chi siamo</router-link>
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Chi
+              siamo</router-link>
           </li>
-
           <li>
             <a href="#"
               class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Eventi</a>
@@ -44,8 +41,14 @@
             <router-link :to="{ name: 'login' }"
               class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</router-link>
           </li>
-          <li v-else>
-            <button id="dropdownNavbarLink" data-dropdown-toggle="menuUser"
+          <!-- dropdown -->
+          <li v-else class="flex ">
+            <div id="userImg" class="overflow-hidden">
+              <img class=" w-100 "
+                src="https://media-assets.vanityfair.it/photos/614d7ee8e058226b8356775c/4:3/w_1144,h_858,c_limit/willem-p.jpg"
+                alt="">
+            </div>
+            <button  id="dropdownNavbarLink" data-dropdown-toggle="menuUser"
               class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
               {{ store.CurrentUser.display_name }}
               <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -105,7 +108,7 @@
   import 'swiper/css/pagination';
   import 'swiper/css/scrollbar';
   import { store } from "../store.js";
-  
+
 
   export default {
     name: "HeaderComponent",
@@ -139,6 +142,19 @@
 </script>
 
 <style scoped>
+  #userImg {
+    border: #df9a04 2px solid;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+
+
+  }
+
   .swiper {
     --swiper-navigation-color: #df9a04;
     --swiper-pagination-color: #df9a04;
