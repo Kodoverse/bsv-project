@@ -42,10 +42,11 @@ export default {
   methods: {
     async getArticle() {
       try {
-        const res = axios.get(
+        const res = await axios.get(
           `http://127.0.0.1:8000/api/articles/${this.$route.params.id}`
         );
         this.article = res.data.result;
+        console.log(this.article);
       } catch (err) {
         this.error = "Errore nel caricamento dell'articolo";
       }
