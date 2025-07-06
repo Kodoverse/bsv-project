@@ -1,176 +1,94 @@
 <template>
-  <Header>
-    <nav
-      class="w-full bg-white border-gray-200 dark:bg-black dark:border-gray-700"
-    >
-      <div class="flex flex-wrap items-center justify-between w-full p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="/biblioteca_logo.png" class="h-8" alt="Logo" />
-        </a>
-        <button
-          data-collapse-toggle="navbar-dropdown"
-          type="button"
-          class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-dropdown"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <svg
-            class="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700"
-          >
-            <li>
-              <router-link
-                :to="{ name: 'home' }"
-                class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-                >Home</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                :to="{ name: 'aboutus' }"
-                class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-                >Chi siamo</router-link
-              >
-            </li>
-            <li>
-              <button
-                id="dropdownNavbarLink"
-                data-dropdown-toggle="dropdownNavbar"
-                class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-              >
-                Dropdown
-                <svg
-                  class="w-2.5 h-2.5 ms-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-              <!-- Dropdown menu -->
-              <div
-                id="dropdownNavbar"
-                class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-400"
-                  aria-labelledby="dropdownLargeButton"
-                >
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Dashboard</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Settings</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Earnings</a
-                    >
-                  </li>
-                </ul>
-                <div class="py-1">
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >Sign out</a
-                  >
+
+  <nav class="w-full bg-white border-gray-200 dark:bg-black dark:border-gray-700">
+    <div class="flex flex-wrap items-center justify-between w-full p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="/biblioteca_logo.png" class="h-8" alt="Logo" />
+      </a>
+      <button data-collapse-toggle="navbar-dropdown" type="button"
+        class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-dropdown" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+        <ul
+          class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700">
+          <li>
+            <router-link :to="{ name: 'home' }"
+              class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+              aria-current="page">Home</router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'aboutus' }"
+              class="block px-3 py-2 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+              aria-current="page">Chi siamo</router-link>
+          </li>
+
+          <li>
+            <a href="#"
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Eventi</a>
+          </li>
+          <li>
+            <router-link :to="{ name: 'articles' }"
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">News</router-link>
+          </li>
+          <li>
+            <a href="#"
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contatti</a>
+          </li>
+          <li v-if="!store.isLoggedIn">
+            <router-link :to="{ name: 'login' }"
+              class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</router-link>
+          </li>
+          <li v-else>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="menuUser"
+              class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+              {{ store.CurrentUser.display_name }}
+              <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 4 4 4-4" />
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="menuUser"
+              class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                </li>
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                </li>
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                </li>
+              </ul>
+              <div class="py-1">
+                <div type="button" @click="onLogout"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  Sign Out
                 </div>
               </div>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Eventi</a
-              >
-            </li>
-            <li>
-              <router-link
-                :to="{ name: 'articles' }"
-                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >News</router-link
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Contatti</a
-              >
-            </li>
-            <li v-if="!store.isLoggedIn">
-              <router-link
-                :to="{ name: 'login' }"
-                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Login</router-link
-              >
-            </li>
-            <li v-else>
-              <button
-                @click="handleLogout"
-                class="block px-3 py-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                esci
-              </button>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </Header>
-  <swiper
-    :modules="modules"
-    :loop="true"
-    :autoplay="{ delay: 3000 }" 
-    :slides-per-view="1"
-    :space-between="50"
-    navigation
-    :pagination="{ clickable: true }"
-    @swiper="onSwiper"
-    @slideChange="onSlideChange"
-    
-  class="h-96 swiper">
-    <swiper-slide><img src="https://www.youontour.it/wp-content/uploads/2017/11/1biblioteca-lucchesiana-agrigento-1920x900.jpg"></swiper-slide>
-    <swiper-slide><img src="https://m.media-amazon.com/images/I/51HvGQYNsML._AC_UF894,1000_QL80_.jpg"></swiper-slide>
-    <swiper-slide><img src="https://images.squarespace-cdn.com/content/v1/58c22624f5e231655c4c4dad/da9d4833-420c-4248-a514-a56a3b7feeeb/ESTUDIO+C+BAJA.jpg"></swiper-slide>
-  </swiper>
+    </div>
+  </nav>
+  <!-- <swiper :modules="modules" :loop="true" :autoplay="{ delay: 3000 }" :slides-per-view="1" :space-between="50"
+    navigation :pagination="{ clickable: true }" @swiper="onSwiper" @slideChange="onSlideChange" class="h-96 swiper">
+    <swiper-slide><img src=""></swiper-slide>
+    <swiper-slide><img src=""></swiper-slide>
+    <swiper-slide><img src=""></swiper-slide>
+  </swiper> -->
 
 </template>
 
@@ -186,15 +104,24 @@
   import 'swiper/css/navigation';
   import 'swiper/css/pagination';
   import 'swiper/css/scrollbar';
+  import { store } from "../store.js";
+  
 
-
-import axios from "axios";
-import { store } from "../store.js";
-export default {
-  components: {
+  export default {
+    name: "HeaderComponent",
+    components: {
       Swiper,
       SwiperSlide,
     },
+    props: [
+      'onLogout'
+    ],
+    data() {
+      return {
+        store,
+      };
+    },
+
     setup() {
       const onSwiper = (swiper) => {
         console.log(swiper);
@@ -208,44 +135,15 @@ export default {
         modules: [Navigation, Pagination, A11y, Autoplay],
       };
     },
-  name: "HeaderComponent",
-  data() {
-    return {
-      store,
-    };
-  },
-
-  mounted() {
-    const storedLoginStatus = localStorage.getItem("isLoggedIn");
-    if (storedLoginStatus === "true") {
-      store.isLoggedIn = true;
-    }
-    console.log("refreshed");
-  },
-  methods: {
-    handleLogout() {
-      axios
-        .post("http://localhost:8000/api/logout", {}, { withCredentials: true })
-        .then(() => {
-          store.isLoggedIn = false;
-          localStorage.setItem("isLoggedIn", "false");
-          console.log(store.isLoggedIn);
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          console.error("Errore durante il logout", error);
-        });
-    },
-  },
-};
+  };
 </script>
 
 <style scoped>
-.swiper {
-  --swiper-navigation-color: #df9a04;
-  --swiper-pagination-color: #df9a04;
-  --swiper-navigation-sides-offset: 5%;
-  --swiper-navigation-size: 30px;
-}
+  .swiper {
+    --swiper-navigation-color: #df9a04;
+    --swiper-pagination-color: #df9a04;
+    --swiper-navigation-sides-offset: 5%;
+    --swiper-navigation-size: 30px;
+  }
 
 </style>
