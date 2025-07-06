@@ -16,7 +16,7 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function flagged_comment() {
+    public function flags() {
         return $this->hasMany(FlaggedComment::class);
     }
 }

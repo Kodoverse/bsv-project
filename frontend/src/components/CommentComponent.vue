@@ -34,7 +34,10 @@
         :key="comment.id"
       >
         <footer class="flex items-center justify-between mb-2">
-          <div class="flex items-center">
+          <div
+            v-if="comment.user && comment.user.info"
+            class="flex items-center"
+          >
             <p
               class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white"
             >
@@ -60,6 +63,7 @@
               <div>{{ timeAgo(comment.created_at) }}</div>
             </div>
           </div>
+          <div v-else>Commento non disponibile</div>
         </footer>
         <p
           v-if="editId !== comment.id"
@@ -275,7 +279,7 @@ export default {
     async loadComments() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/article/${this.articleId}`
+          `http://localhost:8000/api/articles/${this.articleId}/comments`
         );
         this.comments = response.data.result.comments;
         this.currentUser = response.data.current_user;
@@ -300,7 +304,7 @@ export default {
     },
     async submitFlag() {
       try {
-        await axios.post("http://localhost:8000/api/flagcomments", {
+        await axios.post("http://localhost:8000/api/comments/flag", {
           comment_id: this.selectedCommentId,
           reason: this.selectedReason,
         });

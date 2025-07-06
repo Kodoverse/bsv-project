@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FlaggedComment;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Http\Resources\CommentResource;
 
 class ApiCommentController extends Controller
 {
@@ -17,6 +18,23 @@ class ApiCommentController extends Controller
             'is_flagged' => 0,
             'user_id' => auth()->user()->id
         ]);
+    }
+
+    public function getByArticle($id){
+        $comments = Comment::with(['user.info', 'flags'])
+            ->where('article_id',$id)
+            ->latest()
+            ->get();
+
+            $currentUser = auth()->check() ? auth()->user()->load('info') : null;
+
+            return response()->json([
+            'result' => [
+            'comments' => CommentResource::collection($comments)
+        ],
+            'current_user' => $currentUser
+    ]);
+
     }
     public function flagComment(Request $request)
     {
@@ -35,14 +53,21 @@ class ApiCommentController extends Controller
             return response()->json(['message' => 'Hai già segnalato questo commento.'], 403);
         }
 
-        $comment->is_flagged = true;
-        $comment->save();
         FlaggedComment::create([
             'comment_id' => $request->comment_id,
             'reason' => $request->reason,
             'user_id' => auth()->user()->id
-
+            
         ]);
-        
+        $flagCount = FlaggedComment::where('comment_id', $comment->id)->count();
+        if($comment->is_flagged){
+        $comment->is_flagged = true;
+        }
+        // if($flagCount >= 3){
+            
+        // }
+        $comment->save();
+
+        return response()->json(['message' => 'Segnalazione inviata con successo']);
     }
 }

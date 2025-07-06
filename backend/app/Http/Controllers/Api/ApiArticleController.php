@@ -27,11 +27,13 @@ class ApiArticleController extends Controller
     {
         $article = Article::with([
             'user.info',
-            'comments.user.info',
-            'comments',
             'images',
             'tags',
         ])->find($id);
+
+        if (!$article) {
+            return response()->json(['message' => 'Articolo non trovato'], 404);
+        }
 
         return response([
             'success' => true,
