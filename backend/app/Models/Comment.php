@@ -17,6 +17,6 @@ class Comment extends Model
     }
 
     public function flagged_comment() {
-        return $this->hasOne(FlaggedComment::class);
+        return $this->hasMany(FlaggedComment::class);
     }
 }

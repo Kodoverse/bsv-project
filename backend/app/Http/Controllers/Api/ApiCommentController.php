@@ -21,11 +21,20 @@ class ApiCommentController extends Controller
     public function flagComment(Request $request)
     {
 
-           
+        $user = auth()->user(); 
         $comment = Comment::find($request->comment_id);
         if(!$comment){
             return response()->json(['message' => 'Comment not found'], 404);
         };
+
+        $alreadyFlagged = FlaggedComment::where('comment_id', $comment->id)
+        ->where('user_id', $user->id)
+        ->exists();
+
+        if($alreadyFlagged){
+            return response()->json(['message' => 'Hai già segnalato questo commento.'], 403);
+        }
+
         $comment->is_flagged = true;
         $comment->save();
         FlaggedComment::create([
