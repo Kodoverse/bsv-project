@@ -34,7 +34,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = ['display_name', 'initials'];
+    protected $appends = ['display_name', 'initials', 'comments_count'];
 
     /**
      * Get the attributes that should be cast.
@@ -90,4 +90,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function getCommentsCountAttribute(): int
+    {
+        // Usa la relazione già definita
+        return $this->comments()->count();
+    }
+
 }

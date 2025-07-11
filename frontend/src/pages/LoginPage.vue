@@ -55,7 +55,7 @@
 
 <script>
   import axios from "axios";
-  import { store } from "../store.js";
+  import { getCurrentUser, store } from "../store.js";
   import { router } from "../router.js";
   export default {
     name: "LoginPage",
@@ -90,17 +90,8 @@
             store.isLoggedIn = true;
             localStorage.setItem("isLoggedIn", "true");
 
-            //chiamata per ottenere i dati utente
-            const userResponse = await axios.get("http://localhost:8000/api/user", {
-              withCredentials: true,
-            });
-
-            // ricevi i dati dell'utente
-            store.CurrentUser = userResponse.data;
-            localStorage.setItem('CurrentUser', JSON.stringify(userResponse.data));
-            console.log("Utente loggato:", store.CurrentUser);
-
-            this.$router.push("/"); // o "/profile" se preferisci
+            getCurrentUser();
+            this.$router.push("/");
           } else {
             this.error = "Errore durante il login";
           }

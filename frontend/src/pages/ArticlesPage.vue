@@ -1,26 +1,26 @@
 <template>
     <div class="container flex flex-col w-full m-auto mb-5">
-        <h1 class="text-3xl text-center">Articolis</h1>
-        <div id="articles" class="flex flex-wrap my-6 gap-6">
+        <h1 class="text-3xl text-center">Articoli</h1>
+        <div id="articles" class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
 
             <div id="article" v-for="article in articles" :key="article.id"
                 class="relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
                     <img class="rounded-t-lg" src="https://img-api.cloud.mediaset.net/api/images/kn/v1/image_main/1200/675/38374717?r=0" alt="" />
                 </a>
-                <div class="p-5 ">
+                <div class="p-3 ">
                     <a href="#">
-                        <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
+                        <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
                             article.title }}
                         </h3>
                     </a>
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
+                        <h5 class="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">{{
                             article.subtitle
                         }}
                         </h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-2">
+                    <p id="content" class="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-2">
                         {{ article.article }}
                     </p>
                     <router-link id="readmore" :to="{ name: 'singlearticle', params: { id: article.id } }"
@@ -70,8 +70,9 @@
 <style scoped>
     #article {
 
-        width: 400px;
-        aspect-ratio: 1 / 1;
+        width: 370px;
+        height: 400;
+        margin-top: 40px;
         cursor: pointer;
        
     }
@@ -83,6 +84,11 @@
 
     #articles {
        height: 450px;
+    }
+
+    #content {
+        overflow: hidden;
+        height: 50px;
     }
 
     #readmore {

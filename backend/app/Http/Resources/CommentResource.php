@@ -32,6 +32,7 @@ class CommentResource extends JsonResource
                 'id' => $this->user->id,
                 'info' => [
                     'username' => $this->user->info ? $this->user->info->username : null,
+                    'profile_img' => $this->user->info ? $this->user->info->profile_img : null
                 ],
                 'initials' => $this->user->initials,
             ],

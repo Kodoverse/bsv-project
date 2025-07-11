@@ -2,7 +2,7 @@
   <div class="wscreen">
     <HeaderComponent v-if="$route.name !== 'login' && $route.name !== 'register'" :onLogout="handleLogout" />
     <MainComponent />
-    <FooterComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
+    <FooterComponent id="footer" v-if="$route.name !== 'login' && $route.name !== 'register'" />
   </div>
 </template>
 
@@ -74,5 +74,10 @@
 
   .logo.vue:hover {
     filter: drop-shadow(0 0 2em #42b883aa);
+  }
+
+  footer {
+   
+    margin-top: 100px;
   }
 </style>

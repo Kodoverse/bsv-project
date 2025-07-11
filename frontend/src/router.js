@@ -6,7 +6,9 @@ import RegisterPage from "./pages/RegisterPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import AboutUsPage from "./pages/AboutUsPage.vue";
 import SingleArticle from "./pages/SingleArticle.vue";
+import Dashboard from "./pages/Dashboard.vue";
 import axios from "axios";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -47,6 +49,11 @@ const router = createRouter({
       name: "singlearticle",
       component: SingleArticle,
     },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: Dashboard,
+    }
   ],
 });
 

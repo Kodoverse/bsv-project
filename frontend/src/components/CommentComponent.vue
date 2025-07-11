@@ -96,10 +96,11 @@
             <button
               type="button"
               @click="editComment(comment.id)"
-              class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+              class="inline-flex border-1 items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 mr-2"
             >
               Save
             </button>
+            <button class="inline-flex border-1 items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">annulla</button>
           </div>
 
           <div class="flex items-center justify-between mt-4 space-x-4">
@@ -153,7 +154,7 @@
               <div
                 class="flex items-center space-x-4"
                 v-if="
-                  store.currentUser && comment.user.id === store.currentUser.id
+                  store.CurrentUser && comment.user.id === store.CurrentUser.id
                 "
               >
                 <button
@@ -257,7 +258,7 @@
 <script>
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
-import { store } from "../store";
+import { getCurrentUser, store } from "../store";
 
 export default {
   name: "CommentComponent",
