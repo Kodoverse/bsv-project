@@ -4,6 +4,11 @@
 
        <h1 class="text-3xl">HOME</h1>
 
+       <div id="events">
+
+
+       </div>
+
     </div>
 </template>
 

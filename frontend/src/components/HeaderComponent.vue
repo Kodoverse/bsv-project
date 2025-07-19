@@ -95,12 +95,12 @@
       </div>
     </div>
   </nav>
-  <!-- <swiper :modules="modules" :loop="true" :autoplay="{ delay: 3000 }" :slides-per-view="1" :space-between="50"
+  <swiper v-if="$route.name === 'home'" :modules="modules" :loop="true" :autoplay="{ delay: 3000 }" :slides-per-view="1" :space-between="50"
     navigation :pagination="{ clickable: true }" @swiper="onSwiper" @slideChange="onSlideChange" class="h-96 swiper">
     <swiper-slide><img src=""></swiper-slide>
     <swiper-slide><img src=""></swiper-slide>
     <swiper-slide><img src=""></swiper-slide>
-  </swiper> -->
+  </swiper>
 
 </template>
 

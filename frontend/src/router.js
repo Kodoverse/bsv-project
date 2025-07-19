@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import AboutUsPage from "./pages/AboutUsPage.vue";
 import SingleArticle from "./pages/SingleArticle.vue";
+
 import axios from "axios";
 
 const router = createRouter({
@@ -47,6 +48,7 @@ const router = createRouter({
       name: "singlearticle",
       component: SingleArticle,
     },
+  
   ],
 });
 
