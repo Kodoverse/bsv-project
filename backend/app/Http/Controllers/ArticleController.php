@@ -34,6 +34,7 @@ class ArticleController extends Controller
         $request->validated();
         $newArticle = new Article();
         $newArticle->fill($request->all());
+        $newArticle->user_id = auth()->user()->id;
         $newArticle->save();
         return redirect()->route('articles.show', $newArticle->id);
     }

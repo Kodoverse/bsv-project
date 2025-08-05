@@ -3,40 +3,79 @@
     <div class="text-center">
       <h1 class="text-3xl m-auto">Chi Siamo</h1>
     </div>
-    <div id="org-chart">
-      <div class="flex flex-col w-full m-auto mb-5 mt-5">
-        <div @click="modalToggle" id="CEO" class="people">Tano</div>
+
+    <!-- ORG CHART -->
+    <div id="org-chart" class="flex flex-col items-center gap-6 mt-10">
+      <div class="grid gap-6">
+        <div
+          v-for="employee in employees"
+          :key="employee.id"
+          class="people"
+          @click="openModal(employee)"
+        >
         <div>
-          <div class="flex justify-center gap-20">
-            <div class="people"></div>
-            <div class="people"></div>
-          </div>
+            <img class="w-40 rounded-full" :src="employee.image" :alt="employee.name" />
+        </div>
+        
+          {{ employee.name }}
+          <hr>
+          {{ employee.role }}
         </div>
       </div>
     </div>
   </div>
 
-
-<transition name="modal">
-  <div id="modal" v-if="modalFlag">
-    <button class="btn" id="close-modal" @click="closeModal">CLOSE</button>
-  </div>
-</transition>
+  <transition name="modal">
+    <div id="modal" v-if="modalVisible">
+      <button class="btn" id="close-modal" @click="closeModal">CLOSE</button>
+      <div id="modal-content">
+        <div id="photo" class="flex justify-center">
+          <img :src="selectedEmployee.image" :alt="selectedEmployee.name" />
+        </div>
+        <div class="p-3">
+          <h2 class="text-2xl text-center my-4">{{ selectedEmployee.name }}</h2>
+          <p class="text-center my-4">{{ selectedEmployee.role }}</p>
+          <p class="text-center my-4">{{ selectedEmployee.description }}</p>
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
 import axios from "axios";
 
-
 export default {
   name: "AboutUsPage",
-  components: {
-   
-  },
+  components: {},
   data() {
     return {
       aboutSection: [],
       test: [],
-      modalFlag: false,
+      modalVisible: false,
+      selectedEmployee: null,
+      employees: [
+        {
+          id: 1,
+          name: "Tano",
+          role: "CEO",
+          description: "Fondatore e guida visionaria.",
+          image: "/TANU.jpeg",
+        },
+        {
+          id: 2,
+          name: "Luca",
+          role: "CTO",
+          description: "Responsabile tecnico.",
+          image: "https://i.pravatar.cc/100?u=cto",
+        },
+        {
+          id: 3,
+          name: "Anna",
+          role: "Developer",
+          description: "Sviluppatrice front-end.",
+          image: "https://i.pravatar.cc/100?u=dev",
+        },
+      ],
     };
   },
   methods: {
@@ -53,14 +92,13 @@ export default {
         });
     },
 
-    modalToggle() {
-      this.modalFlag = !this.modalFlag
-
+    openModal(employee) {
+      this.selectedEmployee = employee;
+      this.modalVisible = true;
     },
-
     closeModal() {
-      this.modalFlag = false
-    }
+      this.modalVisible = false;
+    },
   },
   mounted() {
     this.getData();
@@ -84,18 +122,16 @@ export default {
   height: 200px;
   width: 200px;
   border-radius: 50px;
-  border: 3px solid red;
+
   margin-bottom: 50px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
-#CEO {
-  margin: auto;
-  margin-bottom: 50px;
-}
+
 
 #modal {
   position: absolute;
@@ -103,8 +139,7 @@ export default {
   left: 5%;
   height: 90%;
   width: 90%;
-  background-color: rgba(255, 255, 255, 0.91);
-
+  background-color: rgba(108, 108, 108, 0.971);
 }
 
 #close-modal {

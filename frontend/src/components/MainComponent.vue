@@ -16,12 +16,6 @@
 
 
 <style scoped>
-
-    h1 {
-        color: rgb(255, 0, 0);
-    }
-
-
   
 
 </style>

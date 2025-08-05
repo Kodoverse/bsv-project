@@ -6,7 +6,7 @@
           Discussion ({{ comments.length }})
         </h2>
       </div>
-      <form class="mb-6" @submit.prevent="saveComment">
+      <form class="mb-6" @submit.prevent="saveComment" v-if="isAuthenticated">
         <div
           class="px-4 py-2 mb-4 bg-white border border-gray-200 rounded-lg rounded-t-lg dark:bg-gray-800 dark:border-gray-700"
         >
