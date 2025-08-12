@@ -6,23 +6,23 @@
           Discussion ({{ comments.length }})
         </h2>
       </div>
-      <form class="mb-6" @submit.prevent="saveComment" v-if="isAuthenticated">
+      <form class="mb-6" @submit.prevent="saveComment" v-if="store.isLoggedIn">
         <div
           class="px-4 py-2 mb-4 bg-white border border-gray-200 rounded-lg rounded-t-lg dark:bg-gray-800 dark:border-gray-700"
         >
-          <label for="comment" class="sr-only">Your comment</label>
+          <label for="comment" class="sr-only text-black">Your comment</label>
           <textarea
             id="comment"
             v-model="newComment"
             rows="6"
-            class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+            class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-black  dark:placeholder-gray-400 dark:bg-gray-800"
             placeholder="Write a comment..."
             required
           ></textarea>
         </div>
         <button
           type="submit"
-          class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+          class="inline-flex btn-info items-center py-2.5 px-4 text-xs font-medium text-center text-black bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
         >
           Post comment
         </button>
@@ -135,6 +135,7 @@
                 "
                 type="button"
                 class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400"
+                @click="toggleLike(comment.id)"
               >
                 <svg
                   class="mr-1.5 w-3.5 h-3.5"
@@ -394,6 +395,20 @@ export default {
       this.editId = comment.id;
       this.editOldComment = comment.comment;
     },
+
+    toggleLike(commentId) {
+      axios.get("/sanctum/csrf-cookie");
+       axios.put(
+          `/like/${commentId}`,
+          {},
+          { withCredentials: true }
+        ).then((response) => {
+          console.log(response);  
+        });
+        console.log(response);
+        this.loadComments();
+      }
+    
   },
   mounted() {
     this.loadComments();

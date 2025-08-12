@@ -70,4 +70,11 @@ class ApiCommentController extends Controller
 
         return response()->json(['message' => 'Segnalazione inviata con successo']);
     }
+
+    public function toggleLike(Request $request){
+        $comment = Comment::find($request->comment_id);
+        $comment->like = !$comment->like;
+        $comment->save();
+        return response()->json(['message' => 'Like aggiunto con successo']);
+    }
 }
