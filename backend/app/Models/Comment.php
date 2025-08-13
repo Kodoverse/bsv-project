@@ -19,4 +19,10 @@ class Comment extends Model
     public function flags() {
         return $this->hasMany(FlaggedComment::class);
     }
+
+        public function likers()
+    {
+        return $this->belongsToMany(User::class, 'comment_likes')
+                    ->withTimestamps();
+    }
 }

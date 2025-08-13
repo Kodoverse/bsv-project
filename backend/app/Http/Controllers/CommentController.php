@@ -80,4 +80,32 @@ class CommentController extends Controller
         return response()->json(['message' => 'Commento eliminato con successo']);
     }
 
+    public function toggleLike(Request $request, $commentId)
+    {
+        $user = auth()->user(); // utente autenticato
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment->likers()->where('user_id', $user->id)->exists()) {
+            // se il like esiste, lo rimuovo
+            $comment->likers()->detach($user->id);
+            $comment->decrement('like');
+            $action = 'Like rimosso';
+        } else {
+            // altrimenti lo aggiungo
+            $comment->likers()->attach($user->id);
+            $comment->increment('like');
+            $action = 'Like aggiunto';
+        }
+
+        $comment->refresh();
+
+        // conto i like aggiornati
+        $likeCount = $comment->likers()->count();
+
+        return response()->json([
+            'message' => $action,
+            'like_count' => $likeCount
+        ]);
+    }
+
 }

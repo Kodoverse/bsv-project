@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
@@ -34,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['web', 'auth'])->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::post('/comments', [CommentController::class, 'addComment']);
+    Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
 });
 
