@@ -74,4 +74,32 @@ class ArticleController extends Controller
         $article->delete();
         return redirect()->route('articles.index');
     }
+
+     public function toggleLikeArticle(Request $request, $articleId)
+    {
+        $user = auth()->user(); // utente autenticato
+        $article = Article::findOrFail($articleId);
+
+        if ($article->likersArticle()->where('user_id', $user->id)->exists()) {
+            // se il like esiste, lo rimuovo
+            $article->likersArticle()->detach($user->id);
+            $article->decrement('likes');
+            $action = 'Like rimosso';
+        } else {
+            // altrimenti lo aggiungo
+            $article->likersArticle()->attach($user->id);
+            $article->increment('likes');
+            $action = 'Like aggiunto';
+        }
+
+        $article->refresh();
+
+        // conto i like aggiornati
+        $likeCount = $article->likersArticle()->count();
+
+        return response()->json([
+            'message' => $action,
+            'like_count' => $likeCount
+        ]);
+    }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['title', 'subtitle', 'article', 'is_featured', 'user_id'];
+    protected $fillable = ['title', 'likes',  'subtitle', 'article', 'is_featured', 'user_id'];
 
     public function comments()
     {
@@ -26,5 +26,11 @@ class Article extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+     public function likersArticle()
+    {
+        return $this->belongsToMany(User::class, 'article_likes')
+                    ->withTimestamps();
     }
 }

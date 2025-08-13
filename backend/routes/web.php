@@ -36,6 +36,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::post('/comments', [CommentController::class, 'addComment']);
     Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
+    Route::post('/articles/{articleId}/like', [ArticleController::class, 'toggleLikeArticle']);
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
 });
 
