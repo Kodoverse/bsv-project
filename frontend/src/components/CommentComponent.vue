@@ -15,7 +15,7 @@
             placeholder="Write a comment..." required></textarea>
         </div>
         <button type="submit"
-          class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+          class="w-34 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900" >
           Post comment
         </button>
       </form>
@@ -60,17 +60,17 @@
               class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
               required></textarea>
             <button type="button" @click="editComment(comment.id)"
-              class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+              class="w-29 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
               Save
             </button>
           </div>
 
           <div class="flex items-center justify-between mt-4 space-x-4">
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center ">
               <button v-if="
                 store.CurrentUser && comment.user.id !== store.CurrentUser.id
               " type="button"
-                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400">
+                class="w-29 mr-5 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
                 <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 20 18">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

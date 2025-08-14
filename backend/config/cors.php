@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Article;
+
 return [
 
     /*
@@ -15,7 +17,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'user', 'comments/*','comments'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'user', 'comments/*','comments','article/*','article'],
 
     'allowed_methods' => ['*'],
 

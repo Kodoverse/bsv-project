@@ -79,6 +79,7 @@ class ArticleController extends Controller
     {
         $user = auth()->user(); // utente autenticato
         $article = Article::findOrFail($articleId);
+      
 
         if ($article->likersArticle()->where('user_id', $user->id)->exists()) {
             // se il like esiste, lo rimuovo

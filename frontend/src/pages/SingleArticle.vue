@@ -20,14 +20,14 @@
         </p>
       </div>
     </div>
-    <button type="button" @click="toggleLikeArticle(article.id) ,console.log(article)"
-      class="w-26 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
+    <button type="button" @click="toggleLikeArticle(article.id), console.log(article)"
+      class="w-29 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
       <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 20 18">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
       </svg>
-      Like ({{ article.like }})
+      Like ({{ article.likes }})
 
     </button>
     <hr class="my-6">
@@ -80,15 +80,11 @@
           await axios.get('/sanctum/csrf-cookie');
 
           // poi fai la chiamata POST con autenticazione cookie e CSRF
-          const response = await axios.post(`/articles/${articleId}/like`);
+          const response = await axios.post(`/article/${articleId}/like`);
+          this.article.likes = response.data.like_count;
+          console.log(this.article.likes);
 
-          const article = this.article.find(c => c.id === articleId);
-          if (article) {
-            // aggiorna solo il numero di like
-            article.like = response.data.like_count;
-            // Vue farà il rendering solo del valore aggiornato nel DOM
-          }
-          console.log(response.data.like_count)
+
         } catch (error) {
           // gestione errori
         }
