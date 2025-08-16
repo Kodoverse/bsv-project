@@ -9,13 +9,13 @@
       <form class="mb-6" @submit.prevent="saveComment">
         <div
           class="px-4 py-2 mb-4 bg-white border border-gray-200 rounded-lg rounded-t-lg dark:bg-gray-800 dark:border-gray-700">
-          <label for="comment" class="sr-only">Your comment</label>
+
           <textarea id="comment" v-model="newComment" rows="6"
             class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
             placeholder="Write a comment..." required></textarea>
         </div>
         <button type="submit"
-          class="w-34 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900" >
+          class="w-34 m-10 flex items-center text-sm font-medium  hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300  rounded-lg  px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
           Post comment
         </button>
       </form>
@@ -39,13 +39,13 @@
               <div class="mr-3 font-semibold text-gray-900 dark:text-white">
                 {{ comment.user.info.username }}
               </div>
-
+              <!-- quando il commento viene creato o modificato -->
               <p v-if="comment.updated_at !== comment.created_at"
                 class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
                 <span class="text-xs font-medium text-yellow-600 dark:text-yellow-400">
                   comment edited
                 </span>
-                <span>{{ timeAgo(comment.created_at) }}</span>
+                <span>{{ timeAgo(comment.updated_at) }}</span>
               </p>
               <div v-else class="text-sm text-gray-600 dark:text-gray-400">
                 <div>{{ timeAgo(comment.created_at) }}</div>
@@ -59,30 +59,94 @@
             <textarea id="comment" v-model="editOldComment" rows="6"
               class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
               required></textarea>
+
             <button type="button" @click="editComment(comment.id)"
-              class="w-29 m-10 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
+              class="w-29 m-10 flex items-center 
+                hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
               Save
             </button>
           </div>
+
+
+
+
+          <div v-show="repliesId === comment.id">
+            <div id="replies" class="m-9 border-2 rounded p-3" v-for="reply in comment.replies" :key="reply.id"
+              >
+              <div class="flex items-center">
+                <div
+                  class="inline-flex items-center mr-2 overflow-hidden text-sm font-semibold text-gray-900 rounded-full dark:text-white">
+                  <div v-if="store.CurrentUser.info.profile_img">
+                    <img class="w-6 h-6" :src="reply.user.info.profile_img" :alt="reply.user.display_name" />
+                  </div>
+                  <div v-else class="flex items-center justify-center w-6 h-6 bg-gray-500">
+                    {{ reply.user.initials }}
+                  </div>
+                </div>
+                <div class="mr-3 font-semibold text-gray-900 dark:text-white">
+                  {{ reply.user.info.username }}
+                </div>
+                <!-- quando la risposta viene creata o modificata -->
+                <p v-if="reply.updated_at !== reply.created_at"
+                  class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                  <span class="text-xs font-medium text-yellow-600 dark:text-yellow-400">
+                    comment edited
+                  </span>
+                  <span>{{ timeAgo(reply.created_at) }}</span>
+                </p>
+                <div v-else class="text-sm text-gray-600 dark:text-gray-400">
+                  <div>{{ timeAgo(reply.created_at) }}</div>
+                </div>
+              </div>
+
+              <p class="text-red-500 dark:text-red-400">
+                {{ reply.reply }}
+              </p>
+            </div>
+            <!-- area creazione risposte ai commenti -->
+            <form class="m-9" id="replies">
+              <div
+                class="px-4 py-2 mb-4 bg-white border border-gray-200 rounded-lg rounded-t-lg dark:bg-gray-800 dark:border-gray-700">
+                <textarea id="replies" v-model="replies" rows="6"
+                  class="w-full px-0 text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                  placeholder="Write a replies..." required></textarea>
+              </div>
+              <button type="submit" @click="postReplies(comment.id)"
+                class="w-34 my-10 flex items-center  hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
+                Post replies
+              </button>
+            </form>
+
+
+
+          </div>
+
+
+
+          <!-- sessione risposte -->
+
+
+
+
 
           <div class="flex items-center justify-between mt-4 space-x-4">
             <div class="flex items-center ">
               <button v-if="
                 store.CurrentUser && comment.user.id !== store.CurrentUser.id
-              " type="button"
-                class="w-29 mr-5 flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
+              " type="button" @click="showRepliesArea(comment.id)"
+                class="w-29 mr-5 flex items-center  hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
                 <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 20 18">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
                 </svg>
-                Reply
+                Replies
               </button>
 
               <button v-if="
                 store.CurrentUser && comment.user.id !== store.CurrentUser.id
               " type="button" @click="toggleLike(comment.id), console.log(comment)"
-                class="flex items-center text-sm font-medium text-gray-500 hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
+                class="flex items-center text-sm font-medium  hover:underline dark:text-gray-400 focus:outline-none text-white bg-orange-700 hover:bg-purple-800 focus:ring-4 focus:ring-orange-300 rounded-lg  px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-purple-700 dark:focus:ring-orange-900">
                 <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 20 18">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -180,7 +244,9 @@
         comments: [],
         editId: null, //fa aprire la textarea per l'edit in base al suo ID
         currentUser: null, //recupera l'utente loggato...
-        likeCount: 0,
+        replies: '',
+        repliesId: null,
+
       };
     },
 
@@ -309,9 +375,21 @@
         } catch (error) {
           // gestione errori
         }
-      }
+      },
 
+      showRepliesArea(id) {
+        this.repliesId = this.repliesId === id ? null : id
 
+      },
+
+      postReplies(commentId) {
+        axios.post(`/replies`, {
+          comment_id: commentId,
+          reply: this.replies,
+        })
+        this.replies = ''
+        this.loadComments()
+      },
 
     },
     mounted() {

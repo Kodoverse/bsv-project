@@ -23,7 +23,7 @@ class ApiCommentController extends Controller
 
     public function getByArticle($id)
     {
-        $comments = Comment::with(['user.info', 'flags'])
+        $comments = Comment::with(['user.info', 'flags','replies.user'])
             ->where('article_id', $id)
             ->latest()
             ->get();

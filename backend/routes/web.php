@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlaggedCommentController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/comments', [CommentController::class, 'addComment']);
     Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
     Route::post('/article/{articleId}/like', [ArticleController::class, 'toggleLikeArticle']);
+    Route::post('/replies', [ReplyController::class, 'postReply']);
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
 });
 
