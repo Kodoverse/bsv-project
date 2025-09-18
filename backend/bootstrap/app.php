@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->statefulApi();
+        
+        // Register custom middleware aliases
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
+        
         return [
             EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Http\Middleware\HandleCors::class,

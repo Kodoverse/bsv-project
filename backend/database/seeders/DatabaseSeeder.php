@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             ArticleTagSeeder::class,
             FlaggedCommentSeeder::class,
+            EventCategorySeeder::class,
+            EventSeeder::class,
+            EventRegistrationSeeder::class,
+            PointSeeder::class,
         ]);
     }
 }

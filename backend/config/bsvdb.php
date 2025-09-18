@@ -21,6 +21,12 @@ return [
             'password' => '12345678',
             'user_role' => 'user',
         ],
+        [
+            'id' => 4, 
+            'email' => 'partner@example.com',
+            'password' => '12345678',
+            'user_role' => 'partner',
+        ],
     ],
 
     'tags' => [

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\UsersInfo;
 
 class User extends Authenticatable
@@ -102,4 +103,103 @@ class User extends Authenticatable
         return $this->belongsToMany(Article::class, 'article_likes')
                     ->withTimestamps();
     }
+
+    /**
+     * Get events created by this user
+     */
+    public function createdEvents()
+    {
+        return $this->hasMany(Event::class, 'created_by');
+    }
+
+    /**
+     * Get event registrations for this user
+     */
+    public function eventRegistrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
+    /**
+     * Get products if user is a partner
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'partner_id');
+    }
+
+    /**
+     * Get purchases made by user
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    /**
+     * Get sales if user is a partner
+     */
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Purchase::class, 'partner_id');
+    }
+
+    /**
+     * Get events this user is registered for
+     */
+    public function registeredEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_registrations')
+            ->withPivot('status', 'registered_at', 'notes')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get points earned by this user
+     */
+    public function points()
+    {
+        return $this->hasMany(Point::class);
+    }
+
+    /**
+     * Get points awarded by this user (as admin)
+     */
+    public function awardedPoints()
+    {
+        return $this->hasMany(Point::class, 'awarded_by');
+    }
+
+    /**
+     * Get partner information for this user
+     */
+    public function partnerInfo()
+    {
+        return $this->hasOne(PartnerInfo::class);
+    }
+
+    /**
+     * Check if user is a partner
+     */
+    public function isPartner(): bool
+    {
+        return $this->user_role === 'partner';
+    }
+
+    /**
+     * Check if user is an admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->user_role === 'admin';
+    }
+
+    /**
+     * Check if user has admin privileges
+     */
+    public function hasAdminPrivileges(): bool
+    {
+        return in_array($this->user_role, ['admin', 'librarian']);
+    }
+
 }

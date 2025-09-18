@@ -1,5 +1,5 @@
 <template>
-  <div class="wscreen">
+  <div class="w-full max-w-full overflow-x-hidden">
     <HeaderComponent v-if="$route.name !== 'login' && $route.name !== 'register'" :onLogout="handleLogout" />
     <MainComponent />
     <FooterComponent v-if="$route.name !== 'login' && $route.name !== 'register'" />
