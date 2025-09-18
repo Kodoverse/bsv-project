@@ -125,6 +125,12 @@ class EventRegistrationController extends Controller
      */
     public function myRegistrations(Request $request): JsonResponse
     {
+        \Log::info('myRegistrations called', [
+            'user_id' => Auth::id(),
+            'user' => Auth::user(),
+            'request_status' => $request->status
+        ]);
+
         $registrations = EventRegistration::with(['event.category'])
             ->where('user_id', Auth::id())
             ->when($request->status, function($query, $status) {
@@ -132,6 +138,12 @@ class EventRegistrationController extends Controller
             })
             ->orderBy('registered_at', 'desc')
             ->paginate(10);
+
+        \Log::info('Registrations found', [
+            'count' => $registrations->count(),
+            'total' => $registrations->total(),
+            'registrations' => $registrations->toArray()
+        ]);
 
         return response()->json($registrations);
     }

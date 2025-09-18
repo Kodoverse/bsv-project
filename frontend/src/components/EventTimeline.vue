@@ -243,25 +243,50 @@ export default {
     },
     async fetchUserRegistrations() {
       if (!store.isLoggedIn) {
+        console.log('User not logged in, clearing registrations');
         this.registeredEvents = new Set();
         return;
       }
 
       try {
         console.log('Fetching user registrations...');
-        const response = await axios.get('/api/event-registrations/my-registrations');
+        console.log('Store login status:', store.isLoggedIn);
+        console.log('Current user:', store.CurrentUser);
+        
+        // Get CSRF token first
+        await axios.get('/sanctum/csrf-cookie');
+        
+        // Test authentication first
+        try {
+          const authTest = await axios.get('/api/user', {
+            withCredentials: true
+          });
+          console.log('Auth test successful:', authTest.data);
+        } catch (authError) {
+          console.error('Auth test failed:', authError);
+          this.registeredEvents = new Set();
+          return;
+        }
+        
+        const response = await axios.get('/api/event-registrations/my-registrations', {
+          withCredentials: true
+        });
         console.log('User registrations response:', response.data);
         
         // Handle both direct array and paginated response
         const registrations = response.data.data || response.data;
+        console.log('Raw registrations data:', registrations);
+        
         const eventIds = registrations
-          .filter(reg => reg.status === 'registered')
+          .filter(reg => ['registered', 'attended'].includes(reg.status))
           .map(reg => reg.event_id);
         
         console.log('Registered event IDs:', eventIds);
         this.registeredEvents = new Set(eventIds);
+        console.log('Updated registeredEvents set:', this.registeredEvents);
       } catch (error) {
         console.error('Error fetching registrations:', error);
+        console.error('Error details:', error.response?.data);
         this.registeredEvents = new Set();
       }
     },
@@ -497,6 +522,11 @@ export default {
     }
   },
   async mounted() {
+    console.log('EventTimeline mounted - Store status:', {
+      isLoggedIn: store.isLoggedIn,
+      currentUser: store.CurrentUser
+    });
+    
     if (store.isLoggedIn) {
       await this.fetchUserRegistrations();
     }

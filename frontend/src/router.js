@@ -83,40 +83,46 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    axios
-      .get("http://localhost:8000/api/user", { withCredentials: true })
-      .then((response) => {
-        if (response.status === 200) {
-          // Update store with user data
-          store.CurrentUser = response.data;
-          store.isLoggedIn = true;
-          
-          // Check admin access for admin routes
-          if (to.meta.requiresAdmin && !store.hasAdminPrivileges) {
-            next("/");
-            return;
-          }
-          
-          // Check partner access for partner routes
-          if (to.meta.requiresPartner && !store.isPartner) {
-            next("/");
-            return;
-          }
-          
-          next();
-        } else {
-          next("/login");
-        }
-      })
-      .catch(() => {
-        store.isLoggedIn = false;
-        store.CurrentUser = null;
+router.beforeEach(async (to, from, next) => {
+  // Always check authentication status
+  try {
+    const response = await axios.get("http://localhost:8000/api/user", { withCredentials: true });
+    if (response.status === 200) {
+      // Update store with user data
+      store.CurrentUser = response.data;
+      store.isLoggedIn = true;
+      
+      // Check admin access for admin routes
+      if (to.meta.requiresAdmin && !store.hasAdminPrivileges) {
+        next("/");
+        return;
+      }
+      
+      // Check partner access for partner routes
+      if (to.meta.requiresPartner && !store.isPartner) {
+        next("/");
+        return;
+      }
+      
+      next();
+    } else {
+      store.CurrentUser = null;
+      store.isLoggedIn = false;
+      if (to.meta.requiresAuth) {
         next("/login");
-      });
-  } else {
-    next();
+      } else {
+        next();
+      }
+    }
+  } catch (error) {
+    console.error("Auth check failed:", error);
+    store.CurrentUser = null;
+    store.isLoggedIn = false;
+    if (to.meta.requiresAuth) {
+      next("/login");
+    } else {
+      next();
+    }
   }
 });
 
