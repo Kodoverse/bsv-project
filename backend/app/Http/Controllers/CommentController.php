@@ -88,12 +88,10 @@ class CommentController extends Controller
         if ($comment->likers()->where('user_id', $user->id)->exists()) {
             // se il like esiste, lo rimuovo
             $comment->likers()->detach($user->id);
-            $comment->decrement('like');
             $action = 'Like rimosso';
         } else {
             // altrimenti lo aggiungo
             $comment->likers()->attach($user->id);
-            $comment->increment('like');
             $action = 'Like aggiunto';
         }
 

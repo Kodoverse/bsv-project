@@ -12,6 +12,11 @@ class Reply extends Model
         'reply',
     ];
 
+      protected $casts = [
+        'created_at' => 'datetime:c',
+        'updated_at' => 'datetime:c',
+    ];
+
 
     public function user()
     {

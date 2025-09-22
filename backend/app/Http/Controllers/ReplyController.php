@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Resources\ReplyResource;
 class ReplyController extends Controller
 {
     /**
@@ -29,7 +29,20 @@ class ReplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'comment_id' => 'required|exists:comments,id',
+            'reply' => 'required|string|max:2000',
+        ]);
+
+        // Creazione reply
+        $reply = Reply::create([
+            'comment_id' => $request->comment_id,
+            'user_id' => Auth::id(),
+            'reply' => $request->reply,
+        ]);
+
+        // Restituisci la resource per frontend
+       return new ReplyResource($reply->load('user.info'));
     }
 
     /**
@@ -64,13 +77,4 @@ class ReplyController extends Controller
         //
     }
 
-    public function postReply(Request $request)
-    {
-       // dd($request);
-        $reply = new Reply;
-        $reply->comment_id = $request->comment_id;
-        $reply->user_id = Auth::user()->id;
-        $reply->reply = $request->reply;
-        $reply->save();
-    }
 }

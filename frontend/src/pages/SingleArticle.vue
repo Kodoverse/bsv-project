@@ -32,7 +32,7 @@
     </button>
     <hr class="my-6">
     <div id="comments">
-      <CommentComponent :articleId="$route.params.id" />
+      <CommentComponent :articleId="Number($route.params.id)" />
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@
     data() {
       return {
         article: [],
+        
       };
     },
     methods: {

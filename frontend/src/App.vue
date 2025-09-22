@@ -37,6 +37,8 @@
           .then(() => {
             store.isLoggedIn = false;
             localStorage.setItem("isLoggedIn", "false");
+            store.CurrentUser = false ;
+            console.log(store.CurrentUser);
             this.$router.push("/");
           })
           .catch((error) => {

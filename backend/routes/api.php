@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiArticleController;
 use App\Http\Controllers\Api\ApiCommentController;
 use App\Http\Controllers\Api\AuthFrontEndController;
+use App\Http\Controllers\Api\ApiReplyController;
+
 
 
 Route::post('/login', [AuthFrontEndController::class, 'login']);
@@ -19,7 +21,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/articles', [ApiArticleController::class ,'index']);
 Route::get('/articles/{id}', [ApiArticleController::class ,'show']);
 Route::get('/articles/{id}/comments', [ApiCommentController::class, 'getByArticle']);
-// Route::get('/comments', [ApiCommentController::class ,'index']);
-Route::post('/comments', [ApiCommentController::class ,'addComment']);
+//Route::get('/comments', [ApiCommentController::class ,'index']);
+//Route::post('/comments', [ApiCommentController::class ,'addComment']);
 Route::get('/sections', [ApiSectionController::class, 'index']);
+Route::get('/comments/{commentId}/replies', [ApiReplyController::class, 'getByComment']);
 Route::post('/comments/flag', [ApiCommentController::class, 'flagComment']);

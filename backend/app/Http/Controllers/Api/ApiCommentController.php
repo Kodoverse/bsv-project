@@ -23,7 +23,8 @@ class ApiCommentController extends Controller
 
     public function getByArticle($id)
     {
-        $comments = Comment::with(['user.info', 'flags','replies.user'])
+        $comments = Comment::with(['user.info', 'replies.user'])
+            ->withCount(['flags', 'likers'])
             ->where('article_id', $id)
             ->latest()
             ->get();
@@ -74,5 +75,5 @@ class ApiCommentController extends Controller
         return response()->json(['message' => 'Segnalazione inviata con successo']);
     }
 
-   
+
 }

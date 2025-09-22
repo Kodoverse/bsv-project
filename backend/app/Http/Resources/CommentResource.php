@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ReplyResource;
+use App\Models\Comment;
 
 class CommentResource extends JsonResource
 {
@@ -16,7 +18,7 @@ class CommentResource extends JsonResource
     {
         $flagCount = $this->flags->count();
 
-        if($flagCount >= 3){
+        if ($flagCount >= 3) {
             return [
                 'id' => $this->id,
                 'status' => 'hidden',
@@ -26,14 +28,15 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'comment' => $this->comment,
-            'replies' => $this->replies,
-            'like' => $this->like,
+            'replies' => ReplyResource::collection($this->replies),
+            'likers_count' => $this->likers_count,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => [
                 'id' => $this->user->id,
                 'info' => [
-                    'username' => $this->user->info ? $this->user->info->username : null,
+                    'username' => $this->user->info->username,
+                    'profile_img' => $this->user->info->profile_img,
                 ],
                 'initials' => $this->user->initials,
             ],

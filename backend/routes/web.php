@@ -38,7 +38,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/comments', [CommentController::class, 'addComment']);
     Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
     Route::post('/article/{articleId}/like', [ArticleController::class, 'toggleLikeArticle']);
-    Route::post('/replies', [ReplyController::class, 'postReply']);
+    Route::post('/replies', [ReplyController::class, 'store']);
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
 });
 
