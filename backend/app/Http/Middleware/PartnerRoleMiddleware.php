@@ -15,10 +15,15 @@ class PartnerRoleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || !$request->user()->isPartner()) {
-            return response()->json([
-                'message' => 'This action requires partner privileges'
-            ], 403);
+        $user = $request->user();
+
+        if (!$user) {
+            return redirect()->route('login'); // se non loggato
+        }
+
+        // Controllo ruolo admin
+        if (strtolower(trim($user->user_role)) !== 'partner') {
+            abort(403, 'Accesso non autorizzato'); // invece di json
         }
 
         return $next($request);

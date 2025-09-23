@@ -31,7 +31,7 @@ Route::middleware(['auth', 'admin'])->get('/admin/dashboard', function () {
 })->name('admin.dashboard');
 
 // Partner dashboard
-Route::middleware(['auth', 'role:partner'])->get('/partner/dashboard', function () {
+Route::middleware(['auth', 'partner'])->get('/partner/dashboard', function () {
     $user = auth()->user();
     return view('partner.dashboard', compact('user'));
 })->name('partner.dashboard');
