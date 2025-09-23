@@ -17,6 +17,8 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
-        "flowbite": "^3.1.2"
+        "@vitejs/plugin-vue": "^6.0.1",
+        "flowbite": "^3.1.2",
+        "vue": "^3.5.21"
     }
 }
