@@ -13,20 +13,17 @@ class AdminMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        // Check if user is authenticated
-        if (!auth()->check()) {
-            return response()->json([
-                'message' => 'Unauthenticated. Please log in.'
-            ], 401);
+        $user = $request->user();
+
+        if (!$user) {
+            return redirect()->route('login'); // se non loggato
         }
 
-        // Check if user has admin privileges
-        if (!auth()->user()->hasAdminPrivileges()) {
-            return response()->json([
-                'message' => 'Access denied. Admin privileges required.'
-            ], 403);
+        // Controllo ruolo admin
+        if (strtolower(trim($user->user_role)) !== 'admin') {
+            abort(403, 'Accesso non autorizzato'); // invece di json
         }
 
         return $next($request);

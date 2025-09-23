@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FlaggedCommentController;
@@ -16,9 +17,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(['auth', 'verified'])->get('/', [DashboardController::class, 'redirectToDashboard'])->name('dashboard');
+
+// Admin dashboard
+Route::middleware(['auth', 'admin'])->get('/admin/dashboard', function () {
+    $user = auth()->user();
+    return view('admin.dashboard', compact('user'));
+})->name('admin.dashboard');
+
+// Partner dashboard
+Route::middleware(['auth', 'role:partner'])->get('/partner/dashboard', function () {
+    $user = auth()->user();
+    return view('partner.dashboard', compact('user'));
+})->name('partner.dashboard');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
