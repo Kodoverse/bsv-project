@@ -137,7 +137,7 @@
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
               </svg>
-              {{ event.status === 'cancelled' ? 'Cancelled' : 'Event Ended' }}
+              {{ getButtonText(event) }}
             </span>
           </div>
         </div>
@@ -313,6 +313,7 @@ export default {
     getStatusClass(status) {
       const classes = {
         'upcoming': 'bg-gradient-to-r from-green-500/30 to-emerald-500/30 text-green-400 border-green-500/40',
+        'ongoing': 'bg-gradient-to-r from-blue-500/30 to-cyan-500/30 text-blue-400 border-blue-500/40',
         'finished': 'bg-gradient-to-r from-gray-500/30 to-slate-500/30 text-gray-400 border-gray-500/40',
         'cancelled': 'bg-gradient-to-r from-red-500/30 to-rose-500/30 text-red-400 border-red-500/40'
       };
@@ -321,6 +322,7 @@ export default {
     formatStatus(status) {
       const statusMap = {
         'upcoming': 'Upcoming',
+        'ongoing': 'Ongoing',
         'finished': 'Finished',
         'cancelled': 'Cancelled'
       };
@@ -337,7 +339,7 @@ export default {
     canRegister(event) {
       const now = new Date();
       return new Date(event.starts_at) > now && 
-             event.status === 'upcoming' && 
+             ['upcoming', 'ongoing'].includes(event.status) && 
              !this.isRegistered(event.id) &&
              !this.registeringEvents.has(event.id);
     },
@@ -346,6 +348,18 @@ export default {
     },
     isUnregistering(eventId) {
       return this.unregisteringEvents.has(eventId);
+    },
+    getButtonText(event) {
+      switch (event.status) {
+        case 'cancelled':
+          return 'Cancelled';
+        case 'finished':
+          return 'Event Ended';
+        case 'ongoing':
+          return 'Event in Progress';
+        default:
+          return 'Event Ended';
+      }
     },
     async registerForEvent(eventId) {
       // Check if user is logged in

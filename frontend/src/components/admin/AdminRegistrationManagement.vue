@@ -437,7 +437,9 @@ export default {
         if (this.filters.search) params.append('search', this.filters.search);
         params.append('page', page);
         
-        const response = await axios.get(`/api/event-registrations?${params.toString()}`);
+        const response = await axios.get(`/api/event-registrations?${params.toString()}`, {
+          withCredentials: true
+        });
         this.registrations = response.data.data;
         this.pagination = {
           current_page: response.data.current_page,
@@ -465,7 +467,9 @@ export default {
 
     async fetchStats() {
       try {
-        const response = await axios.get('/api/admin/dashboard-stats');
+        const response = await axios.get('/api/admin/dashboard-stats', {
+          withCredentials: true
+        });
         // Calculate stats from response
         this.stats = {
           total: response.data.total_registrations || 0,
@@ -508,6 +512,8 @@ export default {
         await axios.put(`/api/event-registrations/${this.selectedRegistration.id}/status`, {
           status: this.newStatus,
           notes: this.statusNotes
+        }, {
+          withCredentials: true
         });
         
         alert('Registration status updated successfully!');

@@ -18,6 +18,12 @@ class EventController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        // Update all event statuses automatically before fetching
+        $updatedCount = Event::updateAllStatuses();
+        if ($updatedCount > 0) {
+            \Log::info('Updated event statuses', ['count' => $updatedCount]);
+        }
+
         $query = Event::with(['category', 'creator'])
             ->withCount('registrations');
 
@@ -65,6 +71,9 @@ class EventController extends Controller
      */
     public function upcoming(Request $request): JsonResponse
     {
+        // Update all event statuses automatically before fetching
+        Event::updateAllStatuses();
+
         $query = Event::upcoming()
             ->with(['category', 'creator'])
             ->withCount('registrations');
@@ -91,6 +100,9 @@ class EventController extends Controller
      */
     public function finished(Request $request): JsonResponse
     {
+        // Update all event statuses automatically before fetching
+        Event::updateAllStatuses();
+
         $query = Event::finished()
             ->with(['category', 'creator'])
             ->withCount('registrations');

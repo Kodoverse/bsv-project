@@ -101,7 +101,17 @@
             localStorage.setItem('CurrentUser', JSON.stringify(userResponse.data));
             console.log("Utente loggato:", store.CurrentUser);
 
-            router.push("/articles"); // Navigate to articles page after login
+            // Redirect based on user role
+            const userRole = store.CurrentUser.user_role;
+            console.log("User role:", userRole);
+            
+            if (userRole === 'admin' || userRole === 'librarian') {
+              router.push("/admin"); // Admin dashboard
+            } else if (userRole === 'partner') {
+              router.push("/partner"); // Partner dashboard
+            } else {
+              router.push("/"); // Home page for regular users
+            }
           } else {
             this.error = "Errore durante il login";
           }

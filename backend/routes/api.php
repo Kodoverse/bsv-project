@@ -36,7 +36,7 @@ Route::get('event-categories', [EventCategoryController::class, 'index']);
 Route::get('event-categories/{eventCategory}', [EventCategoryController::class, 'show']);
 
 // Protected Event Category Routes
-Route::middleware(['auth', 'can:manage-events'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('event-categories', [EventCategoryController::class, 'store']);
     Route::put('event-categories/{eventCategory}', [EventCategoryController::class, 'update']);
     Route::delete('event-categories/{eventCategory}', [EventCategoryController::class, 'destroy']);
@@ -49,7 +49,7 @@ Route::prefix('events')->group(function () {
     Route::get('/finished', [EventController::class, 'finished']);
     Route::get('/{event}', [EventController::class, 'show']);
     
-    Route::middleware(['auth', 'can:manage-events'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/', [EventController::class, 'store']);
         Route::put('/{event}', [EventController::class, 'update']);
         Route::delete('/{event}', [EventController::class, 'destroy']);
@@ -64,7 +64,7 @@ Route::prefix('event-registrations')->group(function () {
         Route::post('/{event}/cancel', [EventRegistrationController::class, 'cancel']);
     });
 
-    Route::middleware(['auth', 'can:manage-events'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [EventRegistrationController::class, 'index']);
         Route::put('/{registration}/status', [EventRegistrationController::class, 'updateStatus']);
     });

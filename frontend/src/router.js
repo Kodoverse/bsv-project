@@ -94,13 +94,35 @@ router.beforeEach(async (to, from, next) => {
       
       // Check admin access for admin routes
       if (to.meta.requiresAdmin && !store.hasAdminPrivileges) {
-        next("/");
+        // Redirect to appropriate dashboard based on user role
+        if (store.isPartner) {
+          next("/partner");
+        } else {
+          next("/");
+        }
         return;
       }
       
       // Check partner access for partner routes
       if (to.meta.requiresPartner && !store.isPartner) {
-        next("/");
+        // Redirect to appropriate dashboard based on user role
+        if (store.hasAdminPrivileges) {
+          next("/admin");
+        } else {
+          next("/");
+        }
+        return;
+      }
+      
+      // Redirect logged-in users away from login/register pages
+      if ((to.name === 'login' || to.name === 'register') && store.isLoggedIn) {
+        if (store.hasAdminPrivileges) {
+          next("/admin");
+        } else if (store.isPartner) {
+          next("/partner");
+        } else {
+          next("/");
+        }
         return;
       }
       

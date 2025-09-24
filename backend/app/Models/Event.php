@@ -93,4 +93,59 @@ class Event extends Model
                 ->orWhere('ends_at', '<', now());
         });
     }
+
+    /**
+     * Update event status based on current time
+     */
+    public function updateStatus(): void
+    {
+        $now = now();
+        
+        if ($this->ends_at < $now && $this->status === 'upcoming') {
+            $this->update(['status' => 'finished']);
+        } elseif ($this->starts_at <= $now && $this->ends_at > $now && $this->status === 'upcoming') {
+            $this->update(['status' => 'ongoing']);
+        }
+    }
+
+    /**
+     * Update all events statuses automatically
+     */
+    public static function updateAllStatuses(): int
+    {
+        $updated = 0;
+        
+        // Update upcoming events that have ended
+        $endedEvents = Event::where('status', 'upcoming')
+            ->where('ends_at', '<', now())
+            ->get();
+            
+        foreach ($endedEvents as $event) {
+            $event->update(['status' => 'finished']);
+            $updated++;
+        }
+        
+        // Update upcoming events that are now ongoing
+        $ongoingEvents = Event::where('status', 'upcoming')
+            ->where('starts_at', '<=', now())
+            ->where('ends_at', '>', now())
+            ->get();
+            
+        foreach ($ongoingEvents as $event) {
+            $event->update(['status' => 'ongoing']);
+            $updated++;
+        }
+        
+        // Update ongoing events that have ended
+        $finishedOngoingEvents = Event::where('status', 'ongoing')
+            ->where('ends_at', '<', now())
+            ->get();
+            
+        foreach ($finishedOngoingEvents as $event) {
+            $event->update(['status' => 'finished']);
+            $updated++;
+        }
+        
+        return $updated;
+    }
 }

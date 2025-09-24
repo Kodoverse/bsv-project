@@ -18,12 +18,27 @@ class EventRegistrationController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        \Log::info('EventRegistrationController@index called', [
+            'user_id' => Auth::id(),
+            'user_role' => Auth::user()?->user_role,
+            'is_admin' => Auth::user()?->hasAdminPrivileges(),
+            'request_params' => $request->all()
+        ]);
+
         $registrations = EventRegistration::with(['event', 'user'])
             ->when($request->event_id, function($query, $eventId) {
                 return $query->where('event_id', $eventId);
             })
+            ->when($request->status, function($query, $status) {
+                return $query->where('status', $status);
+            })
             ->orderBy('registered_at', 'desc')
             ->paginate(20);
+
+        \Log::info('Registrations found', [
+            'count' => $registrations->count(),
+            'total' => $registrations->total()
+        ]);
 
         return response()->json($registrations);
     }

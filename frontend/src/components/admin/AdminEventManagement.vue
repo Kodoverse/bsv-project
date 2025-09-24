@@ -423,7 +423,9 @@ export default {
         if (this.filters.status) params.append('status', this.filters.status);
         if (this.filters.search) params.append('search', this.filters.search);
         
-        const response = await axios.get(`/api/admin/events?${params.toString()}`);
+        const response = await axios.get(`/api/admin/events?${params.toString()}`, {
+          withCredentials: true
+        });
         this.events = response.data.data || response.data;
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -448,7 +450,9 @@ export default {
       
       try {
         this.loadingRegistrations = true;
-        const response = await axios.get(`/api/admin/events/${event.id}/registrations`);
+        const response = await axios.get(`/api/admin/events/${event.id}/registrations`, {
+          withCredentials: true
+        });
         this.eventRegistrations = response.data.data || response.data;
       } catch (error) {
         console.error('Error fetching registrations:', error);
