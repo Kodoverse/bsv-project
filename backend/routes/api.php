@@ -23,11 +23,11 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 
-Route::get('/articles', [ApiArticleController::class ,'index']);
-Route::get('/articles/{id}', [ApiArticleController::class ,'show']);
+Route::get('/articles', [ApiArticleController::class, 'index']);
+Route::get('/articles/{id}', [ApiArticleController::class, 'show']);
 Route::get('/articles/{id}/comments', [ApiCommentController::class, 'getByArticle']);
 // Route::get('/comments', [ApiCommentController::class ,'index']);
-Route::post('/comments', [ApiCommentController::class ,'addComment']);
+Route::post('/comments', [ApiCommentController::class, 'addComment']);
 Route::get('/sections', [ApiSectionController::class, 'index']);
 Route::post('/comments/flag', [ApiCommentController::class, 'flagComment']);
 
@@ -35,6 +35,8 @@ Route::post('/comments/flag', [ApiCommentController::class, 'flagComment']);
 Route::get('event-categories', [EventCategoryController::class, 'index']);
 Route::get('event-categories/{eventCategory}', [EventCategoryController::class, 'show']);
 
+
+//rotte web
 // Protected Event Category Routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('event-categories', [EventCategoryController::class, 'store']);
@@ -48,7 +50,8 @@ Route::prefix('events')->group(function () {
     Route::get('/upcoming', [EventController::class, 'upcoming']);
     Route::get('/finished', [EventController::class, 'finished']);
     Route::get('/{event}', [EventController::class, 'show']);
-    
+
+    //rotte web
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/', [EventController::class, 'store']);
         Route::put('/{event}', [EventController::class, 'update']);
@@ -64,6 +67,7 @@ Route::prefix('event-registrations')->group(function () {
         Route::post('/{event}/cancel', [EventRegistrationController::class, 'cancel']);
     });
 
+    //rotte web
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [EventRegistrationController::class, 'index']);
         Route::put('/{registration}/status', [EventRegistrationController::class, 'updateStatus']);
@@ -82,6 +86,8 @@ Route::prefix('points')->group(function () {
         Route::get('/users/{user}', [PointController::class, 'userSummary']);
     });
 
+
+    //rotte web
     // Partner routes for point redemption
     Route::middleware(['auth', 'partner.role'])->group(function () {
         Route::post('/redeem', [PointController::class, 'redeemPoints']);
@@ -92,7 +98,8 @@ Route::prefix('points')->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/', [App\Http\Controllers\Api\ProductController::class, 'index']);
     Route::get('/{product}', [App\Http\Controllers\Api\ProductController::class, 'show']);
-    
+
+    //rotte web
     Route::middleware(['auth'])->group(function () {
         Route::get('/partner/stats', [App\Http\Controllers\Api\ProductController::class, 'salesStats']);
         Route::post('/', [App\Http\Controllers\Api\ProductController::class, 'store']);
@@ -120,7 +127,7 @@ Route::prefix('businesses')->group(function () {
     Route::get('/', [PartnerInfoController::class, 'index']);
     Route::get('/categories', [PartnerInfoController::class, 'categories']);
     Route::get('/{id}', [PartnerInfoController::class, 'showBusiness']);
-    
+
     // Protected routes
     Route::middleware(['auth'])->group(function () {
         Route::get('/my/info', [PartnerInfoController::class, 'show']);
@@ -137,25 +144,25 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard-stats', [App\Http\Controllers\Api\AdminController::class, 'dashboardStats']);
     Route::get('/users', [App\Http\Controllers\Api\AdminController::class, 'users']);
     Route::put('/users/{user}/role', [App\Http\Controllers\Api\AdminController::class, 'updateUserRole']);
-    
-        // Enhanced event management routes
-        Route::prefix('events')->group(function () {
-            Route::get('/', [EventController::class, 'index']);
-            Route::post('/', [EventController::class, 'store']);
-            Route::get('/{event}', [EventController::class, 'show']);
-            Route::put('/{event}', [EventController::class, 'update']);
-            Route::post('/{event}', [EventController::class, 'update']); // For file uploads with _method=PUT
-            Route::delete('/{event}', [EventController::class, 'destroy']);
-            
-            // Event registrations management
-            Route::get('/{event}/registrations', [EventRegistrationController::class, 'index']);
-            
-            // Event attendance management (volunteer events only)
-            Route::get('/{event}/attendance', [App\Http\Controllers\Api\AttendanceController::class, 'getEventAttendance']);
-            Route::post('/{event}/attendance', [App\Http\Controllers\Api\AttendanceController::class, 'confirmAttendance']);
-            Route::post('/{event}/attendance/bulk', [App\Http\Controllers\Api\AttendanceController::class, 'bulkUpdateAttendance']);
-        });
-    
+
+    // Enhanced event management routes
+    Route::prefix('events')->group(function () {
+        Route::get('/', [EventController::class, 'index']);
+        Route::post('/', [EventController::class, 'store']);
+        Route::get('/{event}', [EventController::class, 'show']);
+        Route::put('/{event}', [EventController::class, 'update']);
+        Route::post('/{event}', [EventController::class, 'update']); // For file uploads with _method=PUT
+        Route::delete('/{event}', [EventController::class, 'destroy']);
+
+        // Event registrations management
+        Route::get('/{event}/registrations', [EventRegistrationController::class, 'index']);
+
+        // Event attendance management (volunteer events only)
+        Route::get('/{event}/attendance', [App\Http\Controllers\Api\AttendanceController::class, 'getEventAttendance']);
+        Route::post('/{event}/attendance', [App\Http\Controllers\Api\AttendanceController::class, 'confirmAttendance']);
+        Route::post('/{event}/attendance/bulk', [App\Http\Controllers\Api\AttendanceController::class, 'bulkUpdateAttendance']);
+    });
+
     // Enhanced category management
     Route::prefix('categories')->group(function () {
         Route::get('/', [EventCategoryController::class, 'index']);
@@ -164,7 +171,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         Route::put('/{eventCategory}', [EventCategoryController::class, 'update']);
         Route::delete('/{eventCategory}', [EventCategoryController::class, 'destroy']);
     });
-    
+
     // Partner management
     Route::prefix('partners')->group(function () {
         Route::get('/', [App\Http\Controllers\Api\AdminPartnerController::class, 'index']);
