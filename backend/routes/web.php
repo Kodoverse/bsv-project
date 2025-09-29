@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -14,16 +16,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-
-Route::middleware(['auth', 'verified'])->get('/admin/dashboard', [AuthenticatedSessionController::class, 'admin'])
-    ->name('admin.dashboard');
-
-Route::middleware(['auth', 'verified'])->get('/partner/dashboard', [AuthenticatedSessionController::class, 'partner'])
-    ->name('partner.dashboard');
+Route::get('/', [DashboardController::class, 'login'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
