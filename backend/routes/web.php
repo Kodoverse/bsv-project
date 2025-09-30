@@ -12,6 +12,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Partner\PartnerDashboardController;
+use App\Http\Controllers\Partner\PartnerProductController;
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -45,6 +48,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
     Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
+    Route::get('/partner/products', [PartnerProductController::class, 'index'])->name('partner.products');
+
+    // Sales partner
+    Route::get('/partner/sales', [PartnerDashboardController::class, 'sales'])->name('partner.sales');
+
+    // Redemptions partner
+    Route::get('/partner/redemptions', [PartnerDashboardController::class, 'redemptions'])->name('partner.redemptions');
+
+    // Profile partner
+    Route::get('/partner/profile', [PartnerDashboardController::class, 'profile'])->name('partner.profile');
+
 });
 
 Route::middleware(['web', 'auth'])->group(function () {
@@ -53,6 +67,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
     Route::post('/article/{articleId}/like', [ArticleController::class, 'toggleLikeArticle']);
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
+
 });
 
 /*

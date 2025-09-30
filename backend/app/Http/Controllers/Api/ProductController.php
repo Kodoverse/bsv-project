@@ -232,29 +232,7 @@ class ProductController extends Controller
     /**
      * Get partner's sales statistics
      */
-    public function salesStats(Request $request): JsonResponse
-    {
-        if (!Auth::user()->isPartner()) {
-            return response()->json(['message' => 'Only partners can view sales stats'], 403);
-        }
-
-        $partnerId = Auth::id();
-        
-        $stats = [
-            'total_products' => Product::forPartner($partnerId)->count(),
-            'active_products' => Product::forPartner($partnerId)->where('is_available', true)->count(),
-            'total_sales' => Purchase::forPartner($partnerId)->completed()->count(),
-            'pending_orders' => Purchase::forPartner($partnerId)->pending()->count(),
-            'total_points_earned' => Purchase::forPartner($partnerId)->completed()->sum('points_spent'),
-            'recent_sales' => Purchase::with(['user', 'product'])
-                ->forPartner($partnerId)
-                ->orderBy('created_at', 'desc')
-                ->limit(5)
-                ->get()
-        ];
-
-        return response()->json($stats);
-    }
+    
 
     /**
      * Get full image URL

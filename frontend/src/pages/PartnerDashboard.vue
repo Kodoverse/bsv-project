@@ -235,6 +235,7 @@ export default {
         this.loading = true;
         const response = await axios.get('/api/products/partner/stats');
         this.dashboardData = response.data;
+        console.log('Dashboard Data:', this.dashboardData);
         this.recentSales = response.data.recent_sales || [];
       } catch (error) {
         console.error('Error fetching dashboard stats:', error);

@@ -101,7 +101,7 @@ Route::prefix('products')->group(function () {
 
     //rotte web
     Route::middleware(['auth'])->group(function () {
-        Route::get('/partner/stats', [App\Http\Controllers\Api\ProductController::class, 'salesStats']);
+        Route::get('/partner/stats', [App\Http\Controllers\Api\ProductController::class, 'salesStats']); // non serve più 
         Route::post('/', [App\Http\Controllers\Api\ProductController::class, 'store']);
         Route::put('/{product}', [App\Http\Controllers\Api\ProductController::class, 'update']);
         Route::post('/{product}', [App\Http\Controllers\Api\ProductController::class, 'update']); // For file uploads
