@@ -36,7 +36,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardStats'])->name('admin.dashboard');
-Route::middleware(['auth'])->get('/partner', [PartnerController::class, 'index'])->name('partner.dashboard');
+Route::middleware(['auth'])->get('/partner', [PartnerController::class, 'partnerDashboardStats'])->name('partner.dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

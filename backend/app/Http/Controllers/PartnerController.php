@@ -13,27 +13,34 @@ use Illuminate\Support\Facades\Storage;
 
 class PartnerController extends Controller
 {
-    public function index(Request $request)
+   
+  
+
+       public function PartnerDashboardStats(Request $request)
     {
-        if (!Auth::user()->isPartner()) {
-            return response()->json(['message' => 'Only partners can view sales stats'], 403);
-        }
-
-        $partnerId = Auth::id();
-
-        $stats = [
-            'total_products' => Product::forPartner($partnerId)->count(),
-            'active_products' => Product::forPartner($partnerId)->where('is_available', true)->count(),
-            'total_sales' => Purchase::forPartner($partnerId)->completed()->count(),
-            'pending_orders' => Purchase::forPartner($partnerId)->pending()->count(),
-            'total_points_earned' => Purchase::forPartner($partnerId)->completed()->sum('points_spent'),
-            'recent_sales' => Purchase::with(['user', 'product'])
-                ->forPartner($partnerId)
-                ->orderBy('created_at', 'desc')
-                ->limit(5)
-                ->get()
+        $user = Auth::user();
+        $tabs = [
+            ['id' => 'overview', 'name' => 'Overview', 'url' => route('partner.dashboard', ['tab' => 'overview']), 'icon' => '<i class="icon-overview"></i>'],
+            ['id' => 'products', 'name' => 'Products', 'url' => route('partner.dashboard', ['tab' => 'products']), 'icon' => '<i class="icon-events"></i>'],
+            ['id' => 'sales', 'name' => 'Sales', 'url' => route('partner.dashboard', ['tab' => 'sales']), 'icon' => '<i class="icon-attendance"></i>'],
+            ['id' => 'redemptions', 'name' => 'Redemptions', 'url' => route('partner.dashboard', ['tab' => 'redemptions']), 'icon' => '<i class="icon-categories"></i>'],
+            ['id' => 'profile', 'name' => 'Profile', 'url' => route('partner.dashboard', ['tab' => 'profile']), 'icon' => '<i class="icon-users"></i>'],
         ];
 
-        return view('partner.dashboard', compact('stats'));
+        $activeTab = $request->query('tab', 'overview');     
+
+
+        $userRole = $user->user_role;
+
+        // Classe colore per il ruolo (opzionale)
+        $roleColorClass = $userRole === 'partner' ? 'text-red-400' : 'text-blue-400';
+
+        return view('partner.dashboard', compact(
+            'user',
+            'tabs',
+            'activeTab',
+            'userRole',
+            'roleColorClass'
+        ));
     }
 }
