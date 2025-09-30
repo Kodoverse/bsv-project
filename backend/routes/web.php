@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 
@@ -17,9 +19,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/', [DashboardController::class, 'login'])
-    ->middleware(['auth'])
-    ->name('dashboard');
+Route::get('/', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        return match ($user->user_role) {
+            'admin' => redirect()->route('admin.dashboard'),
+            'partner' => redirect()->route('partner.dashboard'),
+            default => redirect()->route('login'),
+        };
+    }
+    return redirect()->route('login');
+})->name('dashboard');
+
+
+Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardStats'])->name('admin.dashboard');
+Route::middleware(['auth'])->get('/partner', [PartnerController::class, 'index'])->name('partner.dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

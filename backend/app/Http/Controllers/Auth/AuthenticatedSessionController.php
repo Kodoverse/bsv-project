@@ -24,29 +24,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-
         $request->authenticate();
+        $request->session()->regenerate();
 
         $user = Auth::user();
 
         if (!in_array($user->user_role, ['admin', 'partner'])) {
             Auth::logout();
             return redirect()->route('login')->withErrors([
-                'email' => 'Non sei autorizzato ad accedere al backend.',
+                'email' => 'Non sei autorizzato ad accedere.'
             ]);
         }
 
-        $request->session()->regenerate();
-
-        $user = Auth::user();
-
-        if ($user->user_role === 'admin') {
-            return view('admin.dashboard');
-        }
-
-        if ($user->user_role === 'partner') {
-            return view('partner.dashboard');
-        }
+        return redirect()->route('dashboard'); // -> deciderà la rotta in base al ruolo
     }
     /**
      * Destroy an authenticated session.

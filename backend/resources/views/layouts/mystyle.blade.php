@@ -16,11 +16,11 @@
     </head>
     <body class="w-full font-sans antialiased">
       <div class="flex h-screen bg-white">
-         <div class="flex-shrink-0 text-white bg-gray-700 md:w-64 h-screen">
+         <div class="flex-shrink-0 h-screen text-white bg-gray-700 md:w-64">
              @include('layouts.sidebar')
          </div>
  
-         <main class="flex-1 overflow-y-auto w-full text-white bg-white dark:bg-gray-800">
+         <main class="flex-1 w-full overflow-y-auto text-white bg-white dark:bg-gray-800">
              @yield('content')
          </main>
      </div> 
