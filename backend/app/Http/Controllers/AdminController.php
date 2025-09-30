@@ -33,7 +33,7 @@ class AdminController extends Controller
             ['title' => 'Total Users', 'value' => User::count(), 'bgColor' => 'bg-orange-500', 'icon' => '<i class="icon-users"></i>'],
             ['title' => 'Total Events', 'value' => Event::count(), 'bgColor' => 'bg-red-500', 'icon' => '<i class="icon-events"></i>'],
             ['title' => 'Upcoming Events', 'value' => Event::where('status', 'upcoming')->count(), 'bgColor' => 'bg-green-500', 'icon' => '<i class="icon-upcoming"></i>'],
-            ['title' => 'Total Categories', 'value' => EventCategory::count(), 'bgColor' => 'bg-blue-500', 'icon' => '<i class="icon-categories"></i>'],
+            ['title' => 'Recent Registrations', 'value' => EventRegistration::where('status', 'registered')->count(), 'bgColor' => 'bg-blue-500', 'icon' => '<i class="icon-categories"></i>'],
         ];
 
         // Recent registrations
