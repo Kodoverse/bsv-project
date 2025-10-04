@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,6 +21,7 @@ return new class extends Migration
             $table->dateTime('ends_at');
             $table->enum('status', ['upcoming', 'finished', 'cancelled'])->default('upcoming');
             $table->boolean('is_volunteer_event')->default(false);
+            $table->integer('volunteer_points')->nullable()->comment('Points awarded for attending this volunteer event');
             $table->integer('max_participants')->nullable();
             $table->timestamps();
             $table->softDeletes();

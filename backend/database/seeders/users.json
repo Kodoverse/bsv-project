@@ -1,0 +1,52 @@
+[
+  {
+    "email": "user1@example.com",
+    "password": "password",
+    "user_role": "user"
+  },
+  {
+    "email": "user2@example.com",
+    "password": "password",
+    "user_role": "user"
+  },
+  {
+    "email": "editor1@example.com",
+    "password": "password",
+    "user_role": "editor"
+  },
+  {
+    "email": "editor2@example.com",
+    "password": "password",
+    "user_role": "editor"
+  },
+  {
+    "email": "admin1@example.com",
+    "password": "password",
+    "user_role": "admin"
+  },
+  {
+    "email": "admin2@example.com",
+    "password": "password",
+    "user_role": "admin"
+  },
+  {
+    "email": "partner1@example.com",
+    "password": "password",
+    "user_role": "partner"
+  },
+  {
+    "email": "partner2@example.com",
+    "password": "password",
+    "user_role": "partner"
+  },
+  {
+    "email": "librarian1@example.com",
+    "password": "password",
+    "user_role": "librarian"
+  },
+  {
+    "email": "librarian2@example.com",
+    "password": "password",
+    "user_role": "librarian"
+  }
+]
