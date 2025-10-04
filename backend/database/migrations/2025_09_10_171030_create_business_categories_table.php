@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->integer('volunteer_points')->nullable()->after('is_volunteer_event')->comment('Points awarded for attending this volunteer event');
+        Schema::create('business_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('volunteer_points');
-        });
+        Schema::dropIfExists('business_categories');
     }
 };

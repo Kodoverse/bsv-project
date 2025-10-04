@@ -5,15 +5,14 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 
-use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PartnerDashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Partner\PartnerDashboardController;
-use App\Http\Controllers\Partner\PartnerProductController;
 
 
 
@@ -34,10 +33,16 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('dashboard');
 
-
+//rotte admin
 Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardStats'])->name('admin.dashboard');
-Route::middleware(['auth'])->get('/partner', [PartnerController::class, 'partnerDashboardStats'])->name('partner.dashboard');
 
+//rotte partner
+Route::middleware(['auth', 'verified'])->group(function () {
+Route::get('/partner', [PartnerDashboardController::class, 'partnerDashboardStats'])->name('partner.dashboard');
+Route::resource('partner/products', ProductController::class);
+});
+
+//rotte web
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -48,16 +53,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
     Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
-    Route::get('/partner/products', [PartnerProductController::class, 'index'])->name('partner.products');
-
-    // Sales partner
-    Route::get('/partner/sales', [PartnerDashboardController::class, 'sales'])->name('partner.sales');
-
-    // Redemptions partner
-    Route::get('/partner/redemptions', [PartnerDashboardController::class, 'redemptions'])->name('partner.redemptions');
-
-    // Profile partner
-    Route::get('/partner/profile', [PartnerDashboardController::class, 'profile'])->name('partner.profile');
 
 });
 

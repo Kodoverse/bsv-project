@@ -18,7 +18,8 @@ class Product extends Model
         'stock_quantity',
         'is_available',
         'category',
-        'metadata'
+        'metadata',
+        'category_id'
     ];
 
     protected $casts = [
@@ -142,5 +143,10 @@ class Product extends Model
     public function scopeByCategory($query, $category)
     {
         return $query->where('category', $category);
+    }
+
+      public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
