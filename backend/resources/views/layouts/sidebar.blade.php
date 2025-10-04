@@ -71,5 +71,14 @@
                     Impostazioni
                 </span>
             </a>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+    
+                <a class="block w-full p-2 rounded-md hover:bg-red-500 hover:font-semibold" :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </a>
+            </form>
         </nav>
     </div>
