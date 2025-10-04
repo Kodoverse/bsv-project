@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Card base */
+    .card {
+        @apply rounded-2xl p-6 transition-shadow;
+    }
+    .card-light {
+        @apply bg-light-card text-light-text shadow-card-light;
+    }
+    .dark .card-dark {
+        @apply bg-dark-card text-dark-text shadow-card-dark;
+    }
+
+    /* Bottoni */
+    .btn {
+        @apply px-4 py-2 rounded-xl font-medium transition-all;
+    }
+    .btn-primary {
+        @apply bg-brand-red text-white shadow-btn-light hover:shadow-lg;
+    }
+    .btn-secondary {
+        @apply bg-brand-orange text-white shadow-btn-light hover:shadow-lg;
+    }
+    .btn-warning {
+        @apply bg-brand-yellow text-black shadow-btn-light hover:shadow-lg;
+    }
+
+    /* Bottoni in dark mode */
+    .dark .btn-primary {
+        @apply bg-brand-red text-white shadow-btn-dark-red;
+    }
+    .dark .btn-secondary {
+        @apply bg-brand-orange text-white shadow-btn-dark-orange;
+    }
+    .dark .btn-warning {
+        @apply bg-brand-yellow text-black shadow-btn-dark-yellow;
+    }
+}
