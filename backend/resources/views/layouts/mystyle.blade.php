@@ -18,10 +18,20 @@
     <div x-data="{ open: true }" class="flex h-screen bg-white">
 
     <!-- Sidebar -->
-    <div class="h-screen text-white transition-all duration-300 bg-black"
-         :class="$store.sidebar.open ? 'w-72' : 'w-20'">
+<div 
+    class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 bg-black md:static"
+    :class="{
+        'w-72': $store.sidebar.open, 
+        'w-0 md:w-28': !$store.sidebar.open
+    }"
+>
         @include('layouts.sidebar')
     </div>
+    <div 
+    x-show="$store.sidebar.open && window.innerWidth < 768"
+    @click="$store.sidebar.open = false"
+    class="fixed inset-0 z-30 transition-opacity duration-300 bg-black bg-opacity-50 md:hidden"
+></div>
 
     <!-- Main -->
     <main class="flex-1 overflow-y-auto transition-all duration-300 bg-white dark:bg-black">
@@ -29,5 +39,6 @@
     </main>
 
 </div>
+
 </body>
 </html>
