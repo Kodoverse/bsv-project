@@ -39,3 +39,8 @@
         @apply bg-brand-yellow text-black shadow-btn-dark-yellow;
     }
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

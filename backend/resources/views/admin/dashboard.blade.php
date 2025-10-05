@@ -36,7 +36,7 @@
                                             class="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-200 to-orange-300">
                                             Ciao {{$user->email}}
                                         </span>
-                                        <span class="block mt-2 text-2xl font-bold text-white md:text-2xl lg:text-2xl">
+                                        <span class="hidden mt-2 text-2xl font-bold text-white md:text-2xl lg:text-2xl">
                                             Hai 6 nuove Notifiche
                                         </span>
                                     </h1>
