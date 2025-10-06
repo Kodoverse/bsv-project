@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
@@ -55,6 +56,15 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('events', EventController::class);
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('partners', AdminPartnerController::class);
+    });
+
+
+    // Route::get('/admin/partners', [AdminPartnerController::class, 'index'])->name('admin.partners.index');
+    // Route::get('/admin/partners', [AdminPartnerController::class, 'create'])->name('admin.partners.create');
+
+
 
     // Route::get('/events', [EventController::class, 'index'])->name('event.index');
     // Route::get('/event/{event}', [EventController::class, 'show'])->name('event.show');

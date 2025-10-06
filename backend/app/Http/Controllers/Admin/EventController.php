@@ -37,7 +37,6 @@ class EventController extends Controller
         }
 
         $events = $query->orderBy('starts_at', 'desc')->paginate(10);
-        dd($events);
         return view('admin.events.index', compact('events'));
     }
 

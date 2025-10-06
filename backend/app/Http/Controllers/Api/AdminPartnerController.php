@@ -27,26 +27,26 @@ class AdminPartnerController extends Controller
             // Search filter
             if ($request->has('search') && !empty($request->search)) {
                 $search = $request->search;
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%")
-                      ->orWhereHas('partnerInfo', function($subQ) use ($search) {
-                          $subQ->where('business_name', 'like', "%{$search}%")
-                               ->orWhere('business_address', 'like', "%{$search}%");
-                      });
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhereHas('partnerInfo', function ($subQ) use ($search) {
+                            $subQ->where('business_name', 'like', "%{$search}%")
+                                ->orWhere('business_address', 'like', "%{$search}%");
+                        });
                 });
             }
 
             // Status filter
             if ($request->has('status') && !empty($request->status)) {
                 if ($request->status === 'active') {
-                    $query->whereHas('partnerInfo', function($q) {
+                    $query->whereHas('partnerInfo', function ($q) {
                         $q->where('is_active', true);
                     });
                 } elseif ($request->status === 'pending') {
                     $query->whereDoesntHave('partnerInfo');
                 } elseif ($request->status === 'suspended') {
-                    $query->whereHas('partnerInfo', function($q) {
+                    $query->whereHas('partnerInfo', function ($q) {
                         $q->where('is_active', false);
                     });
                 }
@@ -54,7 +54,7 @@ class AdminPartnerController extends Controller
 
             // Category filter
             if ($request->has('category') && !empty($request->category)) {
-                $query->whereHas('partnerInfo', function($q) use ($request) {
+                $query->whereHas('partnerInfo', function ($q) use ($request) {
                     $q->where('business_category', $request->category);
                 });
             }
@@ -76,7 +76,7 @@ class AdminPartnerController extends Controller
         try {
             $totalPartners = User::where('user_role', 'partner')->count();
             $activePartners = User::where('user_role', 'partner')
-                ->whereHas('partnerInfo', function($q) {
+                ->whereHas('partnerInfo', function ($q) {
                     $q->where('is_active', true);
                 })->count();
             $pendingPartners = User::where('user_role', 'partner')
@@ -207,8 +207,13 @@ class AdminPartnerController extends Controller
 
             // Update or create partner info
             $partnerInfoData = $request->only([
-                'business_name', 'business_category', 'business_address',
-                'business_description', 'contact_phone', 'business_email', 'is_active'
+                'business_name',
+                'business_category',
+                'business_address',
+                'business_description',
+                'contact_phone',
+                'business_email',
+                'is_active'
             ]);
 
             if (!empty($partnerInfoData)) {
@@ -278,7 +283,7 @@ class AdminPartnerController extends Controller
             $partner->partnerInfo?->delete();
             $partner->products()->delete();
             $partner->sales()->delete();
-            
+
             // Delete user
             $partner->delete();
 
