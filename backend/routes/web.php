@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\PartnerDashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
@@ -38,8 +37,8 @@ Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardSt
 
 //rotte partner
 Route::middleware(['auth', 'verified'])->group(function () {
-Route::get('/partner', [PartnerDashboardController::class, 'partnerDashboardStats'])->name('partner.dashboard');
-Route::resource('partner/products', ProductController::class);
+    Route::get('/partner', [PartnerDashboardController::class, 'partnerDashboardStats'])->name('partner.dashboard');
+    Route::resource('partner/products', ProductController::class);
 });
 
 //rotte web
@@ -54,6 +53,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
     Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
 
+
+    Route::resource('events', EventController::class);
+
+    // Route::get('/events', [EventController::class, 'index'])->name('event.index');
+    // Route::get('/event/{event}', [EventController::class, 'show'])->name('event.show');
+    // Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
 });
 
 Route::middleware(['web', 'auth'])->group(function () {
