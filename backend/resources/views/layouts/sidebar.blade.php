@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+{{-- <!-- Sidebar -->
 <div class="relative flex flex-col w-full h-full p-5 text-white transition-all duration-300 bg-gray-600">
     <!-- Bottone toggle -->
     <button @click="$store.sidebar.open = !$store.sidebar.open"
@@ -115,4 +115,85 @@
             </span>
         </a>
     </nav>
-</div>
+</div> --}}
+
+@php
+    use App\Models\SidebarItem;
+
+    $role = auth()->user()->role ?? 'partner';
+    $sidebarItems = SidebarItem::whereNull('parent_id')
+        ->forRole($role)
+        ->orderBy('order')
+        ->get()
+        ->map(function ($item) use ($role) {
+            $item->children = $item->visibleChildren($role);
+            return $item;
+        });
+@endphp
+
+<aside 
+    x-data 
+    class="relative flex flex-col w-full h-full p-5 text-white transition-all duration-300 bg-gray-600"
+>
+    {{-- Toggle --}}
+    <div class="relative flex items-center justify-end p-4">
+<button @click="$store.sidebar.open = !$store.sidebar.open"
+        class="absolute p-2 text-white transition-all duration-300 bg-gray-600 rounded-full shadow-md -right-16 top-4">
+        <i :class="$store.sidebar.open ? 'fa fa-lock-open' : 'fa fa-lock'" class="w-7" aria-hidden="true"></i>
+    </button>
+    </div>
+
+    {{-- Menu --}}
+    <nav class="mt-6 space-y-1">
+        @foreach($sidebarItems as $item)
+            <div x-data="{ open: false }">
+                <a 
+                    href="{{ $item->route ? route($item->route) : '#' }}"
+                    @click="open = !open"
+                    class="flex items-center px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-gray-700"
+                >
+                    @if($item->icon)
+                        <i class="{{ $item->icon }} text-lg mr-3"></i>
+                    @endif
+
+                    <span 
+                        class="flex-1 truncate" 
+                        x-show="$store.sidebar.open"
+                        x-transition
+                    >
+                        {{ $item->label }}
+                    </span>
+
+                    @if($item->children->count())
+                        <i 
+                            class="text-xs fa" 
+                            :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
+                            x-show="$store.sidebar.open"
+                        ></i>
+                    @endif
+                </a>
+
+                {{-- Sottovoci --}}
+                @if($item->children->count())
+                    <ul 
+                        x-show="open && $store.sidebar.open"
+                        x-transition
+                        class="ml-6 space-y-1"
+                    >
+                        @foreach($item->children as $child)
+                            <li>
+                                <a 
+                                    href="{{ $child->route ? route($child->route) : '#' }}"
+                                    class="block px-4 py-2 text-sm text-gray-300 transition-colors rounded-md hover:bg-gray-700"
+                                >
+                                    {{ $child->label }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        @endforeach
+    </nav>
+</aside>
+
