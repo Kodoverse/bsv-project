@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignId('business_category_id')->nullable()->constrained('business_categories')->onDelete('set null');
+            $table->foreignId('partner_info_id')->nullable()->constrained('partner_infos')->onDelete('set null');
             $table->text('description')->nullable();
             $table->string('logo')->nullable();
             $table->string('address')->nullable();

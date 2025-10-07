@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminPartnerRequest;
+use App\Http\Requests\UpdateAdminPartnerRequest;
 use App\Models\Business;
 use App\Models\BusinessCategory;
 use App\Models\PartnerInfo;
@@ -19,7 +20,7 @@ class AdminPartnerController extends Controller
         $query = User::where('user_role', 'partner')
             ->with(['partnerInfo', 'products'])
             ->withCount('products');
-        //FILTRI DA RIVEDERE
+        //TODO: FILTRI DA RIVEDERE
         // Search filter
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
@@ -103,5 +104,58 @@ class AdminPartnerController extends Controller
 
         return redirect()->route('admin.partners.index')
             ->with('success', 'Partner creato con successo!');
+    }
+
+    public function show(User $partner)
+    {
+        $partner->load(['partnerInfo.businesses', 'products']);
+        return view('admin.partners.show', compact('partner'));
+    }
+
+    public function edit(User $partner)
+    {
+        $partner->load('partnerInfo');
+        return view('admin.partners.edit', compact('partner'));
+    }
+    public function update(UpdateAdminPartnerRequest $request, User $partner)
+    {
+        // Controllo ruolo
+        if ($partner->user_role !== 'partner') {
+            return redirect()->back()->withErrors(['error' => 'L\'utente selezionato non è un partner']);
+        }
+
+        // Tutti i dati validati
+        $data = $request->validated();
+
+        // Aggiorna email login se presente
+        if (!empty($data['partner_email'])) {
+            $partner->update(['email' => $data['partner_email']]);
+        }
+
+        // Aggiorna PartnerInfo
+        $partnerInfo = $partner->partnerInfo;
+        if ($partnerInfo) {
+            $partnerInfo->update([
+                'name' => $data['name'] ?? $partnerInfo->name,
+                'lastname' => $data['lastname'] ?? $partnerInfo->lastname,
+                'email' => $data['email'] ?? $partnerInfo->email,
+            ]);
+        }
+
+        // // Aggiorna Business
+        // if ($partnerInfo && $partnerInfo->businesses()->exists()) {
+        //     $business = $partnerInfo->businesses()->first();
+        //     $business->update([
+        //         'name' => $data['business_name'] ?? $business->name,
+        //         'business_category_id' => $data['business_category_id'] ?? $business->business_category_id,
+        //         'address' => $data['business_address'] ?? $business->address,
+        //         'description' => $data['business_description'] ?? $business->description,
+        //         'contact_phone' => $data['contact_phone'] ?? $business->contact_phone,
+        //         'email' => $data['business_email'] ?? $business->email,
+        //     ]);
+        // }
+
+        return redirect()->route('admin.partners.show', $partner->id)
+            ->with('success', 'Partner aggiornato con successo!');
     }
 }
