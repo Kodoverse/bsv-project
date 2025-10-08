@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\UsersStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
@@ -58,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('events', EventController::class);
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('partners', AdminPartnerController::class);
+        Route::resource('users', UsersStatsController::class);
+        Route::resource('stats', StatisticController::class);
     });
 
 
