@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('label');
             $table->string('route')->nullable();
+            $table->string('icon');
             $table->foreignId('parent_id')->nullable()->constrained('sidebar_items')->onDelete('cascade');
             $table->json('roles')->nullable();
             $table->boolean('is_enabled')->default(true);
