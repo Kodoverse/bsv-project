@@ -16,9 +16,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="w-full font-sans antialiased">
-
-    <div x-cloak x-data="{ open: true }" class="flex h-screen bg-white">
+<body class="w-full font-sans antialiased dark:bg-gray-900">
+    <div x-cloak x-data="{ open: true }" class="flex h-screen bg-white dark:bg-gray-900">
 
         <!-- Sidebar -->
         <div class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 bg-black md:static"
@@ -32,7 +31,8 @@
             class="fixed inset-0 z-30 transition-opacity duration-300 bg-black bg-opacity-50 md:hidden"></div>
 
         <!-- Main -->
-        <main class="flex-1 overflow-y-auto transition-all duration-300 bg-white dark:bg-black">
+        <main class="flex-1 overflow-y-auto transition-all duration-300 bg-white dark:bg-gray-900">
+            @include('components.searchbar');
             @yield('content')
         </main>
 
