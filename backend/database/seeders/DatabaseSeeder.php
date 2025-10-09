@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             EventRegistrationSeeder::class,
             PointSeeder::class,
+            SidebarItemSeeder::class,
         ]);
     }
 }
