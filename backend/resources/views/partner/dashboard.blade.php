@@ -14,7 +14,7 @@
                                 <h1 class="text-4xl font-black md:text-5xl lg:text-6xl">
                                     <span
                                         class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-200 to-violet-300">
-                                        Ciao {{ $user->info->firstname }}
+                                        Ciao {{ $user->partnerInfo->name }}
                                     </span>
 
                                 </h1>

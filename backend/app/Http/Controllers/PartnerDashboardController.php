@@ -18,7 +18,7 @@ class PartnerDashboardController extends Controller
 {
     public function PartnerDashboardStats(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::user()->load('partnerInfo');
 
         if (!$user->isPartner()) {
             return response()->json(['message' => 'Accesso negato'], 403);
@@ -96,8 +96,7 @@ class PartnerDashboardController extends Controller
             $products = Product::forPartner($partnerId)->with(['category'])->get();
             $categories = ProductCategory::get();
 
-        }
-        ;
+        };
         //dd($products);
 
         return view('partner.dashboard', compact(

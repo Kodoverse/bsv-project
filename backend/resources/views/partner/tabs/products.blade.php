@@ -135,7 +135,7 @@
             </svg>
             <p class="text-gray-400 text-lg">No products found</p>
             <p class="text-gray-500 text-sm mt-2">Create your first product to start selling with points.</p>
-            <a href="{{ route('products.create') }}"
+            <a href="{{ route('partner.products.create') }}"
                 class="mt-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300">
                 Create Product
             </a>
