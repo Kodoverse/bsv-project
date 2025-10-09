@@ -4,70 +4,487 @@ return [
 
     'users' => [
         [
-            'id' => 1, 
-            'email' => 'prova@gmail.com',
+            'id' => 1,
+            'email' => 'admin1@gmail.com',
             'password' => '12345678',
             'user_role' => 'admin',
         ],
         [
-            'id' => 2, 
-            'email' => 'villasetaregna@gmail.com',
+            'id' => 2,
+            'email' => 'admin2@gmail.com',
             'password' => '12345678',
-            'user_role' => 'user',
+            'user_role' => 'admin',
         ],
         [
-            'id' => 3, 
-            'email' => 'vendoerba@gmail.com',
-            'password' => '12345678',
-            'user_role' => 'user',
-        ],
-        [
-            'id' => 4, 
-            'email' => 'partner@example.com',
+            'id' => 3,
+            'email' => 'partner1@example.com',
             'password' => '12345678',
             'user_role' => 'partner',
         ],
+        [
+            'id' => 4,
+            'email' => 'partner2@example.com',
+            'password' => '12345678',
+            'user_role' => 'partner',
+        ],
+        [
+            'id' => 5,
+            'email' => 'user1@example.com',
+            'password' => '12345678',
+            'user_role' => 'user',
+        ],
+        [
+            'id' => 6,
+            'email' => 'user2@example.com',
+            'password' => '12345678',
+            'user_role' => 'user',
+        ],
     ],
+
+    'users_infos' => [
+        [
+            'id' => 1,
+            'firstname' => 'Luca',
+            'lastname' => 'Bianchi',
+            'username' => 'WhiteLuke96',
+            'show_username' => 1,
+            'birthday' => '1997-07-27',
+            'profile_img' => '',
+            'user_id' => 5,
+        ],
+        [
+            'id' => 1,
+            'firstname' => 'Mario',
+            'lastname' => 'Verdi',
+            'username' => 'SuperMarioGreen',
+            'show_username' => 0,
+            'birthday' => '1994-05-17',
+            'profile_img' => '',
+            'user_id' => 6,
+        ],
+    ],
+
+    'partner_infos' => [
+        [
+            'id' => 1,
+            'name' => 'Claudio',
+            'lastname' => 'Biondi',
+            'birthday' => '1992-04-25',
+            'contact_phone' => '334562837',
+            'redemption_rules' => '',
+            'min_points_per_redemption' => 10,
+            'max_points_per_redemption' => 1000,
+            'is_active' => 1,
+            'user_id' => 4
+        ],
+        [
+            'id' => 2,
+            'name' => 'Fabrizio',
+            'lastname' => 'Giraudo',
+            'birthday' => '1975-04-25',
+            'contact_phone' => '332548937',
+            'redemption_rules' => '',
+            'min_points_per_redemption' => 10,
+            'max_points_per_redemption' => 1000,
+            'is_active' => 0,
+            'user_id' => 3,
+        ],
+    ],
+    'events' => [
+        [
+            'id' => 1,
+            'category_id' => 1,
+            'created_by' => 1,
+            'title' => 'Evento 1',
+            'description' => 'Descrizione evento 2',
+            'image_url' => null,
+            'starts_at' => '2025-10-23 16:00',
+            'ends_at' => '2025-10-23 18:00',
+            'status' => 'upcoming',
+            'is_volunteer' => 1,
+            'volunteer_points' => 20,
+            'max_participants' => 30,
+        ],
+        [
+            'id' => 2,
+            'category_id' => 2,
+            'created_by' => 2,
+            'title' => 'Evento 2',
+            'description' => 'Descrizione evento 2',
+            'image_url' => null,
+            'starts_at' => '2025-10-18 09:00',
+            'ends_at' => '2025-10-18 12:00',
+            'status' => 'upcoming',
+            'is_volunteer' => 1,
+            'volunteer_points' => 20,
+            'max_participants' => 25,
+        ],
+    ],
+
+    'event_categories' => [
+        [
+            'id' => 1,
+            'name' => 'Club del libro',
+            'description' => 'Lettura',
+            'image' => null,
+            'color' => null,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Gaming',
+            'description' => 'Gioco',
+            'image' => null,
+            'color' => null,
+        ],
+    ],
+
+    'event_registration' => [
+        [
+            'id' => 1,
+            'event_id' => 1,
+            'user_id' => 5,
+            'status' => 'registered',
+            'notes' => '',
+        ],
+        [
+            'id' => 1,
+            'event_id' => 2,
+            'user_id' => 6,
+            'status' => 'registered',
+            'notes' => '',
+        ]
+    ],
+
+    'points' => [
+        [
+            'id' => 1,
+            'user_id' => 3,
+            'event_id' => 1,
+            'awarded_by' => 1,
+            'points' => 20,
+            'reason' => 'Bravissimo',
+        ],
+        [
+            'id' => 1,
+            'user_id' => 4,
+            'event_id' => 2,
+            'awarded_by' => 1,
+            'points' => 20,
+            'reason' => 'Bravo',
+        ],
+    ],
+    'business_categories' => [
+        [
+            'id' => 1,
+            'name' => 'Bar',
+            'slug' => 'bar',
+        ],
+        [
+            'id' => 1,
+            'name' => 'Ristorante',
+            'slug' => 'ristorante',
+        ],
+    ],
+    'products' => [
+        [
+            'id' => 1,
+            'partner_id' => 1,
+            'category_id' => 1,
+            'name' => 'caffe',
+            'description' => 'caffe',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 5,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 2,
+            'partner_id' => 2,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+    ],
+
+    'purchases' => [
+        [
+            'id' => 1,
+            'user_id' => 3,
+            'product_id' => 1,
+            'partner_id' => 1,
+            'quantity' => 1,
+            'points_spent' => 20,
+            'points_per_item' => 20,
+            'redemption_code' => 'CAJS-HASS-HAA3',
+            'notes' => '',
+            'confirmed_at' => '2025-10-08 17:52:23',
+            'completed_at' => '2025-10-09 09:38:23',
+        ],
+        [
+            'id' => 1,
+            'user_id' => 4,
+            'product_id' => 2,
+            'partner_id' => 2,
+            'quantity' => 1,
+            'points_spent' => 20,
+            'points_per_item' => 20,
+            'redemption_code' => 'YEHR-HUJS-HANX',
+            'notes' => '',
+            'confirmed_at' => '2025-10-01 15:02:03',
+            'completed_at' => '2025-10-04 11:28:54',
+        ]
+    ],
+    'businesses' => [
+        [
+            'id' => 1,
+            'name' => 'Bar Nazionale',
+            'business_category_id' => 1,
+            'partner_info_id' => 1,
+            'description' => 'Un Bar',
+            'logo' => null,
+            'address' => 'Vicino al centro commerciale, Villaseta',
+            'work_hours' => null,
+            'email' => 'barnazionale@gmail.com',
+            'website' => 'barnazionale.vs'
+        ],
+        [
+            'id' => 1,
+            'name' => 'Ristorante Internazione',
+            'business_category_id' => 2,
+            'partner_info_id' => 2,
+            'description' => 'Un ristorante',
+            'logo' => null,
+            'address' => 'Via rotondi, 3',
+            'work_hours' => '',
+            'email' => 'restinternazionale@gmail.com',
+            'website' => 'restinternazionale@gmail.com'
+        ],
+    ],
+    'sidebar_items' => [
+        [
+            'id' => 1,
+            'label' => 'Home',
+            'route' => 'admin.dashboard',
+            'icon' => 'fa fa-home',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 0,
+        ],
+        [
+            'id' => 1,
+            'label' => 'Home',
+            'route' => 'partner.dashboard',
+            'icon' => 'fa fa-home',
+            'parent_id' => null,
+            'roles' => ['partner'],
+            'is_enabled' => 1,
+            'order' => 0,
+        ],
+        [
+            'id' => 1,
+            'label' => 'Eventi',
+            'route' => null,
+            'icon' => 'fa fa-calendar',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 2,
+            'label' => 'Tutti gli Eventi',
+            'route' => 'events.index',
+            'icon' => 0,
+            'parent_id' => 1,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 3,
+            'label' => 'Aggiungi un Evento',
+            'route' => 'events.create',
+            'icon' => 0,
+            'parent_id' => 1,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 4,
+            'label' => 'Categorie Eventi',
+            'route' => null,
+            'icon' => 0,
+            'parent_id' => 1,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 5,
+            'label' => 'Aggiungi una Categoria',
+            'route' => null,
+            'icon' => 0,
+            'parent_id' => 1,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 6,
+            'label' => 'Gestisci Registrazioni Eventi',
+            'route' => null,
+            'icon' => 0,
+            'parent_id' => 1,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 1,
+        ],
+        [
+            'id' => 7,
+            'label' => 'Partecipazioni',
+            'route' => null,
+            'icon' => 'fa fa-calendar-days',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 2,
+        ],
+        [
+            'id' => 8,
+            'label' => 'Utenti',
+            'route' => null,
+            'icon' => 'fa fa-users',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 3,
+        ],
+        [
+            'id' => 9,
+            'label' => 'Statistiche',
+            'route' => 'admin.stats.index',
+            'icon' => 'fa fa-chart',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 4,
+        ],
+        [
+            'id' => 10,
+            'label' => 'Partner',
+            'route' => null,
+            'icon' => 'fa fa-shop',
+            'parent_id' => null,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 5,
+        ],
+        [
+            'id' => 11,
+            'label' => 'Tutti i Partner',
+            'route' => 'admin.partners.index',
+            'icon' => null,
+            'parent_id' => 10,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 5,
+        ],
+        [
+            'id' => 12,
+            'label' => 'Aggiungi Partner',
+            'route' => 'admin.partners.create',
+            'icon' => null,
+            'parent_id' => 10,
+            'roles' => ['admin'],
+            'is_enabled' => 1,
+            'order' => 5,
+        ],
+        [
+            'id' => 13,
+            'label' => 'Partner Sospesi',
+            'route' => null,
+            'icon' => null,
+            'parent_id' => 10,
+            'roles' => ['admin'],
+            'is_enabled' => 0,
+            'order' => 5,
+        ],
+
+        //Voci Sidebar
+        [
+            'id' => 14,
+            'label' => 'Notifiche',
+            'route' => 'partner.alerts',
+            'icon' => 'fa fa-bell',
+            'parent_id' => 1,
+            'roles' => ['partner'],
+            'is_enabled' => 0,
+            'order' => 0,
+        ],
+        [
+            'id' => 14,
+            'label' => 'Impostazioni',
+            'route' => 'partner.settings',
+            'icon' => 'fa fa-gear',
+            'parent_id' => 1,
+            'roles' => ['partner'],
+            'is_enabled' => 0,
+            'order' => 0,
+        ],
+
+
+    ],
+
 
     'tags' => [
         [
-            'id' => 1, 
+            'id' => 1,
             'name' => 'Tech',
         ],
         [
-            'id' => 2, 
+            'id' => 2,
             'name' => 'Art',
         ],
-    
+
         [
-            'id' => 3, 
+            'id' => 3,
             'name' => 'Science',
         ]
     ],
-    
+
     'articles' => [
         [
-            'id' => 1, 
-            'title' => 'The Future of AI', 
-            'subtitle' => 'Exploring GPT models', 
+            'id' => 1,
+            'title' => 'The Future of AI',
+            'subtitle' => 'Exploring GPT models',
             'article' => 'Lorem ipsum AI...'
         ],
 
         [
             'id' => 2,
-            'title' => 'Impressionism', 
-            'subtitle' => 'A revolution in color', 
+            'title' => 'Impressionism',
+            'subtitle' => 'A revolution in color',
             'article' => 'The Impressionist movement...'
-            ],
+        ],
     ],
-    
+
     'comments' => [
         [
-            'id' => 1, 
+            'id' => 1,
             'comment' => 'Great read!',
-            'like' => 10, 
+            'like' => 10,
             'article_id' => 1,
-            'is_flagged' => false, 
+            'is_flagged' => false,
             'predefinite_comment' => null,
             'user_id' => 1
         ],
@@ -76,90 +493,107 @@ return [
             'comment' => null,
             'like' => 2,
             'article_id' => 1,
-            'is_flagged' => false, 
+            'is_flagged' => false,
             'predefinite_comment' => 'very good',
             'user_id' => 1
         ],
         [
-            'id' => 3, 
-            'comment' => 'Love this topic.', 
-            'like' => 5, 
-            'article_id' => 2, 
-            'is_flagged' => true, 
+            'id' => 3,
+            'comment' => 'Love this topic.',
+            'like' => 5,
+            'article_id' => 2,
+            'is_flagged' => true,
             'predefinite_comment' => null,
             'user_id' => 1
         ],
     ],
-    
+
     'sections' => [
         [
-            'id' => 1, 
+            'id' => 1,
             'title' => 'Home'
         ],
         [
-            'id' => 2, 
+            'id' => 2,
             'title' => 'About Us'
         ],
     ],
-    
+
 
     'page_sections' => [
         [
-            'id' => 1, 
-            'type' => 'text', 
-            'content' => 'Welcome to our homepage!', 
+            'id' => 1,
+            'type' => 'text',
+            'content' => 'Welcome to our homepage!',
             'section_id' => 1
         ],
         [
-            'id' => 2, 
-            'type' => 'text', 
-            'content' => 'We are passionate about knowledge.', 
+            'id' => 2,
+            'type' => 'text',
+            'content' => 'We are passionate about knowledge.',
             'section_id' => 2
         ],
     ],
 
     'images' => [
         [
-            'id' => 1, 
-            'name' => 'ai-cover.jpg', 
-            'alt' => 'AI Article Cover', 
-            'link' => '/img/ai-cover.jpg', 
-            'article_id' => 1, 
+            'id' => 1,
+            'name' => 'ai-cover.jpg',
+            'alt' => 'AI Article Cover',
+            'link' => '/img/ai-cover.jpg',
+            'article_id' => 1,
             'page_section_id' => 1
         ],
         [
-            'id' => 2, 
-            'name' => 'about-us.jpg', 
-            'alt' => 'Team Photo', 
-            'link' => '/img/team.jpg', 
-            'article_id' => null, 
+            'id' => 2,
+            'name' => 'about-us.jpg',
+            'alt' => 'Team Photo',
+            'link' => '/img/team.jpg',
+            'article_id' => null,
             'page_section_id' => 2
         ],
     ],
-    'flagged_comments'=> [
+    'flagged_comments' => [
         [
             'id' => 1,
-            'reason'=> 'ha offeso il mio cane',
-            'user_id'=> 1,
+            'reason' => 'ha offeso il mio cane',
+            'user_id' => 1,
             'comment_id' => 1,
         ],
         [
-            'id'=> 2,
+            'id' => 2,
             'reason' => 'mi ha dato del secchione',
             'user_id' => 1,
             'comment_id' => 1,
         ],
         [
-            'id'=> 3,
+            'id' => 3,
             'reason' => 'ha offeso tutta la mia famiglia',
             'user_id' => 2,
             'comment_id' => 3,
         ],
         [
-            'id'=> 3,
+            'id' => 3,
             'reason' => 'mi ha chiamato cassone',
             'user_id' => 2,
             'comment_id' => 3,
         ],
-    ]
+    ],
+
+
+
+
+
+
+
+
+
+
 ];
+
+
+
+
+
+
+
