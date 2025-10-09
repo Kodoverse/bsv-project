@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateArticleRequest;
+
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +21,7 @@ class PartnerDashboardController extends Controller
         $user = Auth::user();
 
         if (!$user->isPartner()) {
-            return response()->json(['message' => 'Only partners can view sales stats'], 403);
+            return response()->json(['message' => 'Accesso negato'], 403);
         }
 
         $tabs = [
@@ -36,30 +39,66 @@ class PartnerDashboardController extends Controller
         // 👇 calcolo i dati SOLO se la tab è "overview"
         $stats = [];
         $dashboardData = [];
-        if ($activeTab === 'overview') {
-            $partnerId = $user->id;
-            $stats = [
-                'total_products' => Product::forPartner($partnerId)->count(),
-                'active_products' => Product::forPartner($partnerId)->where('is_available', true)->count(),
-                'total_sales' => Purchase::forPartner($partnerId)->completed()->count(),
-                'pending_orders' => Purchase::forPartner($partnerId)->pending()->count(),
-                'total_points_earned' => Purchase::forPartner($partnerId)->completed()->sum('points_spent'),
-                'recent_sales' => Purchase::with(['user', 'product'])
-                    ->forPartner($partnerId)
-                    ->orderBy('created_at', 'desc')
-                    ->limit(5)
-                    ->get()
-            ];
+
+        $partnerId = $user->id;
+        $statusFilter = $request->query('status'); // recupera ?status=pending ecc.
 
 
-            $dashboardData['recent_registrations'] = Purchase::with(['user.info', 'product'])
-                ->forPartner($partnerId)
-                ->orderBy('created_at', 'desc')
-                ->limit(5)
-                ->get()
-                ->toArray();
+        $salesQuery = Purchase::forPartner($partnerId)
+            ->with(['user:id,email', 'product:id,name'])
+            ->orderByDesc('created_at');
+
+        // Applica il filtro se selezionato
+        if ($statusFilter) {
+            $salesQuery->where('status', $statusFilter);
         }
-       // dd($dashboardData);
+        //questo recupera le ultime 5 vendite con i dati dell'utente che ha fatto l'acquisto
+        $dashboardData = Purchase::with(['user.info', 'product'])
+            ->forPartner($partnerId)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+
+        //variabile generica presente in tutta la dashboard
+        $stats = [
+            'total_products' => Product::forPartner($partnerId)->count(),
+            'active_products' => Product::forPartner($partnerId)->where('is_available', true)->count(),
+            'total_sales' => Purchase::forPartner($partnerId)->count(),
+            'pending_orders' => Purchase::forPartner($partnerId)->pending()->count(),
+            'total_points_earned' => $dashboardData->map(function ($purchase) {
+                return [
+                    'user_id' => $purchase->user_id,
+                    'user_email' => $purchase->user->email ?? 'Utente sconosciuto',
+                    'product_name' => $purchase->product->name ?? 'Prodotto eliminato',
+                    'points_spent' => $purchase->points_spent,
+                ];
+            }),
+            'recent_sales' => $salesQuery->paginate(10)->withQueryString(),
+            'last_5_purchases' => $dashboardData,
+            'status_count' => [
+                'pending' => Purchase::forPartner($partnerId)->where('status', 'pending')->count(),
+                'confirmed' => Purchase::forPartner($partnerId)->where('status', 'confirmed')->count(),
+                'completed' => Purchase::forPartner($partnerId)->where('status', 'completed')->count(),
+                'cancelled' => Purchase::forPartner($partnerId)->where('status', 'cancelled')->count(),
+            ],
+            'total_points_completed' => Purchase::forPartner($partnerId)
+                ->completed()
+                ->sum('points_spent'),
+
+        ];
+
+
+        $products = [];
+        $categories = [];
+        if ($activeTab === 'products') {
+            $partnerId = $user->id;
+            $products = Product::forPartner($partnerId)->with(['category'])->get();
+            $categories = ProductCategory::get();
+
+        }
+        ;
+        //dd($products);
 
         return view('partner.dashboard', compact(
             'user',
@@ -68,10 +107,9 @@ class PartnerDashboardController extends Controller
             'userRole',
             'roleColorClass',
             'stats', // 👈 così overview riceve $stats
-            'dashboardData'
+            'dashboardData',
+            'products',
+            'categories'
         ));
-        
-
-
     }
 }

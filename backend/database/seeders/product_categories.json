@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "Entertainment",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 2,
+        "name": "Cinema",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 3,
+        "name": "Travel",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 4,
+        "name": "Food",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 5,
+        "name": "Games",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 6,
+        "name": "Culture",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 7,
+        "name": "Sport",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 8,
+        "name": "Bar",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    },
+    {
+        "id": 9,
+        "name": "Learning",
+        "created_at": "2023-09-14T12:30:00",
+        "updated_at": "2023-09-14T12:30:00"
+    }
+]
