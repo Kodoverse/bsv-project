@@ -22,7 +22,7 @@ class BusinessSeeder extends Seeder
             $newBusiness->description = $business['description'];
             $newBusiness->logo = $business['logo'];
             $newBusiness->address = $business['address'];
-            $newBusiness->hours = $business['hours'];
+            $newBusiness->work_hours = $business['work_hours'];
             $newBusiness->email = $business['email'];
             $newBusiness->website = $business['website'];
             $newBusiness->save();

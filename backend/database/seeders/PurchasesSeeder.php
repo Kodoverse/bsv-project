@@ -28,8 +28,6 @@ class PurchasesSeeder extends Seeder
             $newPurchase->notes = $purchase['notes'];
             $newPurchase->confirmed_at = $purchase['confirmed_at'];
             $newPurchase->completed_at = $purchase['completed_at'];
-            $newPurchase->created_at = $purchase['created_at'];
-            $newPurchase->updated_at = $purchase['updated_at'];
             $newPurchase->save();
         }
     }

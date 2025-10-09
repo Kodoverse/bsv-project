@@ -17,7 +17,7 @@ class UsersInfoSeeder extends Seeder
         foreach ($users_infos as $user_info) {
             $newUserInfo = new UsersInfo();
             $newUserInfo->firstname = $user_info['firstname'];
-            $newUserInfo->name = $user_info['lastname'];
+            $newUserInfo->lastname = $user_info['lastname'];
             $newUserInfo->username = $user_info['username'];
             $newUserInfo->show_username = $user_info['show_username'];
             $newUserInfo->birthday = $user_info['birthday'];

@@ -27,8 +27,6 @@ class ProductSeeder extends Seeder
             $newProduct->stock_quantity = $product['stock_quantity'];
             $newProduct->is_available = $product['is_available'];
             $newProduct->metadata = $product['metadata'];
-            $newProduct->created_at = $product['created_at'];
-            $newProduct->updated_at = $product['updated_at'];
             $newProduct->save();
         }
     }

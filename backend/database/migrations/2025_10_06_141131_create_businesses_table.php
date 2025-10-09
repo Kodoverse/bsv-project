@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->string('logo')->nullable();
             $table->string('address')->nullable();
-            $table->json('hours')->nullable();
+            $table->json('work_hours')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
             $table->timestamps();

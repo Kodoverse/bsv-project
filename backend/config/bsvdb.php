@@ -273,7 +273,7 @@ return [
             'description' => 'Un ristorante',
             'logo' => null,
             'address' => 'Via rotondi, 3',
-            'work_hours' => '',
+            'work_hours' => null,
             'email' => 'restinternazionale@gmail.com',
             'website' => 'restinternazionale@gmail.com'
         ],
