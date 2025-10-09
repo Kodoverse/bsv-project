@@ -20,10 +20,10 @@
     <div x-cloak x-data="{ open: true }" class="flex h-screen bg-white dark:bg-gray-900">
 
         <!-- Sidebar -->
-        <div class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 bg-black md:static"
+        <div class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 lg:static"
             :class="{
-                'w-72': $store.sidebar.open,
-                'w-0 md:w-28': !$store.sidebar.open
+                'w-56': $store.sidebar.open,
+                'w-0 lg:w-20': !$store.sidebar.open
             }">
             @include('layouts.sidebar')
         </div>
