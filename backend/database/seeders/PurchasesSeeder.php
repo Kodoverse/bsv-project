@@ -14,8 +14,7 @@ class PurchasesSeeder extends Seeder
      */
     public function run(): void
     {
-        $path = base_path('database/seeders/purchases.json');
-        $purchases = json_decode(file_get_contents($path), true);
+        $purchases = config('bsvdb.purchases');
         foreach ($purchases as $purchase) {
             $newPurchase = new Purchase();
             $newPurchase->user_id = $purchase['user_id'];

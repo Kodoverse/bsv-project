@@ -15,12 +15,11 @@ class ProductCategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        $path = base_path('database/seeders/product_categories.json');
-        $Categories = json_decode(file_get_contents($path), true);
-        foreach ($Categories as $Category) {
+        $categories = config('bsvdb.product_categories');
+        foreach ($categories as $category) {
             $newCategory = new ProductCategory();
-            $newCategory->name = $Category['name'];
-            $newCategory->slug = ProductCategory::generateSlug($Category['name']);
+            $newCategory->name = $category['name'];
+            $newCategory->slug = ProductCategory::generateSlug($category['name']);
             $newCategory->save();
         }
     }

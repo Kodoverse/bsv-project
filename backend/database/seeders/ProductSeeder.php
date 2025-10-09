@@ -14,8 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $path = base_path('database/seeders/products.json');
-        $products = json_decode(file_get_contents($path), true);
+        $products = config("bsvdb.products");
         foreach ($products as $product) {
             $newProduct = new Product();
             $newProduct->partner_id = $product['partner_id'];

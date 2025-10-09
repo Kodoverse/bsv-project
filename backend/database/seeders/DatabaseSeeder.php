@@ -35,6 +35,12 @@ class DatabaseSeeder extends Seeder
             EventRegistrationSeeder::class,
             PointSeeder::class,
             SidebarItemSeeder::class,
+            UsersInfoSeeder::class,
+            ProductCategoriesSeeder::class,
+            ProductSeeder::class,
+            PartnerInfoSeeder::class,
+            BusinessCategorySeeder::class,
+            BusinessSeeder::class,
         ]);
     }
 }

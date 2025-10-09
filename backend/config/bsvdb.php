@@ -213,6 +213,16 @@ return [
             'metadata' => null,
         ],
     ],
+    'product_categories' => [
+        [
+            'id' => 1,
+            'name' => 'Food'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Coupon',
+        ],
+    ],
 
     'purchases' => [
         [
