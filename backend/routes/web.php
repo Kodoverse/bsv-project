@@ -11,6 +11,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PartnerDashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Partner\PartnerSalesController;
 
 use App\Http\Controllers\FlaggedCommentController;
 use App\Http\Controllers\TagController;
@@ -41,7 +42,15 @@ Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardSt
 //rotte partner
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/partner', [PartnerDashboardController::class, 'partnerDashboardStats'])->name('partner.dashboard');
-    Route::resource('partner/products', ProductController::class);
+    Route::resource('partner/products', ProductController::class)->names('partner.products');
+    Route::patch('/partner/sales/{id}/status', [PartnerSalesController::class, 'updateStatus'])
+        ->name('partner.sales.updateStatus');
+    //rotte per la view della sidebar
+    Route::view('/partner/notifiche', 'partner.sidebarLink.notifiche')->name('partner.notifiche');
+    Route::view('/partner/profilo', 'partner.sidebarLink.profilo')->name('partner.profilo');
+    Route::view('/partner/impostazioni', 'partner.sidebarLink.impostazioni')->name('partner.impostazioni');
+
+
 });
 
 //rotte web
