@@ -108,7 +108,7 @@ class PartnerDashboardController extends Controller
             'stats', // 👈 così overview riceve $stats
             'dashboardData',
             'products',
-            'categories'
+            'categories',
         ));
     }
 }

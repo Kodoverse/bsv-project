@@ -54,7 +54,8 @@
                     <!-- Product Image -->
                     <div class="h-48 bg-gray-700 relative overflow-hidden">
                         @if($product->image_url)
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            <img src="{{ Storage::url($product->image_url) }}" alt="{{ $product->name }}"
+                                class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center">
                                 <svg class="w-16 h-16 text-gray-500" fill="currentColor" viewBox="0 0 20 20">

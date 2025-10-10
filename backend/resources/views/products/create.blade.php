@@ -10,7 +10,8 @@
                 <h1 class="text-3xl font-semibold text-gray-900 dark:text-white uppercase tracking-wide">
                     Crea un nuovo prodotto
                 </h1>
-                <a href="{{ route('partner.products.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-400">
+                <a href="{{ route('partner.dashboard', ['tab' => 'products']) }}"
+                    class="text-sm font-medium text-indigo-600 hover:text-indigo-400">
                     ← Torna all'elenco
                 </a>
             </div>
@@ -79,8 +80,13 @@
                 <div>
                     <label for="category"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria</label>
-                    <input type="text" id="category" name="category" value="{{ old('category') }}"
+                    <select type="text" id="category" name="category_id" value="{{ old('category') }}"
                         class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+
+                    </select>
                     @error('category')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -113,9 +119,13 @@
 
                 {{-- Immagine --}}
                 <div class="col-span-2 lg:col-span-3">
+                    <div class="w-75  text-center">
+                        <img id="uploadPreview" class="w-100 uploadPreview" width="100"
+                            src="{{ asset('images/placeholder.png') }}" alt="preview">
+                    </div>
                     <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Immagine del
                         prodotto</label>
-                    <input type="file" id="image" name="image"
+                    <input type="file" id="uploadImage" accept="image/*" name="image_url" value="{{ old('image_cover') }}"
                         class="mt-1 block w-full text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer focus:outline-none p-2.5">
                     @error('image')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
