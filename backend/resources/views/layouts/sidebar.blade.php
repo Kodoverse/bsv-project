@@ -1,7 +1,7 @@
 @php
     use App\Models\SidebarItem;
 
-    $role = auth()->user()->role ?? 'partner';
+    $role = auth()->user()->role ?? 'admin';
     $sidebarItems = SidebarItem::whereNull('parent_id')
         ->forRole($role)
         ->orderBy('order')

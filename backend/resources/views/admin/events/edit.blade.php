@@ -13,7 +13,7 @@
               <div>
                   <div class="flex justify-between">
                       <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
-                          <h1 class="text-3xl tracking-wide uppercase">Edit this Event</h1>
+                          <h1 class="text-3xl tracking-wide text-white uppercase">Edit this Event</h1>
                       </div>
                   </div>
 
