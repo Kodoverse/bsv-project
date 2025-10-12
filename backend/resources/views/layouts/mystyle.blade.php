@@ -32,7 +32,7 @@
 
         <!-- Main -->
         <main class="flex-1 overflow-y-auto transition-all duration-300 bg-white dark:bg-gray-900">
-            @include('components.searchbar');
+            @include('components.searchbar')
             @yield('content')
         </main>
 
