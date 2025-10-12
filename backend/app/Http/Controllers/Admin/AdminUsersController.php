@@ -41,4 +41,18 @@ class AdminUsersController extends Controller
     }
 
 
+    public function updateUserRole(User $user, Request $request)
+    {
+        $validated = $request->validate([
+            'role' => 'required|in:user,admin,librarian,partner'
+        ]);
+
+        $user->update(['user_role' => $validated['role']]);
+
+        // Redirect alla pagina di dettaglio aggiornata
+        return redirect()
+            ->route('admin.users.show', $user->id)
+            ->with('success', 'Ruolo aggiornato con successo.');
+    }
+
 }

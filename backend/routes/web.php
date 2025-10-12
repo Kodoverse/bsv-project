@@ -77,6 +77,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/events/{event}/attendances', [AttendanceController::class, 'manage'])->name('events.attendance.manage');
         Route::get('/users', [AdminUsersController::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [AdminUsersController::class, 'show'])->name('users.show');
+        Route::post('/users/{user}/role', [AdminUsersController::class, 'updateUserRole'])->name('users.updateRole');
+
     });
 
 });
