@@ -3,15 +3,15 @@
     <!-- Header with Create Button -->
     <div class="flex justify-between items-center">
         <div>
-            <h2 class="text-2xl font-bold text-white">Product Management</h2>
-            <p class="text-gray-400">Create and manage your point-redemption products</p>
+            <h2 class="text-2xl font-bold text-white">Gestione dei prodotti</h2>
+            <p class="text-gray-400">Qui puoi creare e gestire i tuoi prodotti</p>
         </div>
         <a href="{{ route('partner.products.create') }}"
             class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            Add Product
+            Nuovo Prodotto
         </a>
     </div>
 
@@ -22,7 +22,7 @@
         type="text" 
         x-model="search" 
         @input.debounce.300ms="fetchFilteredProducts()"
-        placeholder="Search products..."
+        placeholder="Cerca per nome..."
         class="flex-1 min-w-64 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white 
                focus:ring-2 focus:ring-purple-500 focus:border-transparent"
     >
@@ -34,7 +34,7 @@
         class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white 
                focus:ring-2 focus:ring-purple-500 focus:border-transparent"
     >
-        <option value="">All Categories</option>
+        <option value="">Tutte le categorie</option>
         <template x-for="category in categories" :key="category.id">
             <option :value="category.id" x-text="category.name"></option>
         </template>
@@ -47,9 +47,9 @@
         class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white 
                focus:ring-2 focus:ring-purple-500 focus:border-transparent"
     >
-        <option value="">All Status</option>
-        <option value="available">Available</option>
-        <option value="unavailable">Unavailable</option>
+        <option value="">Tutti</option>
+        <option value="available">Disponibile</option>
+        <option value="unavailable">Non disponibile</option>
     </select>
 </div>
 

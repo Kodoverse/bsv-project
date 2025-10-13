@@ -14,14 +14,14 @@ class PartnerInfo extends Model
         'redemption_rules',
         'min_points_per_redemption',
         'max_points_per_redemption',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
         'min_points_per_redemption' => 'integer',
         'max_points_per_redemption' => 'integer',
         'is_active' => 'boolean',
-        'business_hours' => 'json'
+        'business_hours' => 'json',
     ];
 
     /**
@@ -34,6 +34,6 @@ class PartnerInfo extends Model
 
     public function businesses()
     {
-        return $this->hasMany(Business::class);
+        return $this->hasMany(Business::class, 'partner_id');
     }
 }

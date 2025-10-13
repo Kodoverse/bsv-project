@@ -137,7 +137,7 @@
                     </div>
                     <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Immagine del
                         prodotto</label>
-                    <input type="file" id="uploadImage" accept="image/*" name="image_url"
+                    <input type="file" id="uploadImage" accept="image/*" name="image_url" 
                         class="mt-1 block w-full text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer focus:outline-none p-2.5">
                     @error('image')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

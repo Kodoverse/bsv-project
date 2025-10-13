@@ -3,15 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\ProductCategory;
-
 
 class Product extends Model
 {
     protected $fillable = [
-        'partner_id',
+        'business_id',
         'name',
         'description',
         'image_url',
@@ -21,7 +18,7 @@ class Product extends Model
         'is_available',
         'category',
         'metadata',
-        'category_id'
+        'category_id',
     ];
 
     protected $casts = [
@@ -29,16 +26,12 @@ class Product extends Model
         'cash_equivalent' => 'decimal:2',
         'stock_quantity' => 'integer',
         'is_available' => 'boolean',
-        'metadata' => 'json'
+        'metadata' => 'json',
     ];
 
     /**
      * Get the partner who owns this product
      */
-    public function partner(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'partner_id');
-    }
 
     /**
      * Get all purchases for this product
@@ -75,6 +68,7 @@ class Product extends Model
 
         if ($this->stock_quantity >= $quantity) {
             $this->decrement('stock_quantity', $quantity);
+
             return true;
         }
 
@@ -96,7 +90,7 @@ class Product extends Model
      */
     public function getFormattedPriceAttribute(): string
     {
-        return number_format($this->points_price) . ' points';
+        return number_format($this->points_price).' points';
     }
 
     /**
@@ -107,15 +101,15 @@ class Product extends Model
         if ($this->stock_quantity === -1) {
             return 'Unlimited';
         }
-        
+
         if ($this->stock_quantity === 0) {
             return 'Out of Stock';
         }
-        
+
         if ($this->stock_quantity <= 5) {
             return 'Low Stock';
         }
-        
+
         return 'In Stock';
     }
 
@@ -125,10 +119,10 @@ class Product extends Model
     public function scopeAvailable($query)
     {
         return $query->where('is_available', true)
-                    ->where(function($q) {
-                        $q->where('stock_quantity', '>', 0)
-                          ->orWhere('stock_quantity', -1);
-                    });
+            ->where(function ($q) {
+                $q->where('stock_quantity', '>', 0)
+                    ->orWhere('stock_quantity', -1);
+            });
     }
 
     /**
@@ -147,8 +141,13 @@ class Product extends Model
         return $query->where('category', $category);
     }
 
-      public function category()
+    public function category()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
     }
 }
