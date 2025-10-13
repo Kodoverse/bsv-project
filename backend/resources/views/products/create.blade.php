@@ -96,11 +96,27 @@
                 <div>
                     <label for="is_available"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">Disponibile</label>
-                    <select id="is_available" name="is_available"
-                        class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
-                        <option value="1" {{ old('is_available') == '1' ? 'selected' : '' }}>Sì</option>
-                        <option value="0" {{ old('is_available') == '0' ? 'selected' : '' }}>No</option>
-                    </select>
+                    <div class="flex mt-4">
+                        <div class="flex items-center me-4">
+                            <input id="default-radio-1" type="radio" value="1" name="is_available"
+                                class="w-4 h-4 text-orange-600 bg-orange-300 border-orange-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="default-radio-1"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Si</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input checked id="default-radio-2" type="radio" value="0" name="is_available"
+                                class="w-4 h-4 text-orange-600 bg-orange-300 border-orange-300  dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="default-radio-2"
+                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
                     @error('is_available')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror

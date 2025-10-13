@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateArticleRequest;
-
 use App\Models\Product;
 use App\Models\Purchase;
-use App\Models\ProductCategory;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-
 
 class PartnerDashboardController extends Controller
 {
@@ -20,7 +13,7 @@ class PartnerDashboardController extends Controller
     {
         $user = Auth::user()->load('partnerInfo');
 
-        if (!$user->isPartner()) {
+        if (! $user->isPartner()) {
             return response()->json(['message' => 'Accesso negato'], 403);
         }
 
@@ -43,7 +36,6 @@ class PartnerDashboardController extends Controller
         $partnerId = $user->id;
         $statusFilter = $request->query('status'); // recupera ?status=pending ecc.
 
-
         $salesQuery = Purchase::forPartner($partnerId)
             ->with(['user:id,email', 'product:id,name'])
             ->orderByDesc('created_at');
@@ -52,15 +44,14 @@ class PartnerDashboardController extends Controller
         if ($statusFilter) {
             $salesQuery->where('status', $statusFilter);
         }
-        //questo recupera le ultime 5 vendite con i dati dell'utente che ha fatto l'acquisto
+        // questo recupera le ultime 5 vendite con i dati dell'utente che ha fatto l'acquisto
         $dashboardData = Purchase::with(['user.info', 'product'])
             ->forPartner($partnerId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
-
-        //variabile generica presente in tutta la dashboard
+        // variabile generica presente in tutta la dashboard
         $stats = [
             'total_products' => Product::forPartner($partnerId)->count(),
             'active_products' => Product::forPartner($partnerId)->where('is_available', true)->count(),
@@ -88,16 +79,7 @@ class PartnerDashboardController extends Controller
 
         ];
 
-
-        $products = [];
-        $categories = [];
-        if ($activeTab === 'products') {
-            $partnerId = $user->id;
-            $products = Product::forPartner($partnerId)->with(['category'])->get();
-            $categories = ProductCategory::get();
-
-        };
-        //dd($products);
+        // dd($request);
 
         return view('partner.dashboard', compact(
             'user',
@@ -105,10 +87,8 @@ class PartnerDashboardController extends Controller
             'activeTab',
             'userRole',
             'roleColorClass',
-            'stats', // 👈 così overview riceve $stats
-            'dashboardData',
-            'products',
-            'categories',
+            'stats',
+            'dashboardData'
         ));
     }
 }

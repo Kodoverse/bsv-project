@@ -45,6 +45,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('partner/products', ProductController::class)->names('partner.products');
     Route::patch('/partner/sales/{id}/status', [PartnerSalesController::class, 'updateStatus'])
         ->name('partner.sales.updateStatus');
+    Route::patch('partner/products/{product}/toggle', [ProductController::class, 'toggleAvailability'])
+        ->name('partner.products.toggleAvailability');
     //rotte per la view della sidebar
     Route::view('/partner/notifiche', 'partner.sidebarLink.notifiche')->name('partner.notifiche');
     Route::view('/partner/profilo', 'partner.sidebarLink.profilo')->name('partner.profilo');

@@ -36,6 +36,7 @@ $sidebarLinks = [
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,6 +48,7 @@ $sidebarLinks = [
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="w-full font-sans antialiased">
     <div class="text-white-900 ">
         <!-- drawer component -->
@@ -75,7 +77,7 @@ $sidebarLinks = [
                     @foreach ($sidebarLinks as $link)
                         <a href="{{ route($link['route']) }}"
                             class="flex items-center p-2 mb-3 rounded-md bg-gray-800 text-white
-                              {{ request()->routeIs($link['route']) ? 'border-l-4 bg-gray-600 border-gray-300 text-gray-300' : 'hover:bg-gray-700' }}">
+                                  {{ request()->routeIs($link['route']) ? 'border-l-4 bg-gray-600 border-gray-300 text-gray-300' : 'hover:bg-gray-700' }}">
                             {!! $link['icon'] !!}
                             <span>{{ $link['label'] }}</span>
                         </a>
@@ -99,7 +101,7 @@ $sidebarLinks = [
 
                 </ul>
             </div> -->
-<!-- logout -->
+            <!-- logout -->
             <div class="h-1/2  flex items-end">
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
@@ -127,4 +129,5 @@ $sidebarLinks = [
             @yield('content')
         </main>
 </body>
+
 </html>
