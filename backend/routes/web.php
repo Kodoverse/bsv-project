@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\EventCategoryController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\SubCategoryEventController;
 use App\Http\Controllers\Admin\UsersStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
@@ -82,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users/{user}', [AdminUsersController::class, 'show'])->name('users.show');
         Route::post('/users/{user}/role', [AdminUsersController::class, 'updateUserRole'])->name('users.updateRole');
         Route::resource('event-categories', EventCategoryController::class);
+        Route::resource('subcategories-event', SubCategoryEventController::class);
     });
 
 });

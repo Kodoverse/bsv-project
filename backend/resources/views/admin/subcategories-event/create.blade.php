@@ -19,7 +19,7 @@
 
                             <div class="flex justify-start">
 
-                                <form action="{{ route('admin.event-categories.store') }}" method="POST"
+                                <form action="{{ route('admin.subcategories-event.store') }}" method="POST"
                                     class="w-full max-w-xl">
                                     @csrf
                                     <div class="mb-5">
@@ -36,7 +36,29 @@
                                         @enderror
                                     </div>
 
-                                    
+                                    <div class="mb-5">
+                                        <label for="parent_id"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria
+                                            principale</label>
+                                        <select name="parent_id" required>
+                                            <option value=""
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('parent_id') is-invalid 
+                                  @enderror"
+                                                name="parent_id">
+                                                @error('parent_id')
+                                                    <div class="mt-1 text-sm text-red-500">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror>-- Seleziona categoria evento principale --
+                                            </option>
+                                            @foreach ($eventCategories as $eventCategory)
+                                                <option value="{{ $eventCategory->id }}">{{ $eventCategory->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+
+
 
 
 
@@ -51,7 +73,7 @@
                                     @endif
                                     <button type="submit"
                                         class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Create</button>
-                                    <a href="{{ route('admin.event-categories.index') }}"></a>
+                                    <a href="{{ route('admin.subcategories-event.index') }}"></a>
 
                                 </form>
 
@@ -60,5 +82,9 @@
 
 
     </x-app-layout>
+
+
+
+
 
 @endsection

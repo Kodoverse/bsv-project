@@ -10,8 +10,8 @@ class EventCategoryController extends Controller
 {
     public function index()
     {
-        $categoriesEvent = EventCategory::all();
-        return view("admin.event-categories.index", compact("categoriesEvent"));
+        $eventCategories = EventCategory::where("parent_id", null)->get();
+        return view("admin.event-categories.index", compact("eventCategories"));
     }
     public function create()
     {
