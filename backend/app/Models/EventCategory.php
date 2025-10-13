@@ -10,9 +10,12 @@ class EventCategory extends Model
 {
     use SoftDeletes;
 
+
     protected $fillable = [
         'name',
         'description',
+        'parent_id',
+        'slug',
         'color',
         'image'
     ];
@@ -36,5 +39,20 @@ class EventCategory extends Model
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'category_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(EventCategory::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(EventCategory::class, 'parent_id');
+    }
+
+    public function isSubcategory()
+    {
+        return !is_null($this->parent_id);
     }
 }
