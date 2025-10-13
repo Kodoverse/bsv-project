@@ -117,7 +117,7 @@ class User extends Authenticatable
      */
     public function eventRegistrations()
     {
-        return $this->hasMany(EventRegistration::class);
+        return $this->hasMany(EventRegistration::class, 'user_id');
     }
 
     /**

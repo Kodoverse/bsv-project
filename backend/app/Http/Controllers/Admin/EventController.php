@@ -76,6 +76,7 @@ class EventController extends Controller
     {
         $event->load([
             'category',
+            'category.parent',
             'creator',
             'registrations.user',
             'points.user'
