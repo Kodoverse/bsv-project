@@ -4,6 +4,7 @@ import flowbitePlugin from "flowbite/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: "class",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
@@ -36,23 +37,11 @@ export default {
                 sans: ["Inter", "Figtree", "sans-serif"],
             },
             colors: {
-                brand: {
-                    red: "#E4544B",
-                    orange: "#F2855D",
-                    yellow: "#F3C14A",
-                },
-                light: {
-                    bg: "#FFFFFF",
-                    card: "#F9FAFB",
-                    text: "#111827",
-                    textSecondary: "#4B5563",
-                },
-                dark: {
-                    bg: "#111827",
-                    card: "#1F2937",
-                    text: "#F9FAFB",
-                    textSecondary: "#D1D5DB",
-                },
+                background: "hsl(var(--color-background))",
+                sidebar: "hsl(var(--color-sidebar))",
+                surface: "hsl(var(--color-surface))",
+                foreground: "hsl(var(--color-foreground))",
+                muted: "hsl(var(--color-muted))",
             },
             boxShadow: {
                 // Light

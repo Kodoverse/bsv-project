@@ -1,4 +1,4 @@
-@extends('layouts.mystyle')
+@extends('layouts.admin')
 @section('content')
 
 <x-app-layout>

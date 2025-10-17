@@ -2,43 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    /* Card base */
-    .card {
-        @apply rounded-2xl p-6 transition-shadow;
-    }
-    .card-light {
-        @apply bg-light-card text-light-text shadow-card-light;
-    }
-    .dark .card-dark {
-        @apply bg-dark-card text-dark-text shadow-card-dark;
-    }
-
-    /* Bottoni */
-    .btn {
-        @apply px-4 py-2 rounded-xl font-medium transition-all;
-    }
-    .btn-primary {
-        @apply bg-brand-red text-white shadow-btn-light hover:shadow-lg;
-    }
-    .btn-secondary {
-        @apply bg-brand-orange text-white shadow-btn-light hover:shadow-lg;
-    }
-    .btn-warning {
-        @apply bg-brand-yellow text-black shadow-btn-light hover:shadow-lg;
-    }
-
-    /* Bottoni in dark mode */
-    .dark .btn-primary {
-        @apply bg-brand-red text-white shadow-btn-dark-red;
-    }
-    .dark .btn-secondary {
-        @apply bg-brand-orange text-white shadow-btn-dark-orange;
-    }
-    .dark .btn-warning {
-        @apply bg-brand-yellow text-black shadow-btn-dark-yellow;
-    }
-}
 * {
     margin: 0;
     padding: 0;
@@ -47,4 +10,29 @@
 
 [x-cloak] {
     display: none !important;
+}
+
+/*colori portale admin*/
+@layer base {
+    :root {
+        --color-background: 220 30% 90%; /* grigio molto chiaro */
+        --color-sidebar: 220 56% 95%; /* bianco sporco */
+        --color-surface: 0 0% 100%; /* bianco per card */
+        --color-foreground: 210 80% 9%; /* testo grigio scuro, no nero */
+        --color-muted: 220 15% 75%; /* separatori / bordi */
+    }
+
+    .dark {
+        --color-background: 220 12% 18%; /* antracite profondo */
+        --color-sidebar: 220 10% 22%; /* grigio antracite medio */
+        --color-surface: 220 10% 26%; /* grafite per card */
+        --color-foreground: 220 15% 85%; /* testo chiaro, no bianco */
+        --color-muted: 220 8% 40%; /* bordi scuri ma leggibili */
+    }
+}
+/*fine colori portale admin*/
+
+.emoji {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+        sans-serif;
 }

@@ -16,23 +16,24 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="w-full font-sans antialiased dark:bg-gray-900">
-    <div x-cloak x-data="{ open: true }" class="flex h-screen bg-white dark:bg-gray-900">
+<body class="w-full font-sans antialiased bg-background text-foreground">
+    <div x-cloak x-data="{ open: true }" class="flex h-screen">
 
         <!-- Sidebar -->
         <div class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 lg:static"
             :class="{
-                'w-56': $store.sidebar.open,
+                'w-64': $store.sidebar.open,
                 'w-0 lg:w-20': !$store.sidebar.open
             }">
             @include('layouts.sidebar')
         </div>
         <div x-show="$store.sidebar.open && window.innerWidth < 768" @click="$store.sidebar.open = false"
-            class="fixed inset-0 z-30 transition-opacity duration-300 bg-black bg-opacity-50 md:hidden"></div>
+            class="fixed inset-0 z-30 transition-opacity duration-300 bg-opacity-50 md:hidden"></div>
 
         <!-- Main -->
-        <main class="flex-1 overflow-y-auto transition-all duration-300 bg-white dark:bg-gray-900">
-            @include('components.searchbar')
+        <main class="flex-1 overflow-y-auto transition-all duration-300">
+                <x-upper-nav-component />
+
             @yield('content')
         </main>
 
@@ -41,3 +42,11 @@
 </body>
 
 </html>
+
+
+<style>
+    main{
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+</style>

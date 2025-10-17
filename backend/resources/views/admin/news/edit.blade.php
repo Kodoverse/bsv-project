@@ -1,4 +1,4 @@
-@extends("layouts.mystyle")
+@extends("layouts.admin")
 @section("content")
 
 
@@ -12,16 +12,16 @@
           <div class="w-full">
               <div>
                   <div class="flex justify-between">
-                      <div v-if="user" class="flex flex-col gap-5 ps-6 py-6">
+                      <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
                           <h1 class="text-3xl tracking-wide uppercase">Edit this Article</h1>
                       </div>
                   </div>
 
-                  <div class="px-6 w-full">
+                  <div class="w-full px-6">
 
                       <div class="flex justify-start">
                           
-                        <form action="{{ route('articles.update', $article->id) }}" enctype="multipart/form-data" method="POST" class="max-w-xl w-full">
+                        <form action="{{ route('articles.update', $article->id) }}" enctype="multipart/form-data" method="POST" class="w-full max-w-xl">
                           @csrf
                           @method('PUT')
                         <div class="mb-5">

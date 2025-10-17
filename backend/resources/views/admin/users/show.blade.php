@@ -1,4 +1,4 @@
-@extends('layouts.mystyle')
+@extends('layouts.admin')
 @section('content')
     <x-app-layout>
         <div x-data="userRoleModal({{ $userData->id }}, '{{ $userData->user_role }}')">

@@ -1,4 +1,4 @@
-@extends('layouts.mystyle')
+@extends('layouts.admin')
 @section('content')
     <x-app-layout>
         <div class="flex flex-wrap w-1/2 gap-4 mx-auto justify-content-center">

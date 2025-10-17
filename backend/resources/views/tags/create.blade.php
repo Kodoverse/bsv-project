@@ -1,4 +1,4 @@
-@extends("layouts.mystyle")
+@extends("layouts.admin")
 @section("content")
 
 <x-app-layout>
@@ -10,16 +10,16 @@
             <div class="w-full">
                 <div>
                     <div class="flex justify-between">
-                        <div v-if="user" class="flex flex-col gap-5 ps-6 py-6">
+                        <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
                             <h1 class="text-3xl tracking-wide uppercase">Add a Tag</h1>
                         </div>
                     </div>
 
-                    <div class="px-6 w-full">
+                    <div class="w-full px-6">
 
                         <div class="flex justify-start">
                             
-                            <form action="{{ route('tags.store') }}" enctype="multipart/form-data" method="POST" class="max-w-xl w-full">
+                            <form action="{{ route('tags.store') }}" enctype="multipart/form-data" method="POST" class="w-full max-w-xl">
                                 @csrf
                               <div class="mb-5">
                                   <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>

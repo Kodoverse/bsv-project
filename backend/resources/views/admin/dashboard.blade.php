@@ -1,64 +1,58 @@
-@extends('layouts.mystyle')
+@extends('layouts.admin')
 @section('content')
     <x-app-layout>
 
 
-
-        <div class="flex flex-col items-center w-full overflow-hidden">
+        <div class="flex flex-col items-center w-full overflow-hidden bg-background">
             <div class="w-full py-6">
                 <div class="w-full">
                     <!-- Header -->
                     <div
-                        class="mx-6 border-b rounded-2xl bg-gradient-to-r from-brand-yellow/70 to-brand-red border-gray-700/50 backdrop-blur-sm">
+                        class="mx-6 bg-background rounded-2xl">
                         <div class="px-4 py-6 sm:px-6 md:px-8 lg:px-12">
                             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <div>
                                     <h1 class="text-4xl font-black md:text-4xl lg:text-4xl">
                                         <span
-                                            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-200 to-orange-300">
-                                            Ciao {{ $user->email }}
+                                            class="text-transparent">
+                                             <span class="shine-text">{{ $messageText }}</span>
                                         </span>
-                                        <span class="hidden mt-2 text-2xl font-bold text-white md:text-2xl lg:text-2xl">
-                                            Hai 6 nuove Notifiche
-                                        </span>
+                                        <span class="emoji">{{ $messageEmoji }}</span>
                                     </h1>
-                                    <div class="w-20 h-1 mt-4 bg-gradient-to-r from-orange-400 to-red-400"></div>
-                                </div>
-                                <!-- Admin Role Display -->
-                                <div class="text-right">
-                                    <p class="text-xl font-bold {{ $roleColorClass ?? '' }}">
-                                        {{ ucfirst($userRole ?? 'Admin') }} Access
-                                    </p>
+                                    <span class="mt-2 text-2xl font-bold text-foreground md:text-2xl lg:text-2xl">
+                                        Hai 6 nuove Notifiche
+                                    </span>
+                                    <div class="w-20 h-1 mt-4 dark:bg-white shine-text"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <main class="min-h-screen p-6 bg-gray-900">
+                    <main class="min-h-screen p-6 bg-background">
                         <div class="grid gap-6 xl:grid-cols-12">
                             <!-- COLONNA SINISTRA (5/12) -->
                             <div class="flex flex-col gap-6 xl:col-span-5">
                                 <!-- Riepilogo Attività -->
-                                <section class="p-6 text-gray-100 bg-gray-800 shadow rounded-2xl">
-                                    <h2 class="mb-4 text-lg font-semibold">Riepilogo Attività</h2>
-                                    <div class="grid gap-4 sm:grid-cols-2">
-                                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-xl">
-                                            <span>Utenti</span><span class="text-2xl font-bold">89</span>
+                                <section class="p-6 text-gray-100 rounded shadow bg-surface">
+                                    <h2 class="mb-4 text-lg font-semibold text-foreground">Riepilogo Attività</h2>
+                                    <div class="grid gap-4 sm:grid-cols-2 text-foreground ">
+                                        <div class="flex items-center justify-between p-4 rounded bg-sidebar">
+                                            <span>Utenti</span><span class="text-2xl font-bold text-foreground">89</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-xl">
-                                            <span>Tutti gli eventi</span><span class="text-2xl font-bold">17</span>
+                                        <div class="flex items-center justify-between p-4 rounded bg-sidebar">
+                                            <span>Tutti gli eventi</span><span class="text-2xl font-bold text-foreground">17</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-xl">
-                                            <span>Prossimi Eventi</span><span class="text-2xl font-bold">7</span>
+                                        <div class="flex items-center justify-between p-4 rounded bg-sidebar">
+                                            <span>Prossimi Eventi</span><span class="text-2xl font-bold text-foreground">7</span>
                                         </div>
-                                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-xl">
-                                            <span>Registrazioni Eventi</span><span class="text-2xl font-bold">42</span>
+                                        <div class="flex items-center justify-between p-4 rounded bg-sidebar">
+                                            <span>Registrazioni Eventi</span><span class="text-2xl font-bold text-foreground">42</span>
                                         </div>
                                     </div>
                                 </section>
 
                                 <!-- Riepilogo visite -->
-                                <section class="flex-1 p-6 text-gray-100 bg-gray-800 shadow rounded-2xl">
+                                <section class="flex-1 p-6 text-gray-100 bg-gray-800 shadow rounded-2xl bg-surface">
                                     <h2 class="mb-4 text-lg font-semibold">Riepilogo visite 2025</h2>
                                     <div class="flex items-center justify-center h-64 text-gray-400">[Grafico]</div>
                                 </section>
@@ -67,7 +61,7 @@
                             <!-- COLONNA DESTRA (7/12) -->
                             <div class="flex flex-col gap-6 xl:col-span-7">
                                 <!-- Eventi in programma -->
-                                <section class="p-6 text-gray-100 bg-gray-800 shadow rounded-2xl">
+                                <section class="p-6 text-gray-100 bg-gray-800 shadow rounded-2xl bg-surface">
                                     <div class="flex items-center justify-between mb-4">
                                         <h2 class="text-lg font-semibold">Ultimi Eventi in programma</h2>
                                         <a href="#" class="text-sm text-gray-400 hover:text-gray-200">Mostra tutti</a>
@@ -83,7 +77,7 @@
                                     </div>
 
                                     <!-- Righe -->
-                                    <div class="space-y-2 text-sm">
+                                    <div class="space-y-2 text-sm bg-surface">
                                         <div class="grid items-center grid-cols-6 p-3 text-center bg-gray-700/60 rounded-xl">
                                             <div>Evento 1</div>
                                             <div>Volontariato</div>
@@ -130,7 +124,7 @@
                                 </section>
 
                                 <!-- Ultimi redeem -->
-                                <section class="flex-1 p-6 text-gray-100 bg-gray-800 shadow rounded-2xl">
+                                <section class="flex-1 p-6 text-gray-100 shadow bg-surface rounded-xl">
                                     <div class="flex items-center justify-between mb-4">
                                         <h2 class="text-lg font-semibold">Ultimi redeem</h2>
                                         <a href="#" class="text-sm text-gray-400 hover:text-gray-200">Mostra tutti</a>
@@ -225,3 +219,29 @@
         </div>
     </x-app-layout>
 @endsection
+
+<style>
+    @keyframes shine {
+  0% {
+    background-position: -200%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+.shine-text {
+  background-image: linear-gradient(
+    90deg,
+    #b8860b 0%,
+    #c9ac07 25%,
+    #cac2a3 50%,
+    #ffd700 75%,
+    #b8860b 100%
+  );
+  background-size: 200%;
+  animation: shine 10s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
