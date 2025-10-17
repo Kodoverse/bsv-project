@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\BusinessCategory;
+use App\Models\Business;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +16,7 @@ class PartnerDashboardController extends Controller
     {
         $user = Auth::user()->load('partnerInfo');
 
-        if (! $user->isPartner()) {
+        if (!$user->isPartner()) {
             return response()->json(['message' => 'Accesso negato'], 403);
         }
 
@@ -77,7 +80,12 @@ class PartnerDashboardController extends Controller
                 ->completed()
                 ->sum('points_spent'),
 
+            'business_profile' => $user->businesses()->get(),
+            'categoriesBusiness' => BusinessCategory::all(),
+
         ];
+
+
 
         // dd($request);
 
@@ -88,7 +96,7 @@ class PartnerDashboardController extends Controller
             'userRole',
             'roleColorClass',
             'stats',
-            'dashboardData'
+            'dashboardData',
         ));
     }
 }

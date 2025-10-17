@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\UsersStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\PartnerDashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -40,19 +40,26 @@ Route::get('/', function () {
 Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardStats'])->name('admin.dashboard');
 
 //rotte partner
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/partner', [PartnerDashboardController::class, 'partnerDashboardStats'])->name('partner.dashboard');
-    Route::resource('partner/products', ProductController::class)->names('partner.products');
-    Route::patch('/partner/sales/{id}/status', [PartnerSalesController::class, 'updateStatus'])
-        ->name('partner.sales.updateStatus');
-    Route::patch('partner/products/{product}/toggle', [ProductController::class, 'toggleAvailability'])
-        ->name('partner.products.toggleAvailability');
-    //rotte per la view della sidebar
-    Route::view('/partner/notifiche', 'partner.sidebarLink.notifiche')->name('partner.notifiche');
-    Route::view('/partner/profilo', 'partner.sidebarLink.profilo')->name('partner.profilo');
-    Route::view('/partner/impostazioni', 'partner.sidebarLink.impostazioni')->name('partner.impostazioni');
+Route::prefix('partner')->name('partner.')->middleware(['auth', 'verified'])->group(function () {
 
+    Route::get('/', [PartnerDashboardController::class, 'partnerDashboardStats'])
+        ->name('dashboard');
 
+    Route::resource('products', ProductController::class)
+        ->names('products');
+
+    Route::patch('/sales/{id}/status', [PartnerSalesController::class, 'updateStatus'])
+        ->name('sales.updateStatus');
+
+    Route::patch('products/{product}/toggle', [ProductController::class, 'toggleAvailability'])
+        ->name('products.toggleAvailability');
+
+    Route::resource('business', BusinessController::class)->names('business');
+
+    // Rotte per la sidebar
+    Route::view('/notifiche', 'partner.sidebarLink.notifiche')->name('notifiche');
+    Route::view('/profilo', 'partner.sidebarLink.profilo')->name('profilo');
+    Route::view('/impostazioni', 'partner.sidebarLink.impostazioni')->name('impostazioni');
 });
 
 //rotte web

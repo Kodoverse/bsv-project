@@ -29,11 +29,19 @@ class PartnerInfo extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function businesses()
+    public function business()
     {
-        return $this->hasMany(Business::class, 'partner_id');
+        return $this->hasOne(Business::class, 'partner_id', 'user_id');
     }
+
+    public function scopeForPartner($query)
+    {
+        return $query->whereHas('user', function ($q) {
+            $q->where('user_role', 'partner');
+        });
+    }
+
 }

@@ -90,7 +90,7 @@ class Product extends Model
      */
     public function getFormattedPriceAttribute(): string
     {
-        return number_format($this->points_price).' points';
+        return number_format($this->points_price) . ' points';
     }
 
     /**
@@ -130,7 +130,9 @@ class Product extends Model
      */
     public function scopeForPartner($query, $partnerId)
     {
-        return $query->where('partner_id', $partnerId);
+        return $query->whereHas('business', function ($q) use ($partnerId) {
+            $q->where('partner_id', $partnerId);
+        });
     }
 
     /**
@@ -148,6 +150,6 @@ class Product extends Model
 
     public function business()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class, 'business_id');
     }
 }

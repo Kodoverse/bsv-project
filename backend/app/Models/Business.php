@@ -24,7 +24,7 @@ class Business extends Model
 
     public function partner()
     {
-        return $this->belongsTo(PartnerInfo::class, 'partner_id');
+        return $this->belongsTo(User::class, 'partner_id');
     }
 
     public function businessCategory()
@@ -34,6 +34,6 @@ class Business extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'business_id');
     }
 }

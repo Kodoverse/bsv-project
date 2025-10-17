@@ -67,27 +67,29 @@ return [
     'partner_infos' => [
         [
             'id' => 1,
-            'name' => 'Claudio',
-            'lastname' => 'Biondi',
+            'user_id' => 4,
+            'name' => 'Frank',
+            'lastname' => 'Coppola',
             'birthday' => '1992-04-25',
             'contact_phone' => '334562837',
             'redemption_rules' => '',
             'min_points_per_redemption' => 10,
             'max_points_per_redemption' => 1000,
             'is_active' => 1,
-            'user_id' => 4
+
         ],
         [
             'id' => 2,
-            'name' => 'Fabrizio',
-            'lastname' => 'Giraudo',
+            'user_id' => 3,
+            'name' => 'Giò',
+            'lastname' => 'Banana',
             'birthday' => '1975-04-25',
             'contact_phone' => '332548937',
             'redemption_rules' => '',
             'min_points_per_redemption' => 10,
             'max_points_per_redemption' => 1000,
             'is_active' => 0,
-            'user_id' => 3,
+
         ],
     ],
     'events' => [
@@ -152,7 +154,7 @@ return [
             'user_id' => 6,
             'status' => 'registered',
             'notes' => '',
-        ]
+        ],
     ],
 
     'points' => [
@@ -173,6 +175,32 @@ return [
             'reason' => 'Bravo',
         ],
     ],
+    'businesses' => [
+        [
+            'id' => 1,
+            'name' => 'Bar Nazionale',
+            'business_category_id' => 1,
+            'partner_id' => 3,
+            'description' => 'Un Bar',
+            'logo' => null,
+            'address' => 'Vicino al centro commerciale, Villaseta',
+            'work_hours' => null,
+            'email' => 'barnazionale@gmail.com',
+            'website' => 'barnazionale.vs',
+        ],
+        [
+            'id' => 2,
+            'name' => 'Ristorante Internazione',
+            'business_category_id' => 2,
+            'partner_id' => 4,
+            'description' => 'Un ristorante',
+            'logo' => null,
+            'address' => 'Via rotondi, 3',
+            'work_hours' => null,
+            'email' => 'restinternazionale@gmail.com',
+            'website' => 'restinternazionale@gmail.com',
+        ],
+    ],
     'business_categories' => [
         [
             'id' => 1,
@@ -188,11 +216,11 @@ return [
     'products' => [
         [
             'id' => 1,
-            'partner_id' => 1,
+            'business_id' => 1,
             'category_id' => 1,
-            'name' => 'caffe',
-            'description' => 'caffe',
-            'image_url' => null,
+            'name' => 'Massaggi',
+            'description' => 'Massaggi per le pal... ehm per la pelle.',
+            'image_url' => 'best-bouncing-boobs.gif',
             'points_price' => 20,
             'cash_equivalent' => 40,
             'stock_quantity' => 5,
@@ -201,8 +229,190 @@ return [
         ],
         [
             'id' => 2,
-            'partner_id' => 2,
+            'business_id' => 2,
             'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 3,
+            'business_id' => 2,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 4,
+            'business_id' => 1,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 5,
+            'business_id' => 2,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 6,
+            'business_id' => 1,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 7,
+            'business_id' => 2,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 8,
+            'business_id' => 1,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 9,
+            'business_id' => 2,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 10,
+            'business_id' => 1,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 11,
+            'business_id' => 2,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 12,
+            'business_id' => 1,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 13,
+            'business_id' => 1,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 14,
+            'business_id' => 2,
+            'category_id' => 1,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 15,
+            'business_id' => 2,
+            'category_id' => 2,
+            'name' => 'Cibo',
+            'description' => 'Cibo',
+            'image_url' => null,
+            'points_price' => 20,
+            'cash_equivalent' => 40,
+            'stock_quantity' => 10,
+            'is_available' => 1,
+            'metadata' => null,
+        ],
+        [
+            'id' => 16,
+            'business_id' => 2,
+            'category_id' => 1,
             'name' => 'Cibo',
             'description' => 'Cibo',
             'image_url' => null,
@@ -216,7 +426,7 @@ return [
     'product_categories' => [
         [
             'id' => 1,
-            'name' => 'Food'
+            'name' => 'Food',
         ],
         [
             'id' => 2,
@@ -250,34 +460,9 @@ return [
             'notes' => '',
             'confirmed_at' => '2025-10-01 15:02:03',
             'completed_at' => '2025-10-04 11:28:54',
-        ]
-    ],
-    'businesses' => [
-        [
-            'id' => 1,
-            'name' => 'Bar Nazionale',
-            'business_category_id' => 1,
-            'partner_info_id' => 1,
-            'description' => 'Un Bar',
-            'logo' => null,
-            'address' => 'Vicino al centro commerciale, Villaseta',
-            'work_hours' => null,
-            'email' => 'barnazionale@gmail.com',
-            'website' => 'barnazionale.vs'
-        ],
-        [
-            'id' => 1,
-            'name' => 'Ristorante Internazione',
-            'business_category_id' => 2,
-            'partner_info_id' => 2,
-            'description' => 'Un ristorante',
-            'logo' => null,
-            'address' => 'Via rotondi, 3',
-            'work_hours' => null,
-            'email' => 'restinternazionale@gmail.com',
-            'website' => 'restinternazionale@gmail.com'
         ],
     ],
+
     'sidebar_items' => [
         [
             'id' => 1,
@@ -430,7 +615,7 @@ return [
             'order' => 5,
         ],
 
-        //Voci Sidebar
+        // Voci Sidebar
         [
             'id' => 14,
             'label' => 'Notifiche',
@@ -452,9 +637,7 @@ return [
             'order' => 0,
         ],
 
-
     ],
-
 
     'tags' => [
         [
@@ -469,7 +652,7 @@ return [
         [
             'id' => 3,
             'name' => 'Science',
-        ]
+        ],
     ],
 
     'articles' => [
@@ -477,14 +660,14 @@ return [
             'id' => 1,
             'title' => 'The Future of AI',
             'subtitle' => 'Exploring GPT models',
-            'article' => 'Lorem ipsum AI...'
+            'article' => 'Lorem ipsum AI...',
         ],
 
         [
             'id' => 2,
             'title' => 'Impressionism',
             'subtitle' => 'A revolution in color',
-            'article' => 'The Impressionist movement...'
+            'article' => 'The Impressionist movement...',
         ],
     ],
 
@@ -496,7 +679,7 @@ return [
             'article_id' => 1,
             'is_flagged' => false,
             'predefinite_comment' => null,
-            'user_id' => 1
+            'user_id' => 1,
         ],
         [
             'id' => 2,
@@ -505,7 +688,7 @@ return [
             'article_id' => 1,
             'is_flagged' => false,
             'predefinite_comment' => 'very good',
-            'user_id' => 1
+            'user_id' => 1,
         ],
         [
             'id' => 3,
@@ -514,34 +697,33 @@ return [
             'article_id' => 2,
             'is_flagged' => true,
             'predefinite_comment' => null,
-            'user_id' => 1
+            'user_id' => 1,
         ],
     ],
 
     'sections' => [
         [
             'id' => 1,
-            'title' => 'Home'
+            'title' => 'Home',
         ],
         [
             'id' => 2,
-            'title' => 'About Us'
+            'title' => 'About Us',
         ],
     ],
-
 
     'page_sections' => [
         [
             'id' => 1,
             'type' => 'text',
             'content' => 'Welcome to our homepage!',
-            'section_id' => 1
+            'section_id' => 1,
         ],
         [
             'id' => 2,
             'type' => 'text',
             'content' => 'We are passionate about knowledge.',
-            'section_id' => 2
+            'section_id' => 2,
         ],
     ],
 
@@ -552,7 +734,7 @@ return [
             'alt' => 'AI Article Cover',
             'link' => '/img/ai-cover.jpg',
             'article_id' => 1,
-            'page_section_id' => 1
+            'page_section_id' => 1,
         ],
         [
             'id' => 2,
@@ -560,7 +742,7 @@ return [
             'alt' => 'Team Photo',
             'link' => '/img/team.jpg',
             'article_id' => null,
-            'page_section_id' => 2
+            'page_section_id' => 2,
         ],
     ],
     'flagged_comments' => [
@@ -590,20 +772,4 @@ return [
         ],
     ],
 
-
-
-
-
-
-
-
-
-
 ];
-
-
-
-
-
-
-

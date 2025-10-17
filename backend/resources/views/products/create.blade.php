@@ -20,7 +20,16 @@
             <form action="{{ route('partner.products.store') }}" method="POST" enctype="multipart/form-data"
                 class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @csrf
-
+                @if ($errors->any())
+                    <div class="col-span-2 lg:col-span-3 bg-red-100 text-red-800 p-4 rounded-lg">
+                        <strong>Attenzione!</strong> Ci sono degli errori nel form.<br>
+                        <ul class="mt-2 list-disc list-inside">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 {{-- Nome --}}
                 <div class="col-span-1">
                     <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome</label>
@@ -111,12 +120,6 @@
                         </div>
 
                     </div>
-
-
-
-
-
-
                     @error('is_available')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -143,7 +146,7 @@
                         prodotto</label>
                     <input type="file" id="uploadImage" accept="image/*" name="image_url" value="{{ old('image_cover') }}"
                         class="mt-1 block w-full text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer focus:outline-none p-2.5">
-                    @error('image')
+                    @error('image_url')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
