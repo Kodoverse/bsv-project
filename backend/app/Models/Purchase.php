@@ -16,7 +16,6 @@ class Purchase extends Model
         'points_spent',
         'points_per_item',
         'status',
-        'redemption_code',
         'notes',
         'confirmed_at',
         'completed_at'
@@ -29,32 +28,6 @@ class Purchase extends Model
         'confirmed_at' => 'datetime',
         'completed_at' => 'datetime'
     ];
-
-    /**
-     * Boot method to generate redemption code
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($purchase) {
-            if (empty($purchase->redemption_code)) {
-                $purchase->redemption_code = static::generateRedemptionCode();
-            }
-        });
-    }
-
-    /**
-     * Generate unique redemption code
-     */
-    public static function generateRedemptionCode(): string
-    {
-        do {
-            $code = strtoupper(Str::random(8));
-        } while (static::where('redemption_code', $code)->exists());
-
-        return $code;
-    }
 
     /**
      * Get the user who made the purchase
@@ -154,7 +127,7 @@ class Purchase extends Model
      */
     public function getStatusBadgeClassAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'pending' => 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
             'confirmed' => 'bg-blue-500/20 text-blue-400 border-blue-500/30',
             'completed' => 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -168,7 +141,7 @@ class Purchase extends Model
      */
     public function getFormattedStatusAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'pending' => 'Pending',
             'confirmed' => 'Confirmed',
             'completed' => 'Completed',
@@ -215,5 +188,10 @@ class Purchase extends Model
     public function scopeForUser($query, $userId)
     {
         return $query->where('user_id', $userId);
+    }
+
+    public function qrCode()
+    {
+        return $this->hasOne(QrCode::class);
     }
 }

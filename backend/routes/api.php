@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\EventRegistrationController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\PartnerInfoController;
 use App\Http\Controllers\Api\PointController;
+use App\Http\Controllers\Api\QrCodeController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -112,13 +114,19 @@ Route::prefix('products')->group(function () {
 // Purchase Management
 Route::prefix('purchases')->middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\Api\PurchaseController::class, 'index']);
-    Route::post('/', [App\Http\Controllers\Api\PurchaseController::class, 'store']);
+    Route::post('/buy', [App\Http\Controllers\Api\PurchaseController::class, 'store']);
     Route::get('/stats', [App\Http\Controllers\Api\PurchaseController::class, 'partnerStats']);
     Route::post('/verify', [App\Http\Controllers\Api\PurchaseController::class, 'verify']);
     Route::get('/{purchase}', [App\Http\Controllers\Api\PurchaseController::class, 'show']);
     Route::post('/{purchase}/confirm', [App\Http\Controllers\Api\PurchaseController::class, 'confirm']);
     Route::post('/{purchase}/complete', [App\Http\Controllers\Api\PurchaseController::class, 'complete']);
     Route::post('/{purchase}/cancel', [App\Http\Controllers\Api\PurchaseController::class, 'cancel']);
+
+});
+
+Route::prefix('qrcode')->group(function () {
+    Route::post('/generate/{purchaseId}', [QrCodeController::class, 'generate']);   // crea un QR per una purchase
+    Route::post('/redeem/{code}', [QrCodeController::class, 'redeem']); // riscatta un QR
 });
 
 // Partner Info routes
@@ -126,7 +134,8 @@ Route::prefix('businesses')->group(function () {
     // Public routes
     Route::get('/', [PartnerInfoController::class, 'index']);
     Route::get('/categories', [PartnerInfoController::class, 'categories']);
-    Route::get('/{id}', [PartnerInfoController::class, 'showBusiness']);
+    Route::get('/negozi', [PartnerInfoController::class, 'getAllBusinesses']);
+    Route::get('/business/{id}/products', [PartnerInfoController::class, 'getProductsByBusiness']);
 
     // Protected routes
     Route::middleware(['auth'])->group(function () {

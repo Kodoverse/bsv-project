@@ -19,6 +19,12 @@ class PartnerSalesController extends Controller
         ]);
 
         $sale->status = $request->status;
+        if ($request->status == 'completed') {
+            $sale->completed_at = now();
+        }
+        if ($request->status == 'confirmed') {
+            $sale->confirmed_at = now();
+        }
         $sale->save();
 
         return redirect()->back()->with('success', 'Order status updated!');

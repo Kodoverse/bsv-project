@@ -1,7 +1,7 @@
 @extends('layouts.partner')
 
 @section('content')
-    <div class="max-w-6xl mx-auto p-8 bg-gray-800 text-white rounded-2xl shadow-lg space-y-8">
+    <div class=" max-w-6xl mx-auto p-8 bg-gray-800 text-white rounded-2xl shadow-lg space-y-8">
         <div class="mb-6">
             <a href="{{ route('partner.dashboard', ['tab' => 'profile']) }}"
                 class="inline-flex items-center px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
@@ -15,7 +15,7 @@
 
         </div>
 
-        {{-- Sezione principale: logo + info azienda --}}
+        <!-- Sezione principale: logo + info azienda -->
         <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
             {{-- Logo --}}
             <div class="w-full md:w-1/3 flex justify-center md:justify-start">
@@ -35,10 +35,10 @@
             </div>
         </div>
 
-        {{-- Divider --}}
+        <!--  Divider -->
         <hr class="border-gray-700">
 
-        {{-- Dati partner --}}
+        <!-- Dati partner  -->
         <div class="space-y-4">
             <h2 class="text-2xl font-bold">Dati del Partner</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -61,18 +61,21 @@
             </div>
         </div>
 
-        {{-- Eventuale sezione prodotti --}}
-        @if($business->products->count())
-            <hr class="border-gray-700">
-            <div class="space-y-4">
-                <h2 class="text-2xl font-bold">Prodotti</h2>
+        <!-- Eventuale sezione prodotti  -->
+        <hr class="border-gray-700">
+
+        <div class="space-y-4 pb-16">
+            <h2 class="text-2xl font-bold">Prodotti</h2>
+
+            @if($business->products->count())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($business->products as $product)
-                        <div class="bg-gray-700 rounded-xl p-4 flex flex-col items-center space-y-4">
+                        <div
+                            class="bg-gray-700 rounded-xl p-4 flex flex-col items-center space-y-4 shadow-md hover:shadow-lg transition">
                             <img src="{{ $product->image_url ? Storage::url($product->image_url) : asset('images/placeholder.png') }}"
                                 alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-lg">
                             <h3 class="text-lg font-semibold">{{ $product->name }}</h3>
-                            <p class="text-gray-300">{{ $product->description }}</p>
+                            <p class="text-gray-300 text-center line-clamp-3">{{ $product->description }}</p>
                             <p class="text-gray-300 font-semibold">{{ $product->points_price }} punti</p>
                             <p class="{{ $product->is_available ? 'text-green-400' : 'text-red-400' }}">
                                 {{ $product->is_available ? 'Disponibile' : 'Non disponibile' }}
@@ -80,9 +83,17 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
-        @endif
-
+            @else
+                <!-- Nessun prodotto  -->
+                <div class="flex flex-col items-center justify-center py-16 text-center text-gray-400 space-y-4">
+                    <svg class="w-16 h-16 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 13h6m-3-3v6m-7 7h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z" />
+                    </svg>
+                    <p class="text-lg">Non ci sono ancora prodotti per questa attività.</p>
+                </div>
+            @endif
+        </div>
     </div>
-
 @endsection

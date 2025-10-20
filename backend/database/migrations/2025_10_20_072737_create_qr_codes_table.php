@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('points', function (Blueprint $table) {
+        Schema::create('qr_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('event_id')->constrained()->onDelete('cascade');
-            $table->integer('points');
-            $table->string('reason')->nullable();
+            $table->foreignId('purchase_id')->constrained('purchases')->OnDelete('cascade');
+            $table->string('code')->unique();
+            $table->boolean('is_used')->default(false);
+            $table->timestamp('used_at')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('points');
+        Schema::dropIfExists('qr_codes');
     }
 };
