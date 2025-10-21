@@ -110,5 +110,15 @@ window.productHandler = () => {
 
 Alpine.store("sidebar", {
     open: true,
+    openId: null,
+    visible: window.innerWidth >= 1024,
+    init() {
+        window.addEventListener("resize", () => {
+            this.visible = window.innerWidth >= 1024 ? true : false;
+        });
+    },
+    get isMobile() {
+        return window.innerWidth < 1024;
+    },
 });
 Alpine.start();

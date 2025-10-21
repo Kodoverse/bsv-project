@@ -20,20 +20,24 @@
     <div x-cloak x-data="{ open: true }" class="flex h-screen">
 
         <!-- Sidebar -->
-        <div class="fixed top-0 left-0 z-40 h-screen text-white transition-all duration-300 lg:static"
-            :class="{
-                'w-64': $store.sidebar.open,
-                'w-0 lg:w-20': !$store.sidebar.open
-            }">
+        <div class="hidden h-screen transition-all duration-300 lg:flex" :class="$store.sidebar.open ? 'w-64' : 'w-20'">
             @include('layouts.sidebar')
         </div>
-        <div x-show="$store.sidebar.open && window.innerWidth < 768" @click="$store.sidebar.open = false"
-            class="fixed inset-0 z-30 transition-opacity duration-300 bg-opacity-50 md:hidden"></div>
+
+        <!-- Wrapper mobile -->
+        <div class="fixed top-0 left-0 z-40 h-screen bg-sidebar lg:hidden" x-show="$store.sidebar.visible"
+            x-transition:enter="transition transform duration-300" x-transition:enter-start="-translate-x-full"
+            x-transition:enter-end="translate-x-0" x-transition:leave="transition transform duration-300"
+            x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-cloak>
+            @include('layouts.sidebar')
+        </div>
+
 
         <!-- Main -->
         <main class="flex-1 overflow-y-auto transition-all duration-300">
+              
                 <x-upper-nav-component />
-
+    
             @yield('content')
         </main>
 
@@ -45,7 +49,7 @@
 
 
 <style>
-    main{
+    main {
         border-top-right-radius: 30px;
         border-bottom-right-radius: 30px;
     }

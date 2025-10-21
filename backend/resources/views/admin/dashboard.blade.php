@@ -8,8 +8,8 @@
                 <div class="w-full">
                     <!-- Header -->
                     <div
-                        class="mx-6 bg-background rounded-2xl">
-                        <div class="px-4 py-6 sm:px-6 md:px-8 lg:px-12">
+                        class="mx-3 bg-background rounded-2xl">
+                        <div class="px-6 py-6">
                             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <div>
                                     <h1 class="text-4xl font-black md:text-4xl lg:text-4xl">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <main class="min-h-screen p-6 bg-background">
+                    <main class="p-6 bg-background">
                         <div class="grid gap-6 xl:grid-cols-12">
                             <!-- COLONNA SINISTRA (5/12) -->
                             <div class="flex flex-col gap-6 xl:col-span-5">
