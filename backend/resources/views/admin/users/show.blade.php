@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     <x-app-layout>
+        <x-page-header
+        :title="$userData->user_role === 'partner' ? 'Partner' : 'Utente' . $userData->firstame"/>
         <div x-data="userRoleModal({{ $userData->id }}, '{{ $userData->user_role }}')">
         <button @click="open = true" class="px-2 py-1 text-white bg-blue-500 rounded">
             Modifica Ruolo

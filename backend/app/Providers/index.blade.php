@@ -3,7 +3,7 @@
     <x-app-layout>
         <x-page-header
     title="Eventi"
-
+    icon="lucide-calendar"
 />
         <div class="flex flex-wrap w-1/2 gap-4 mx-auto justify-content-center">
             @foreach ($events as $event)

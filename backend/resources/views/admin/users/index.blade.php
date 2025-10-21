@@ -2,9 +2,8 @@
 
 @section('content')
 <x-app-layout>
-    <div class="w-5/6 mx-auto">
-        <h1 class="my-6 text-4xl text-white">Gestione Utenti</h1>
-    </div>
+    <x-page-header
+    title="Gestione Utenti"/>
 
     <div x-data="{ activeTab: 'users' }" class="w-full mt-3">
         <!-- Tabs Navigation -->

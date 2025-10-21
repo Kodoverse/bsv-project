@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     <x-app-layout>
+        <x-page-header
+    title="{{ $event->title }}"
+
+/>
         <div class="p-6">
             <div class="flex gap-6">
                 <div class="flex flex-wrap w-1/2 gap-4 mx-auto justify-content-center">

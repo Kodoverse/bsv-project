@@ -22,7 +22,7 @@ class AdminController extends Controller
         $roleColorClass = $userRole === 'admin' ? 'text-timenge-400' : 'text-blue-400';
 
         $messages = [
-            'mattina' => ['Buongiorno', 'Buona giornata Splendido inizio di giornata', 'Che bella mattinata', 'Inizia la giornata con il sorriso', 'Una mattina piena di energia', 'Svegliati e risplendi'],
+            'mattina' => ['Buongiorno', 'Buona giornata', 'Splendido inizio di giornata', 'Che bella mattinata', 'Inizia la giornata con il sorriso', 'Una mattina piena di energia', 'Svegliati e risplendi'],
             'pomeriggio' => ['Buon pomeriggio', 'Splendido pomeriggio', 'Una pausa rigenerante', 'Continua cosi, sei sulla buona strada', 'Goditi il pomeriggio', 'Pomeriggio produttivo', 'Che bel pomeriggio'],
             'sera' => ['Buonasera', 'Buona serata', 'Tramonto rilassante', 'Serata rilassante a te', 'Fine giornata con il sorriso', 'Spero tu stia passando una bella serata', 'Tempo di relax', 'Che la tua serata sia serena'],
             'notte' => ['Buonanotte', "Sogni d'oro", 'Riposa bene', 'Notte tranquilla a te'],

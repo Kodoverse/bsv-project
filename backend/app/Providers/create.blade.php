@@ -3,6 +3,7 @@
 
     <x-app-layout>
 
+
         <div class="flex flex-col items-center w-full overflow-hidden">
 
             <div class="w-full py-12">
@@ -168,10 +169,10 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('max_participants') i
                                             </ul>
                                         </div>
                                     @endif
-                                    <x-crud-button type="confirm">
-                                         
+                                    <button type="submit"
+                                        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Create</button>
                                     <a href="{{ route('events.index') }}"></a>
-                                    </x-crud-button>
+
                                 </form>
 
                             </div>

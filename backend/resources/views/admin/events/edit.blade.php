@@ -4,6 +4,10 @@
 
 
 <x-app-layout>
+        <x-page-header
+    title="Modifca Evento {{ $event->title }}"
+
+/>
 
 
   <div class="flex flex-col items-center w-full overflow-hidden">
@@ -12,9 +16,6 @@
           <div class="w-full">
               <div>
                   <div class="flex justify-between">
-                      <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
-                          <h1 class="text-3xl tracking-wide text-white uppercase">Edit this Event</h1>
-                      </div>
                   </div>
 
                   <div class="w-full px-6">
