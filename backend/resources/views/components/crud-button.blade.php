@@ -1,5 +1,6 @@
 @props([
-    'type' => 'edit', // edit, delete, confirm
+    'type' => 'edit',
+    'href' => null // edit, delete, confirm
 ])
 
 @php

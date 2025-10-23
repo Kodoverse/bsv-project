@@ -42,34 +42,39 @@ class EventController extends Controller
 
     public function create()
     {
-        $categories = EventCategory::all();
+        $categories = EventCategory::whereNotNull('parent_id')->get();
         return view('admin.events.create', compact('categories'));
     }
     public function store(StoreEventRequest $request)
     {
-        // Handle image upload
+
+        $validated = $request->validated();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $imagePath = $image->storeAs('events', $imageName, 'public');
-            $request['image_url'] = '/storage/' . $imagePath;
+            $validated['image_url'] = '/storage/' . $imagePath;
         }
 
         // Remove image from validated data since we're using image_url
-        unset($request['image']);
+        unset($validated['image']);
+        $subcategory = EventCategory::findOrFail($validated['category_id']);
+        $validated['category_id'] = $subcategory->id;
 
-        $request['created_by'] = Auth::id();
-        $request['status'] = 'upcoming';
-        if ($request->image_url) {
-            $request->image_url = $this->getFullImageUrl($request->image_url);
+        $validated['created_by'] = Auth::id();
+        $validated['status'] = 'upcoming';
+
+        if (!empty($validated['image_url'])) {
+            $validated['image_url'] = $this->getFullImageUrl($validated['image_url']);
         }
 
-        $newEvent = new Event();
+
+        $newEvent = new Event($validated);
         // Transform image URL to full URL
-        $newEvent->fill($request->all());
         $newEvent->load(['category', 'creator']);
         $newEvent->save();
-        return redirect()->route('events.show', $newEvent->id);
+        return redirect()->route('events.show', $newEvent->id)
+            ->with('success', 'Evento creato con successo!');
     }
 
     public function show(Event $event)

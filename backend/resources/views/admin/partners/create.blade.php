@@ -180,9 +180,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('contact_phone') is-i
                                             </ul>
                                         </div>
                                     @endif
-                                    <button type="submit"
-                                        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Create</button>
-                                    <a href="{{ route('events.index') }}"></a>
+                                     <x-crud-button type="confirm" :href="route('events.index')" />
 
                                 </form>
 
