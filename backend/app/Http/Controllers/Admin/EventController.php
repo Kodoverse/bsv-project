@@ -96,7 +96,8 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
-        return view('admin.events.edit', compact("event"));
+        $categories = EventCategory::whereNotNull('parent_id')->get();
+        return view('admin.events.edit', compact('event', 'categories'));
     }
 
     public function destroy(Event $event)
@@ -114,7 +115,6 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $request->validated();
-
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($event->image_url) {

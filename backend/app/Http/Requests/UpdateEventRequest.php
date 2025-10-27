@@ -22,16 +22,16 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'category_id' => 'sometimes|required|exists:event_categories,id',
+            'category_id' => 'sometimes|required|exists:event_categories,id',
             'title' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required|string',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
-            // 'starts_at' => 'sometimes|required|date',
-            // 'ends_at' => 'sometimes|required|date|after:starts_at',
-            // 'status' => 'sometimes|required|in:upcoming,finished,cancelled',
-            // 'is_volunteer_event' => 'sometimes|boolean',
-            // 'volunteer_points' => 'nullable|integer|min:1',
-            // 'max_participants' => 'nullable|integer|min:1'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+            'starts_at' => 'required|date|after:now',
+            'ends_at' => 'required|date|after:starts_at',
+            'status' => 'sometimes|required|in:upcoming,finished,cancelled',
+            'is_volunteer_event' => 'sometimes|boolean',
+            'volunteer_points' => 'nullable|integer|min:1',
+            'max_participants' => 'nullable|integer|min:1'
         ];
     }
 }

@@ -1,6 +1,7 @@
 @props([
     'type' => 'edit',
-    'href' => null // edit, delete, confirm
+    'href' => null, // edit, delete, confirm
+    'label' =>null,
 ])
 
 @php
@@ -30,14 +31,16 @@
     ];
     $type = (string) $type;
     $btn = $buttons[$type] ?? $buttons['edit'];
+
+   $finalLabel = $label ?? $btn['label'];
 @endphp
 
-<button class="Btn" style="background-color: {{ $btn['color'] }}; box-shadow: 5px 5px 0px {{ $btn['shadow'] }};">
-    {!! $btn['label'] !!}
+<button class="btn" style="background-color: {{ $btn['color'] }}; box-shadow: 5px 5px 0px {{ $btn['shadow'] }};">
+    {!! $finalLabel !!}
     {!! $btn['icon'] !!}
 </button>
 <style>
-    .Btn {
+    .btn {
         position: relative;
         display: flex;
         align-items: center;
@@ -62,18 +65,18 @@
         transition-duration: .3s;
     }
 
-    .Btn:hover {
+    .btn:hover {
         color: transparent;
     }
 
-    .Btn:hover .svg {
+    .btn:hover .svg {
         right: 43%;
         margin: 0;
         padding: 0;
         transition-duration: .3s;
     }
 
-    .Btn:active {
+    .btn:active {
         transform: translate(3px, 3px);
         transition-duration: .3s;
     }

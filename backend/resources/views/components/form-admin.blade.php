@@ -10,7 +10,6 @@
 @if(in_array(strtoupper($method), ['PUT', 'DELETE', 'PATCH']))
     @method($method)
 @endif
-
 <div class="grid items-start grid-cols-1 gap-6 md:grid-cols-2">
     {{ $slot }}
 </div>

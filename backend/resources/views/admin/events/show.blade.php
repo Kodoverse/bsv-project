@@ -33,13 +33,12 @@
                     @endforeach
                 </div>
                 <a href="{{ route('events.edit', $event->id) }}">
-                    <button
-                        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Edit</button>
+                    <x-crud-button type="edit"/>
                 </a>
                 <form action="{{ route('events.destroy', $event->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded hover:bg-red-700">Delete</button>
+                    <x-crud-button type="delete"/>
                 </form>
             </div>
 

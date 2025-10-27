@@ -1,18 +1,22 @@
 @props([
-'options' => [],
-'id' => null,
-'name' =>null,
-'placeholder' => null,
+    'options' => [],
+    'id' => null,
+    'name' => null,
+    'placeholder' => null,
+    'label' => ' ',
+    'value' => null,
 ])
 
-<div class="flex flex-col"><label for="{{ $id }}">Categoria Evento</label>
-<select name="{{ $name }}" id="{{ $id }}" {{ $attributes->merge(['class' => 'rounded rounded-2 border-1 cursor-text p-3 ',]) }}>
-    @if(isset($placeholder))
-        <option value="" selected disabled>{{ $placeholder }}</option>
-    @endif
-    @foreach ($options as $key => $option )
-    <option value="{{ $key }}">
-        @if(isset($selected) && $selected == ($option->id)) selected @endif
-        {{ $option->name }}</option>
-    @endforeach
-</select></div>
+<div class="flex flex-col"><label for="{{ $id }}">{{ $label }}</label>
+    <select name="{{ $name }}" id="{{ $id }}"
+        {{ $attributes->merge(['class' => 'rounded rounded-2 border-1 cursor-text p-3 ']) }}>
+        @if (isset($placeholder))
+        <option value="" disabled {{ !$value ? 'selected' : '' }}>{{ $placeholder }}</option>
+        @endif
+        @foreach ($options as $option)
+            <option value="{{ $option->id }}"
+                {{ (string) $option->id === (string) $value ? 'selected' : '' }}>
+                {{ $option->name }}</option>
+        @endforeach
+    </select>
+</div>

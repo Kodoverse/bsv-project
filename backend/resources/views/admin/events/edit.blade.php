@@ -1,48 +1,63 @@
-@extends("layouts.admin")
-@section("content")
+@extends('layouts.admin')
+@section('content')
+    <x-app-layout>
+        <x-page-header title="Modifca Evento {{ $event->title }}" />
+        <div class="flex flex-col w-full px-12 overflow-hidden">
 
 
-
-<x-app-layout>
-        <x-page-header
-    title="Modifca Evento {{ $event->title }}"
-
-/>
-
-
-  <div class="flex flex-col items-center w-full overflow-hidden">
-  
-      <div class="w-full py-12">
-          <div class="w-full">
-              <div>
-                  <div class="flex justify-between">
-                  </div>
-
-                  <div class="w-full px-6">
-
-                      <div class="flex justify-start">
-                          
-                        <form action="{{ route('events.update', $event->id) }}" enctype="multipart/form-data" method="POST" class="w-full max-w-xl">
-                          @csrf
-                          @method('PUT')
-                        <div class="mb-5">
-                            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                            <input type="text" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="title" value="{{ old('title') ?? $event->title }}">
+            <div>
+                <x-form-admin :action="route('events.update', $event->id)" method="PUT" title="Crea un nuovo evento" submit-label="Crea Evento"
+                    enctype="multipart/form-data">
+                    <x-input-admin id="title" label="Nome" type="text" name="title"
+                        value="{{ old('title') ?? $event->title }}" />
+                    <x-input-admin id="description" label="Descrizione Evento" type="text" name="description"
+                        value="{{ old('description') ?? $event->description }}" />
+                    <x-select-admin id="category_id" name="category_id" :options="$categories" label="Seleziona Categoria Evento"
+                        placeholder="Seleziona la categoria" :value="old('category_id', $event->category_id)"></x-select-admin>
+                    <x-input-admin class="" id="image" label="Immagine" type="file" name="image" />
+                    @if ($event->image_url)
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-700">Immagine attuale:</p>
+                            <img src="{{ asset('storage/' . $event->image_url) }}" alt="Immagine evento"
+                                class="object-cover w-32 h-32 rounded">
                         </div>
-                        <div class="mb-5">
-                            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subtitle</label>
-                            <input type="text" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="subtitle" value="{{ old('subtitle') ?? $event->description }}">
+                    @endif
+                    <x-input-admin id="starts_at" label="Data Inizio Evento" type="datetime-local" name="starts_at"
+                        value="{{ old('starts_at') ?? $event->starts_at }}" />
+                    <x-input-admin id="ends_at" label="Data Fine Evento" type="datetime-local" name="ends_at"
+                        value="{{ old('ends_at') ?? $event->ends_at }}" />
+                    <x-input-admin id="max_participants" label="Numero Massimo Partecipanti" type="number"
+                        name="max_participants" value="{{ old('max_participants') ?? $event->max_participants }}" />
+
+                    <div x-data="{ isVolunteer: @json((bool) old('is_volunteer_event', $event->is_volunteer_event ?? false)) }" class="mb-5">
+                        <label class="inline-flex items-center">
+                            <input type="hidden" name="is_volunteer_event" value="0">
+
+                            <input type="checkbox" name="is_volunteer_event" value="1" x-model="isVolunteer"
+                                @checked(old('is_volunteer_event', $event->is_volunteer_event ?? false))
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600">
+                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Evento di volontariato
+                            </span>
+                        </label>
+
+                        <div x-show="isVolunteer" x-transition class="mt-4">
+                            <x-input-admin id="volunteer_points" label="Punti Ottenibili" type="number"
+                                name="volunteer_points" min="1"
+                                value="{{ old('volunteer_points', $event->volunteer_points ?? '') }}" />
                         </div>
-                    
-                        <a>
-                          <button type="submit" class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Save</button>
-                        </a>
-                      
-                      </form>
-  
-                      </div>
-                  </div>
-  
-  
-</x-app-layout>
+                    </div>
+                    <div class="flex justify-center">
+                        <x-crud-button type="confirm" :href="route('events.index')"></x-crud-button>
+                    </div>
+                </x-form-admin>
+                <div class="flex justify-center">
+                    <a href="{{ route('events.index') }}">
+                    <x-crud-button type="delete" label="Annulla"></x-crud-button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </x-app-layout>
 @endsection
