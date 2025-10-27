@@ -2,25 +2,13 @@
 @section('content')
 
     <x-app-layout>
+        <x-page-header title="Modifca Categoria Evento {{ $eventCategory->name }}" />
+        <div class="flex flex-col w-full px-12 overflow-hidden">
 
 
-        <div class="flex flex-col items-center w-full overflow-hidden">
-
-            <div class="w-full py-12">
-                <div class="w-full">
-                    <div>
-                        <div class="flex justify-between">
-                            <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
-                                <h1 class="text-3xl tracking-wide uppercase dark:text-white">Modifica categoria evento</h1>
-                            </div>
-                        </div>
-
-                        <div class="w-full px-6">
-
-                            <div class="flex justify-start">
-
-                                <form action="{{ route('admin.event-categories.update', $eventCategory->id) }}" method="POST"
-                                    class="w-full max-w-xl">
+            <div>
+                <x-form-admin :action="route('admin.event-categories.update', $eventCategory->id)" method="PUT" title="Modifica Categoria Evento" submit-label="Modifica Categoria"
+                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-5">
@@ -48,11 +36,13 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <button type="submit"
-                                        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Create</button>
+                                    <x-crud-button type="confirm">Create</x-crud-button>
                                     <a href="{{ route('admin.event-categories.index') }}"></a>
 
-                                </form>
+                                </x-form-admin>
+                                <a href="{{ route('admin.event-categories.show', $eventCategory->id) }}">
+                                <x-crud-button type="delete" label="Annulla"></x-crud-button>
+                                </a>
 
                             </div>
                         </div>
