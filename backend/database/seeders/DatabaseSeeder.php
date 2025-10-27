@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-/*
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        */
+        /*
+                User::factory()->create([
+                    'name' => 'Test User',
+                    'email' => 'test@example.com',
+                ]);
+                */
         $this->call([
             UserSeeder::class,
             ArticleSeeder::class,
@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             ArticleTagSeeder::class,
             FlaggedCommentSeeder::class,
+            PartnerInfoSeeder::class,
+            BusinessCategorySeeder::class,
+            BusinessSeeder::class,
             EventCategorySeeder::class,
             EventSeeder::class,
             EventRegistrationSeeder::class,
@@ -38,9 +41,7 @@ class DatabaseSeeder extends Seeder
             UsersInfoSeeder::class,
             ProductCategoriesSeeder::class,
             ProductSeeder::class,
-            PartnerInfoSeeder::class,
-            BusinessCategorySeeder::class,
-            BusinessSeeder::class,
+
         ]);
     }
 }

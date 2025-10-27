@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -14,10 +12,10 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $products = config("bsvdb.products");
+        $products = config('bsvdb.products');
         foreach ($products as $product) {
-            $newProduct = new Product();
-            $newProduct->partner_id = $product['partner_id'];
+            $newProduct = new Product;
+            $newProduct->business_id = $product['business_id'];
             $newProduct->category_id = $product['category_id'];
             $newProduct->name = $product['name'];
             $newProduct->description = $product['description'];

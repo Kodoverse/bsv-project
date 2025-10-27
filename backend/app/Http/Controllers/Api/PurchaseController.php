@@ -11,6 +11,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+
+
 class PurchaseController extends Controller
 {
     /**
@@ -47,7 +49,8 @@ class PurchaseController extends Controller
             'quantity' => 'required|integer|min:1|max:10'
         ]);
 
-        $product = Product::findOrFail($validated['product_id']);
+        $product = Product::with('business')->findOrFail($validated['product_id']);
+        $partnerId = $product->business->partner_id;
 
         // Check if product is available
         if (!$product->canBePurchased()) {
@@ -63,6 +66,8 @@ class PurchaseController extends Controller
 
         // Check user's point balance
         $userBalance = Point::where('user_id', Auth::id())->sum('points');
+
+
         if ($userBalance < $totalPoints) {
             return response()->json(['message' => 'Insufficient points balance'], 422);
         }
@@ -73,7 +78,7 @@ class PurchaseController extends Controller
             $purchase = Purchase::create([
                 'user_id' => Auth::id(),
                 'product_id' => $product->id,
-                'partner_id' => $product->partner_id,
+                'partner_id' => $partnerId,
                 'quantity' => $validated['quantity'],
                 'points_spent' => $totalPoints,
                 'points_per_item' => $product->points_price,
@@ -83,12 +88,9 @@ class PurchaseController extends Controller
             // Deduct points
             Point::create([
                 'user_id' => Auth::id(),
+                'event_id' => '1',
                 'points' => -$totalPoints,
                 'reason' => "Purchase: {$product->name} (x{$validated['quantity']})",
-                'type' => 'redemption',
-                'partner_id' => $product->partner_id,
-                'redemption_reference' => $purchase->redemption_code,
-                'awarded_by' => $product->partner_id
             ]);
 
             // Decrease stock
@@ -100,7 +102,10 @@ class PurchaseController extends Controller
             return response()->json($purchase, 201);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['message' => 'Failed to create purchase'], 500);
+            return response()->json([
+                'message' => 'Failed to create purchase',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -110,8 +115,10 @@ class PurchaseController extends Controller
     public function show(Purchase $purchase): JsonResponse
     {
         // Check authorization
-        if ($purchase->user_id !== Auth::id() && 
-            (!Auth::user()->isPartner() || $purchase->partner_id !== Auth::id())) {
+        if (
+            $purchase->user_id !== Auth::id() &&
+            (!Auth::user()->isPartner() || $purchase->partner_id !== Auth::id())
+        ) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -178,7 +185,7 @@ class PurchaseController extends Controller
     {
         // User can cancel their own pending purchases, partners can cancel any of their sales
         $canCancel = ($purchase->user_id === Auth::id() && $purchase->isPending()) ||
-                     (Auth::user()->isPartner() && $purchase->partner_id === Auth::id() && !$purchase->isCompleted());
+            (Auth::user()->isPartner() && $purchase->partner_id === Auth::id() && !$purchase->isCompleted());
 
         if (!$canCancel) {
             return response()->json(['message' => 'Cannot cancel this purchase'], 403);
@@ -227,11 +234,11 @@ class PurchaseController extends Controller
         }
 
         $validated = $request->validate([
-            'redemption_code' => 'required|string'
+            'qr_code' => 'required|string'
         ]);
 
         $purchase = Purchase::with(['product', 'user'])
-            ->where('redemption_code', $validated['redemption_code'])
+            ->where('id', $validated['purchase_id'])
             ->forPartner(Auth::id())
             ->first();
 
@@ -256,7 +263,7 @@ class PurchaseController extends Controller
         }
 
         $partnerId = Auth::id();
-        
+
         $stats = [
             'total_sales' => Purchase::forPartner($partnerId)->count(),
             'pending_orders' => Purchase::forPartner($partnerId)->pending()->count(),

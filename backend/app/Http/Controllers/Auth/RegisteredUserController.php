@@ -41,6 +41,12 @@ class RegisteredUserController extends Controller
             'user_role' => $request->user_role,
         ]);
 
+        if ($user->user_role === 'partner') {
+            $user->partnerInfo()->create([
+                'is_active' => true,
+            ]);
+        }
+
         event(new Registered($user));
 
         Auth::login($user);

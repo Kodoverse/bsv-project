@@ -10,6 +10,7 @@ class Business extends Model
         'name',
         'address',
         'business_category_id',
+        'partner_id',
         'description',
         'logo',
         'website',
@@ -18,12 +19,12 @@ class Business extends Model
     ];
 
     protected $casts = [
-        'business_hours' => 'json'
+        'business_hours' => 'json',
     ];
 
     public function partner()
     {
-        return $this->belongsTo(PartnerInfo::class);
+        return $this->belongsTo(User::class, 'partner_id');
     }
 
     public function businessCategory()
@@ -31,4 +32,8 @@ class Business extends Model
         return $this->belongsTo(BusinessCategory::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'business_id');
+    }
 }

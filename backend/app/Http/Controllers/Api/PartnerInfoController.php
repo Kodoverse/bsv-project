@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\PartnerInfo;
 use App\Models\Product;
+use App\Models\Business;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class PartnerInfoController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = PartnerInfo::with(['user'])
-                           ->where('is_active', true);
+            ->where('is_active', true);
 
         // Filter by category
         if ($request->has('category') && !empty($request->category)) {
@@ -28,26 +29,26 @@ class PartnerInfoController extends Controller
         // Search by business name
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('business_name', 'like', "%{$search}%")
-                  ->orWhere('business_description', 'like', "%{$search}%");
+                    ->orWhere('business_description', 'like', "%{$search}%");
             });
         }
 
         $businesses = $query->orderBy('business_name')
-                           ->paginate(12);
+            ->paginate(12);
 
         // Transform businesses to include full logo URLs and product count
         $businesses->getCollection()->transform(function ($business) {
             if ($business->business_logo) {
                 $business->business_logo = $this->getFullImageUrl($business->business_logo);
             }
-            
+
             // Add product count for this business
             $business->products_count = Product::where('partner_id', $business->user_id)
-                                              ->where('is_available', true)
-                                              ->count();
-            
+                ->where('is_available', true)
+                ->count();
+
             return $business;
         });
 
@@ -60,7 +61,7 @@ class PartnerInfoController extends Controller
     public function show(): JsonResponse
     {
         $partnerInfo = PartnerInfo::where('user_id', Auth::id())->first();
-        
+
         if (!$partnerInfo) {
             return response()->json(['message' => 'Partner info not found'], 404);
         }
@@ -75,27 +76,50 @@ class PartnerInfoController extends Controller
     /**
      * Get specific business info by ID
      */
-    public function showBusiness($id): JsonResponse
+    public function getAllBusinesses(Request $request): JsonResponse
     {
-        $business = PartnerInfo::with(['user'])
-                              ->where('id', $id)
-                              ->where('is_active', true)
-                              ->first();
+        // Query base: tutti i business attivi
+        $query = Business::query()
+            ->with(['businessCategory', 'partner:id,email'])
+            ->withCount([
+                'products' => function ($q) {
+                    $q->where('is_available', true);
+                }
+            ]);
 
-        if (!$business) {
-            return response()->json(['message' => 'Business not found'], 404);
+        // 🔍 Filtri opzionali
+        if ($request->filled('category_id')) {
+            $query->where('business_category_id', $request->category_id);
         }
 
-        if ($business->business_logo) {
-            $business->business_logo = $this->getFullImageUrl($business->business_logo);
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        // Add product count
-        $business->products_count = Product::where('partner_id', $business->user_id)
-                                          ->where('is_available', true)
-                                          ->count();
+        if ($request->filled('city')) {
+            $query->where('address', 'like', '%' . $request->city . '%');
+        }
 
-        return response()->json($business);
+
+        // 🔢 Paginazione (es. 12 risultati per pagina)
+        $businesses = $query->paginate(12);
+
+        // 🖼️ Aggiunge URL completo per i loghi
+        $businesses->getCollection()->transform(function ($business) {
+            $business->logo = $business->logo ? Storage::url($business->logo) : asset('images/placeholder.png');
+            return $business;
+        });
+
+        return response()->json($businesses);
+    }
+
+    public function getProductsByBusiness(Request $request, $businessId): JsonResponse
+    {
+        $business = Business::findOrFail($businessId);
+
+        $products = $business->products()->where('is_available', true)->get();
+
+        return response()->json($products);
     }
 
     /**
@@ -176,7 +200,7 @@ class PartnerInfoController extends Controller
         if (str_starts_with($imageUrl, 'http')) {
             return $imageUrl;
         }
-        
+
         return config('app.url') . $imageUrl;
     }
 }

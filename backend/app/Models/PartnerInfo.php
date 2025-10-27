@@ -14,14 +14,14 @@ class PartnerInfo extends Model
         'redemption_rules',
         'min_points_per_redemption',
         'max_points_per_redemption',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
         'min_points_per_redemption' => 'integer',
         'max_points_per_redemption' => 'integer',
         'is_active' => 'boolean',
-        'business_hours' => 'json'
+        'business_hours' => 'json',
     ];
 
     /**
@@ -29,11 +29,19 @@ class PartnerInfo extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function businesses()
+    public function business()
     {
-        return $this->hasMany(Business::class);
+        return $this->hasOne(Business::class, 'partner_id', 'user_id');
     }
+
+    public function scopeForPartner($query)
+    {
+        return $query->whereHas('user', function ($q) {
+            $q->where('user_role', 'partner');
+        });
+    }
+
 }

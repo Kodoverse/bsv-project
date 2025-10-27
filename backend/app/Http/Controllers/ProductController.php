@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\PartnerInfo;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -16,13 +17,18 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if (! $user->isPartner()) {
+        if (!$user->isPartner()) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
         }
+
+
+
         $categories = ProductCategory::all();
-        $productsQuery = Product::query()
-            ->forPartner($user->id)
+        // 📦 Query di base sui prodotti di quel business
+        $productsQuery = Product::forPartner($user->id)
             ->with('category');
+
+
 
         if ($request->filled('search')) {
             $productsQuery->where('name', 'like', "%{$request->search}%");
@@ -42,7 +48,7 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'categories' => $categories,
-            'products' => $products->map(fn ($p) => [
+            'products' => $products->map(fn($p) => [
                 'id' => $p->id,
                 'name' => $p->name,
                 'description' => $p->description,
@@ -58,16 +64,23 @@ class ProductController extends Controller
 
     // la nostra index non c'è perchè abbiamo il file products.blade.php nelle tabs... quindi è gestito nel PartnerDashboardController
 
-    public static function create()
+    public function create()
     {
-        $products = Product::all();
+        $user = Auth::user();
+
+        $business = $user->business;
         $categories = ProductCategory::all();
 
-        return view('products.create', compact('products', 'categories'));
+        return view('products.create', [
+            'business' => $business,
+            'categories' => $categories,
+        ]);
+
     }
 
-    public static function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request)
     {
+        // Validazione
         $validated = $request->validated();
 
         // Trasforma la virgola in punto per i decimali
@@ -75,8 +88,16 @@ class ProductController extends Controller
             $validated['cash_equivalent'] = str_replace(',', '.', $validated['cash_equivalent']);
         }
 
-        // Assegna l'utente loggato come partner
-        $validated['partner_id'] = Auth::id();
+        // Recupera il business del partner loggato
+        $user = Auth::user();
+
+        if (!$user->business || !$user->business->products) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nessuna attività associata al partner.');
+        }
+
+        $validated['business_id'] = $user->business->id;
 
         // Gestione immagine
         if ($request->hasFile('image_url')) {
@@ -105,7 +126,7 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if (! $user->isPartner()) {
+        if (!$user->isPartner()) {
             return response()->json(['message' => 'Accesso negato'], 403);
         }
 
@@ -136,7 +157,7 @@ class ProductController extends Controller
 
     public function toggleAvailability(Product $product)
     {
-        $product->is_available = ! $product->is_available;
+        $product->is_available = !$product->is_available;
         $product->save();
 
         return response()->json([

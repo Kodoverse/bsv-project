@@ -4,10 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\UsersInfo;
 
 class User extends Authenticatable
 {
@@ -175,7 +174,7 @@ class User extends Authenticatable
      */
     public function partnerInfo()
     {
-        return $this->hasOne(PartnerInfo::class);
+        return $this->hasOne(PartnerInfo::class, 'user_id');
     }
 
     /**
@@ -202,4 +201,8 @@ class User extends Authenticatable
         return in_array($this->user_role, ['admin', 'librarian']);
     }
 
+    public function businesses()
+    {
+        return $this->hasMany(Business::class, 'partner_id');
+    }
 }
