@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
     <x-app-layout>
-        <div class="flex flex-col w-full px-12 overflow-hidden">
+        <div class="flex flex-col w-full overflow-hidden">
 
             <div class="flex flex-col gap-5">
                 <x-page-header title="Crea un Evento" />
             </div>
 
-            <div>
+            <div class="px-12 ">
                 <x-form-admin :action="route('events.store')" method="POST" title="Crea un nuovo evento" submit-label="Crea Evento" enctype="multipart/form-data">
                     <x-input-admin class="border-red-500" id="title" label="Nome" type="text" name="title" />
                     <x-input-admin id="description" label="Descrizione Evento" type="text" name="description" />

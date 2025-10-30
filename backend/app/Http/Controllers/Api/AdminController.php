@@ -48,17 +48,17 @@ class AdminController extends Controller
 
         if ($request->has('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('email', 'like', "%{$search}%")
-                  ->orWhereHas('info', function($infoQuery) use ($search) {
-                      $infoQuery->where('firstname', 'like', "%{$search}%")
-                               ->orWhere('lastname', 'like', "%{$search}%");
-                  });
+                    ->orWhereHas('info', function ($infoQuery) use ($search) {
+                        $infoQuery->where('firstname', 'like', "%{$search}%")
+                            ->orWhere('lastname', 'like', "%{$search}%");
+                    });
             });
         }
 
         $users = $query->orderBy('created_at', 'desc')
-                      ->paginate(20);
+            ->paginate(20);
 
         return response()->json($users);
     }

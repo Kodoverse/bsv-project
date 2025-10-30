@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between w-full gap-2 px-4 mx-auto mt-6 md:gap-0">
+<div class="flex items-center justify-between w-full gap-2 px-4 py-6 mx-auto border-b dark:border-none md:gap-0">
     <div class="flex">
             <button @click="$store.sidebar.visible = !$store.sidebar.visible"
                 class="z-50 text-white rounded-md lg:hidden">

@@ -18,21 +18,20 @@ class AdminPartnerController extends Controller
     public function index(Request $request)
     {
         $query = User::where('user_role', 'partner')
-            ->with(['partnerInfo', 'products'])
-            ->withCount('products');
+            ->with(['partnerInfo']);
         //TODO: FILTRI DA RIVEDERE
         // Search filter
-        if ($request->has('search') && !empty($request->search)) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhereHas('partnerInfo', function ($subQ) use ($search) {
-                        $subQ->where('business_name', 'like', "%{$search}%")
-                            ->orWhere('business_address', 'like', "%{$search}%");
-                    });
-            });
-        }
+        // if ($request->has('search') && !empty($request->search)) {
+        //     $search = $request->search;
+        //     $query->where(function ($q) use ($search) {
+        //         $q->where('name', 'like', "%{$search}%")
+        //             ->orWhere('email', 'like', "%{$search}%")
+        //             ->orWhereHas('partnerInfo', function ($subQ) use ($search) {
+        //                 $subQ->where('business_name', 'like', "%{$search}%")
+        //                     ->orWhere('business_address', 'like', "%{$search}%");
+        //             });
+        //     });
+        // }
 
         // Status filter
         if ($request->has('status') && !empty($request->status)) {
@@ -57,7 +56,11 @@ class AdminPartnerController extends Controller
         }
 
         $partners = $query->orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.partners.index', compact('partners'));
+        $statuses = [
+            1 => 'Attivo',
+            2 => 'Non Attivo',
+        ];
+        return view('admin.partners.index', compact('partners', 'statuses'));
     }
 
     public function create()
@@ -157,5 +160,23 @@ class AdminPartnerController extends Controller
 
         return redirect()->route('admin.partners.show', $partner->id)
             ->with('success', 'Partner aggiornato con successo!');
+    }
+
+    public function toggleStatus(Request $request, $id)
+    {
+        $partner = PartnerInfo::findOrFail($id);
+
+        $request->validate([
+            'is_active' => 'required|boolean',
+        ]);
+
+        $partner->is_active = $request->is_active;
+        $partner->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Stato aggiornato con successo',
+            'is_active' => $partner->is_active,
+        ]);
     }
 }

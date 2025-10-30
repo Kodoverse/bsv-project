@@ -13,22 +13,32 @@
 }
 
 /*colori portale admin*/
-@layer base {
-    :root {
-        --color-background: 220 30% 90%; /* grigio molto chiaro */
-        --color-sidebar: 220 56% 95%; /* bianco sporco */
-        --color-surface: 0 0% 100%; /* bianco per card */
-        --color-foreground: 210 80% 9%; /* testo grigio scuro, no nero */
-        --color-muted: 220 15% 75%; /* separatori / bordi */
-    }
+:root {
+    /* === Light Mode === */
+    --color-background: 0 0% 99%; /* #FCFCFC - quasi bianco, caldo */
+    --color-sidebar: 15 45% 97%; /* #FFF8F4 - richiama il logo */
+    --color-surface: 0 0% 100%; /* #FFFFFF */
+    --color-foreground: 230 16% 18%; /* #1E293B */
+    --color-muted: 215 20% 60%; /* #94A3B8 */
 
-    .dark {
-        --color-background: 220 12% 18%; /* antracite profondo */
-        --color-sidebar: 220 10% 22%; /* grigio antracite medio */
-        --color-surface: 220 10% 26%; /* grafite per card */
-        --color-foreground: 220 15% 85%; /* testo chiaro, no bianco */
-        --color-muted: 220 8% 40%; /* bordi scuri ma leggibili */
-    }
+    /* Accenti BSV */
+    --color-accent-red: 4 74% 60%; /* #E65C4F */
+    --color-accent-orange: 26 88% 58%; /* #F28A4A */
+    --color-accent-yellow: 44 93% 58%; /* #F8C145 */
+}
+
+.dark {
+    /* === Dark Mode === */
+    --color-background: 230 15% 10%; /* #101114 */
+    --color-sidebar: 230 14% 13%; /* #15161B */
+    --color-surface: 230 12% 17%; /* #1C1E25 */
+    --color-foreground: 220 14% 85%; /* #E5E7EB */
+    --color-muted: 220 10% 55%; /* #A1A1AA */
+
+    /* Accenti BSV (più saturi per risaltare su fondo scuro) */
+    --color-accent-red: 4 80% 68%; /* #F36C5D */
+    --color-accent-orange: 26 90% 65%; /* #F4975B */
+    --color-accent-yellow: 44 95% 65%; /* #FAD05E */
 }
 /*fine colori portale admin*/
 

@@ -42,14 +42,14 @@ export default {
                 surface: "hsl(var(--color-surface))",
                 foreground: "hsl(var(--color-foreground))",
                 muted: "hsl(var(--color-muted))",
+                "accent-red": "hsl(var(--color-accent-red))",
+                "accent-orange": "hsl(var(--color-accent-orange))",
+                "accent-yellow": "hsl(var(--color-accent-yellow))",
             },
             boxShadow: {
-                // Light
                 "card-light": "0 2px 6px rgba(0,0,0,0.08)",
                 "btn-light": "0 4px 10px rgba(0,0,0,0.12)",
                 "modal-light": "0 8px 20px rgba(0,0,0,0.2)",
-
-                // Dark
                 "card-dark": "0 2px 6px rgba(255,255,255,0.05)",
                 "btn-dark-red": "0 0 10px rgba(228,84,75,0.25)",
                 "btn-dark-orange": "0 0 10px rgba(242,133,93,0.25)",

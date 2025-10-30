@@ -1,12 +1,27 @@
-        <!-- Searchbar -->
-        <form class="w-2/3">
-            <div class="relative">
-                <input type="search" id="default-search"
-                    class="block w-full p-3 text-sm text-center border border-gray-300 rounded-lg bg-surface focus:ring-red-500 focus:border-red-500 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-red-500 dark:focus:border-red-500"
-                    placeholder="Digita per cercare..." required />
-                <button type="submit"
-                    class="flex items-center text-white absolute end-2.5 bottom-3 bg-btn-brand-red hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-brand-red bg-btn-brand-red dark:focus:ring-red-800">
-                    <i class="fa fa-search text-foreground" aria-hidden="true"></i>
-                </button>
-            </div>
-        </form>
+@props([
+    'placeholder' => 'Cerca...',
+    'action' => '#',
+])
+
+<form action="{{ $action }}" class="w-2/3 max-w-xl mx-auto">
+    <div class="relative flex items-center">
+        <input
+            type="search"
+            id="default-search"
+            placeholder="{{ $placeholder }}"
+            class="block w-full py-3 pl-4 pr-12 text-sm text-foreground placeholder-muted
+                bg-surface border border-[#E8E3DD] dark:border-[#2B2C31]
+                rounded-xl shadow-sm
+                hover:bg-[#FFF8F4] dark:hover:bg-[#1C1D22]
+                focus:border-accent-red focus:ring-1 focus:ring-accent-red/50
+                transition-all duration-200
+                dark:bg-[#272930] dark:text-[#E5E7EB] dark:placeholder-[#999]"
+        />
+
+        <button type="submit"
+            class="absolute flex items-center justify-center transition-all duration-200 rounded-full right-2 w-9 h-9 bg-accent-red hover:bg-accent-orange active:scale-95 shadow-btn-light dark:shadow-btn-dark-red"
+            title="Cerca">
+            <i class="fa fa-search text-white text-[15px]" aria-hidden="true"></i>
+        </button>
+    </div>
+</form>

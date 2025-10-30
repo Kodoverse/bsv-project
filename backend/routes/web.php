@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('events', EventController::class);
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('partners', AdminPartnerController::class);
+        Route::patch('/admin/partners/{partner}/toggle-status', [AdminPartnerController::class, 'toggleStatus'])
+            ->name('admin.partners.toggleStatus');
         Route::resource('users', UsersStatsController::class);
         Route::resource('stats', StatisticController::class);
         Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');

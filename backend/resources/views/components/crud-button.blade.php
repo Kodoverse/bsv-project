@@ -28,14 +28,22 @@
             'icon' =>
                 '<svg class="svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-12.497-12.497-12.497-32.758 0-45.255l22.627-22.627c12.497-12.497 32.758-12.497 45.255 0L192 312.69 436.12 68.574c12.497-12.497 32.758-12.497 45.255 0l22.627 22.627c12.497 12.497 12.497 32.758 0 45.255L211.153 439.404c-12.497 12.497-32.758 12.497-45.255 0z"></path></svg>',
         ],
-    ];
+        'add' => [
+            'color' => 'rgb(220,110,15)',
+            'shadow' => 'rgb(200,100,20)',
+            'label' => 'Aggiungi',
+            'icon' => '<svg class="svg" viewBox="0 0 512 512">
+                        <path d="M256 112c17.673 0 32 14.327 32 32v80h80c17.673 0 32 14.327 32 32s-14.327 32-32 32h-80v80c0 17.673-14.327 32-32 32s-32-14.327-32-32v-80h-80c-17.673 0-32-14.327-32-32s14.327-32 32-32h80v-80c0-17.673 14.327-32 32-32z"></path></svg>',
+            ]
+            ];
     $type = (string) $type;
     $btn = $buttons[$type] ?? $buttons['edit'];
 
    $finalLabel = $label ?? $btn['label'];
 @endphp
 
-<button class="btn" style="background-color: {{ $btn['color'] }}; box-shadow: 5px 5px 0px {{ $btn['shadow'] }};">
+<button 
+    {{ $attributes->class(['btn']) }} type="button" class="btn" style="background-color: {{ $btn['color'] }}; box-shadow: 5px 5px 0px {{ $btn['shadow'] }};">
     {!! $finalLabel !!}
     {!! $btn['icon'] !!}
 </button>
