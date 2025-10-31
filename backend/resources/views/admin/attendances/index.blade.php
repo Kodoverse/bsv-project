@@ -1,9 +1,6 @@
-@extends('layouts.admin')
-@section('content')
 
-    <x-app-layout>
 
+    <x-admin-layout title="Gestione Partecipazioni">
+        PARECIPAZIONI
 
     </x-app-layout>
-
-@endsection

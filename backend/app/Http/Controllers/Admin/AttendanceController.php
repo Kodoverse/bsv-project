@@ -22,7 +22,6 @@ class AttendanceController extends Controller
             $event->attended_count = $event->registrations()->where('status', 'attended')->count();
             $event->no_show_count = $event->registrations()->where('status', 'no_show')->count();
         });
-        dd($events);
         return view("admin.attendances.index", compact("events"));
     }
 }

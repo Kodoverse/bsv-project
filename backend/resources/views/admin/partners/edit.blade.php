@@ -1,19 +1,10 @@
-@extends('layouts.admin')
-@section('content')
-
-    <x-app-layout>
+<x-admin-layout title="Modifica Partner {{ $partner->partnerInfo->name . ' ' . $partner->partnerInfo->lastname }}">
 
 
         <div class="flex flex-col items-center w-full overflow-hidden">
             <div class="w-full py-12">
                 <div class="w-full">
                     <div>
-                        <div class="flex justify-between">
-                            <div v-if="user" class="flex flex-col gap-5 py-6 ps-6">
-                                <h1 class="text-3xl tracking-wide uppercase dark:text-white">Modifica un partner</h1>
-                            </div>
-                        </div>
-
                         <div class="w-full px-6">
 
                             <div class="flex justify-start">
@@ -78,7 +69,7 @@
                                     @endif
                                     <button type="submit"
                                         class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700">Create</button>
-                                    <a href="{{ route('events.index') }}"></a>
+                                    <a href="{{ route('admin.events.index') }}"></a>
 
                                 </form>
 
@@ -86,6 +77,4 @@
                         </div>
 
 
-    </x-app-layout>
-
-@endsection
+    </x-admin-layout>

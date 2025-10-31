@@ -1,8 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-
-    <x-app-layout>
-        <x-page-header title="Modifca Categoria Evento {{ $eventCategory->name }}" />
+    <x-admin-layout title="Modifca Categoria Evento {{ $eventCategory->name }}">
         <div class="flex flex-col w-full px-12 overflow-hidden">
 
 
@@ -48,6 +44,4 @@
                         </div>
 
 
-    </x-app-layout>
-
-@endsection
+    </x-admin-layout>

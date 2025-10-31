@@ -1,12 +1,9 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
-        <x-page-header title="Modifca Evento {{ $event->title }}" />
+<x-admin-layout title="Modifca Evento {{ $event->title }}">
         <div class="flex flex-col w-full px-12 overflow-hidden">
 
 
             <div>
-                <x-form-admin :action="route('events.update', $event->id)" method="PUT" title="Crea un nuovo evento" submit-label="Crea Evento"
+                <x-form-admin :action="route('admin.events.update', $event->id)" method="PUT" title="Crea un nuovo evento" submit-label="Crea Evento"
                     enctype="multipart/form-data">
                     <x-input-admin id="title" label="Nome" type="text" name="title"
                         value="{{ old('title') ?? $event->title }}" />
@@ -48,16 +45,15 @@
                         </div>
                     </div>
                     <div class="flex justify-center">
-                        <x-crud-button type="confirm" :href="route('events.index')"></x-crud-button>
+                        <x-crud-button type="confirm" :href="route('admin.events.index')"></x-crud-button>
                     </div>
                 </x-form-admin>
                 <div class="flex justify-center">
-                    <a href="{{ route('events.index') }}">
+                    <a href="{{ route('admin.events.index') }}">
                     <x-crud-button type="delete" label="Annulla"></x-crud-button>
                     </a>
                 </div>
             </div>
         </div>
 
-    </x-app-layout>
-@endsection
+    </x-admin-layout>

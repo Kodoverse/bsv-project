@@ -1,9 +1,4 @@
-@extends("layouts.admin")
-@section("content")
-
-<x-app-layout>
-
-
+<x-admin-layout title="Aggiungi Articolo">
     <div class="flex flex-col items-center w-full overflow-hidden">
     
         <div class="w-full py-12">
@@ -70,5 +65,3 @@
     
     
 </x-app-layout>
-
-@endsection

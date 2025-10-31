@@ -1,7 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-
-<x-app-layout>
+<x-admin-layout title="Commenti Segnalati">
 
     
     <div class="flex flex-col items-center w-full overflow-hidden">
@@ -73,6 +70,4 @@
     </div>
     
     
-</x-app-layout>
-
-@endsection
+</x-admin-layout>

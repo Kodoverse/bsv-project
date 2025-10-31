@@ -1,6 +1,4 @@
-@extends('layouts.admin')
-@section('content')
+    <x-admin-layout title="Statistiche">
+        PAGINA STATS (SOON)
+    </x-admin-layout>
 
-    <x-app-layout>
-    </x-app-layout>
-@endsection

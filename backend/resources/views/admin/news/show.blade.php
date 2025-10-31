@@ -1,10 +1,5 @@
-@extends("layouts.admin")
-@section("content")
+<x-admin-layout title="{{ $article->title }}">
 
-
-<x-app-layout>
-
-    
     <div class="flex flex-col items-center w-full overflow-hidden">
 
         <div class="w-full py-12">
@@ -111,7 +106,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
-
-
-@endsection
+</x-admin-layout>

@@ -1,6 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
+<x-app-layout title="{{ $eventCategory->name }}">
         <div class="p-6">
             <div class="flex gap-6">
              <a href="{{ route('admin.event-categories.edit', $eventCategory->id) }}">
@@ -19,4 +17,3 @@
 
 
     </x-app-layout>
-@endsection

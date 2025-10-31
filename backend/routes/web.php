@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminPartnerController;
+use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\EventCategoryController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventRegistrationController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\SubCategoryEventController;
 use App\Http\Controllers\Admin\UsersStatsController;
+use App\Http\Controllers\Admin\AdminAlertsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
@@ -79,20 +82,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/flagged_comments', [FlaggedCommentController::class, 'index'])->name('flagged_comments.index');
 
 
-    Route::resource('events', EventController::class);
     Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('events', EventController::class);
         Route::resource('partners', AdminPartnerController::class);
         Route::patch('/admin/partners/{partner}/toggle-status', [AdminPartnerController::class, 'toggleStatus'])
             ->name('admin.partners.toggleStatus');
         Route::resource('users', UsersStatsController::class);
         Route::resource('stats', StatisticController::class);
-        Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+        Route::resource('/attendances', AttendanceController::class);
         Route::get('/events/{event}/attendances', [AttendanceController::class, 'manage'])->name('events.attendance.manage');
         Route::get('/users', [AdminUsersController::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [AdminUsersController::class, 'show'])->name('users.show');
         Route::post('/users/{user}/role', [AdminUsersController::class, 'updateUserRole'])->name('users.updateRole');
         Route::resource('event-categories', EventCategoryController::class);
         Route::resource('subcategories-event', SubCategoryEventController::class);
+        Route::resource('alerts', AdminAlertsController::class);
+        Route::resource('settings', AdminSettingsController::class);
+        Route::resource('registrations', EventRegistrationController::class);
+
+
+
     });
 
 });

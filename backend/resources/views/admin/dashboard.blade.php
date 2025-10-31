@@ -1,8 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
-
-
+<x-admin-layout>
         <div class="flex flex-col items-center w-full overflow-hidden bg-background">
             <div class="w-full py-6">
                 <div class="w-full">
@@ -217,8 +213,7 @@
                 </div>
             </div>
         </div>
-    </x-app-layout>
-@endsection
+    </x-admin-layout>
 
 <style>
     @keyframes shine {

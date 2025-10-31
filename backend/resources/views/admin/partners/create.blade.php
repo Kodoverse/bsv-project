@@ -1,11 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-
-    <x-app-layout>
-
-        <x-page-header
-        title="Aggiungi un nuovo partner"
-        />
+    <x-admin-layout title="Aggiungi un nuovo partner">
         <div class="flex flex-col items-center w-full overflow-hidden">
             <div class="w-full py-12">
                 <div class="w-full">
@@ -180,7 +173,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('contact_phone') is-i
                                             </ul>
                                         </div>
                                     @endif
-                                     <x-crud-button type="confirm" :href="route('events.index')" />
+                                     <x-crud-button type="confirm" :href="route('admin.events.index')" />
 
                                 </form>
 
@@ -188,6 +181,5 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('contact_phone') is-i
                         </div>
 
 
-    </x-app-layout>
+    </x-admin-layout>
 
-@endsection

@@ -73,7 +73,7 @@ class EventController extends Controller
         // Transform image URL to full URL
         $newEvent->load(['category', 'creator']);
         $newEvent->save();
-        return redirect()->route('events.show', $newEvent->id)
+        return redirect()->route('admin.events.show', $newEvent->id)
             ->with('success', 'Evento creato con successo!');
     }
 
@@ -109,7 +109,7 @@ class EventController extends Controller
 
         $event->delete();
 
-        return redirect()->route('events.index');
+        return redirect()->route('admin.events.index');
     }
 
     public function update(UpdateEventRequest $request, Event $event)
@@ -138,7 +138,7 @@ class EventController extends Controller
         if ($event->image_url) {
             $event->image_url = $this->getFullImageUrl($event->image_url);
         }
-        return redirect()->route('events.show', $event->id);
+        return redirect()->route('admin.events.show', $event->id);
 
     }
 

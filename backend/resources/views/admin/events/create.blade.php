@@ -1,14 +1,9 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
+    <x-admin-layout title="Crea Nuovo Evento">
         <div class="flex flex-col w-full overflow-hidden">
 
-            <div class="flex flex-col gap-5">
-                <x-page-header title="Crea un Evento" />
-            </div>
 
             <div class="px-12 ">
-                <x-form-admin :action="route('events.store')" method="POST" title="Crea un nuovo evento" submit-label="Crea Evento" enctype="multipart/form-data">
+                <x-form-admin :action="route('admin.events.store')" method="POST" title="Crea un nuovo evento" submit-label="Crea Evento" enctype="multipart/form-data">
                     <x-input-admin class="border-red-500" id="title" label="Nome" type="text" name="title" />
                     <x-input-admin id="description" label="Descrizione Evento" type="text" name="description" />
                     <x-select-admin id="category_id" name="category_id" :options="$categories"
@@ -32,14 +27,13 @@
 
                     </div>
                     <div class="flex justify-center">
-                        <x-crud-button type="confirm" :href="route('events.index')"></x-crud-button>
+                        <x-crud-button type="confirm" :href="route('admin.events.index')"></x-crud-button>
                     </div>
                 </x-form-admin>
             </div>
         </div>
 
-    </x-app-layout>
-@endsection
+    </x-admin-layout>
 
 
 

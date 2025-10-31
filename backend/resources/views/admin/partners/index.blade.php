@@ -1,8 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
-        <x-page-header title="I partner" />
-
+    <x-admin-layout title="I partner">
         <a href="{{ route('admin.partners.create') }}">
             <button>Aggiungi Partner</button>
         </a>
@@ -183,5 +179,4 @@
 
 
 
-    </x-app-layout>
-@endsection
+    </x-admin-layout>

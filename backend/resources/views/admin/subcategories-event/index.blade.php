@@ -1,5 +1,4 @@
-@extends('layouts.admin')
 
-@section('content')
-<x-app-layout></x-app-layout>
-@endsection
+<x-admin-layout title="Sottocategorie Eventi">
+    INDEX SOTTOCATEGORIE
+</x-admin-layout>

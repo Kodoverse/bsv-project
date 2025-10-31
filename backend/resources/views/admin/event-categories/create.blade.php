@@ -1,7 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-
-    <x-app-layout>
+    <x-admin-layout title="Crea Nuova Categoria">
 
 
         <div class="flex flex-col items-center w-full overflow-hidden">
@@ -59,6 +56,6 @@
                         </div>
 
 
-    </x-app-layout>
+    </x-admin-layout>
 
-@endsection
+

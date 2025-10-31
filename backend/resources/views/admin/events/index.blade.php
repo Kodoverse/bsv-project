@@ -1,12 +1,13 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
-        <x-page-header
+<x-admin-layout
     title="Eventi"
-
-/>
+    subtitle="Gestione eventi"
+    :breadcrumbs="[
+        'Dashboard' => route('admin.dashboard'),
+        'Eventi' => null
+    ]"
+>
 <div class="flex justify-end w-full py-6 actions-btn">
-    <x-crud-button type="add" class="me-12" href="{{ route('events.create') }}">
+    <x-crud-button type="add" class="me-12" href="{{ route('admin.events.create') }}">
     </x-crud-button>
 </div>
 <div class="px-8 my-8">
@@ -21,6 +22,5 @@
     :actions="fn($event) => view('components.table-actions', ['event' => $event])"
 />
 </div>
+</x-admin-layout>
 
-    </x-app-layout>
-@endsection

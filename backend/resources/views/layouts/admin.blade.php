@@ -35,9 +35,7 @@
 
         <!-- Main -->
         <main class="flex-1 overflow-y-auto transition-all duration-300">
-              
-                <x-upper-nav-component />
-    
+            <x-upper-nav-component />
             @yield('content')
         </main>
 

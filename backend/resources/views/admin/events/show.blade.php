@@ -1,10 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-    <x-app-layout>
-        <x-page-header
-    title="{{ $event->title }}"
-
-/>
+    <x-admin-layout title="{{ $event->title }}">
         <div class="p-6">
             <div class="flex gap-6">
                 <div class="flex flex-wrap w-1/2 gap-4 mx-auto justify-content-center">
@@ -32,10 +26,10 @@
                         <div class="text-white">{{ $registration->user }}</div>
                     @endforeach
                 </div>
-                <a href="{{ route('events.edit', $event->id) }}">
+                <a href="{{ route('admin.events.edit', $event->id) }}">
                     <x-crud-button type="edit"/>
                 </a>
-                <form action="{{ route('events.destroy', $event->id) }}" method="POST">
+                <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <x-crud-button type="delete"/>
@@ -46,5 +40,5 @@
         </div>
 
 
-    </x-app-layout>
-@endsection
+    </x-admin-layout>
+

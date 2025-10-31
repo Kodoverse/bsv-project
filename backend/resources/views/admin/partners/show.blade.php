@@ -1,12 +1,5 @@
-@extends('layouts.admin')
-@section('content')
 
-    <x-app-layout>
- <x-page-header
-    title="Show Partner"
-
-/>
-
-    </x-app-layout>
+<x-admin-layout title="{{ $partner->partnerInfo->name . ' ' . $partner->partnerInfo->lastname }}">
+    </x-admin-layout>
 
 @endsection
