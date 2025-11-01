@@ -19,35 +19,26 @@ class EventController extends Controller
         $query = Event::with(['category', 'creator'])
             ->withCount('registrations');
 
-        //  Filtra per categoria (solo se non vuota)
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->input('category_id'));
+        // Filter by category if provided
+        if ($request->has('category_id')) {
+            $query->where('category_id', $request->category_id);
         }
 
-        // Filtra per stato (accetta lista separata da virgole)
-        if ($request->filled('status')) {
-            $statuses = collect(explode(',', $request->input('status')))
-                ->map(fn($s) => trim($s))
-                ->filter()
-                ->all();
-
-            if (!empty($statuses)) {
-                $query->whereIn('status', $statuses);
-            }
+        // Filter by status if provided
+        if ($request->has('status')) {
+            $statuses = explode(',', $request->status);
+            $query->whereIn('status', $statuses);
         }
 
-        //  Filtra per evento volontario (true/false)
-        if ($request->filled('is_volunteer_event')) {
-            $isVolunteer = filter_var($request->input('is_volunteer_event'), FILTER_VALIDATE_BOOLEAN);
+        // Filter by volunteer event if provided
+        if ($request->has('is_volunteer_event')) {
+            $isVolunteer = filter_var($request->is_volunteer_event, FILTER_VALIDATE_BOOLEAN);
             $query->where('is_volunteer_event', $isVolunteer);
         }
 
-        // Ordina per data di inizio (desc)
-        $events = $query->orderByDesc('starts_at')->paginate(10);
-
+        $events = $query->orderBy('starts_at', 'desc')->paginate(10);
         return view('admin.events.index', compact('events'));
     }
-
 
     public function create()
     {

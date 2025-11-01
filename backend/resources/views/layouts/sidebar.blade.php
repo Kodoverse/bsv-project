@@ -15,7 +15,7 @@
     :class="$store.sidebar.open ? 'w-64' : 'w-14'"
 >
     {{-- Toggle --}}
-    <button @click="$store.sidebar.open = !$store.sidebar.open"
+    <button @click="$store.sidebar.toggleMain()"
         class="hidden text-white transition-all duration-300 bg-accent-red hover:bg-accent-orange rounded-md shadow-md lg:flex lg:absolute items-center justify-center -right-3.5 top-5">
         <i :class="$store.sidebar.open ? 'fa fa-arrow-left' : 'fa fa-arrow-right'" class="w-4 text-center text-white align-middle"
             aria-hidden="true"></i>
@@ -56,26 +56,37 @@
     @foreach ($sidebarItems as $item)
         <div x-data="{ open: false }" class="overflow-hidden transition-all duration-300 ease-in-out">
             <!-- Voce principale -->
-            <a href="{{ $item->route ? route($item->route) : '#' }}"
-                class="flex items-center justify-start px-2 transition-all duration-300 rounded hover:text-accent-orange text-md "
-              :class="$store.sidebar.open ? 'hover:bg-accent-red/10 dark:hover:bg-accent-orange/10' : 'justify-center'"
-                @click="$store.sidebar.openId = ($store.sidebar.openId === {{ $item->id }} ? null : {{ $item->id }})">
-                <div class="flex items-center justify-center w-10 h-10">
-                    <i class="px-2 transition-transform duration-300  {{ $item->icon }}"
-                        :class="$store.sidebar.open ? 'scale-100' : 'scale-150'"></i>
-                </div>
+<a href="{{ $item->route ? route($item->route) : '#' }}"
+   class="flex items-center justify-start px-2 rounded-md text-md transition-all duration-300
+          hover:text-accent-orange focus:text-accent-orange
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#F28A4A]/60
+          dark:focus-visible:ring-[#F4975B]/50
+          hover:bg-accent-red/10 dark:hover:bg-accent-orange/10"
+   :class="$store.sidebar.open ? '' : 'justify-center'"
+@click="$store.sidebar.toggle({{ $item->id }})">
 
-                <span class="inline-block ml-2 overflow-hidden transition-transform duration-300 origin-left whitespace-nowrap"
-                    :class="$store.sidebar.open ? 'opacity-100 scale-100' : 'opacity-0 scale-0'" >
-                    {{ $item->label }}
-                </span>
+    {{-- Icona principale --}}
+    <div class="flex items-center justify-center w-10 h-10">
+        <i class="px-2 transition-transform duration-300 {{ $item->icon }}"
+           :class="$store.sidebar.open ? 'scale-100' : 'scale-150'"></i>
+    </div>
 
-                @if ($item->children->count())
-                    <i class="ml-auto text-sm fa"
-                        :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
-                        x-show="$store.sidebar.open"></i>
-                @endif
-            </a>
+    {{-- Etichetta --}}
+    <span class="inline-block ml-2 overflow-hidden transition-all duration-300 origin-left whitespace-nowrap"
+          :class="$store.sidebar.open ? 'opacity-100 scale-100' : 'opacity-0 scale-0'">
+        {{ $item->label }}
+    </span>
+
+    {{-- Freccia sottomenù --}}
+    @if ($item->children->count())
+        <span class="inline-flex items-center ml-auto" x-show="$store.sidebar.open">
+            <i class="inline-block transition-transform duration-300 transform-gpu fa fa-caret-right"
+               :class="$store.sidebar.openId === {{ $item->id }} ? 'rotate-90 text-[#F28A4A]' : 'rotate-0 text-zinc-400'">
+            </i>
+        </span>
+    @endif
+</a>
+
 
             <!-- Sottovoci con transizione -->
             @if ($item->children->count())

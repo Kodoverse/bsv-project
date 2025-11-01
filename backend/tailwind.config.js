@@ -1,6 +1,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 import flowbitePlugin from "flowbite/plugin";
+import tailwindScrollbarHide from "tailwind-scrollbar-hide";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -59,5 +60,5 @@ export default {
             darkMode: "class",
         },
     },
-    plugins: [forms, flowbitePlugin],
+    plugins: [forms, flowbitePlugin, tailwindScrollbarHide],
 };

@@ -109,16 +109,30 @@ window.productHandler = () => {
 };
 
 Alpine.store("sidebar", {
-    open: true,
-    openId: null,
+    open: JSON.parse(localStorage.getItem("sidebarOpen")) ?? true,
+    openId: JSON.parse(localStorage.getItem("sidebarOpenId")) ?? null,
     visible: window.innerWidth >= 1024,
+
     init() {
+        // Aggiorna visibilità su resize
         window.addEventListener("resize", () => {
-            this.visible = window.innerWidth >= 1024 ? true : false;
+            this.visible = window.innerWidth >= 1024;
         });
     },
+
+    toggleMain() {
+        this.open = !this.open;
+        localStorage.setItem("sidebarOpen", JSON.stringify(this.open));
+    },
+
+    toggle(id) {
+        this.openId = this.openId === id ? null : id;
+        localStorage.setItem("sidebarOpenId", JSON.stringify(this.openId));
+    },
+
     get isMobile() {
         return window.innerWidth < 1024;
     },
 });
+
 Alpine.start();
