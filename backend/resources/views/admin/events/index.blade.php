@@ -6,10 +6,21 @@
         'Eventi' => null
     ]"
 >
-<div class="flex justify-end w-full py-6 actions-btn">
+<x-table-toolbar>
+    <x-slot:filters>
+        <x-table-filters searchPlaceholder="Cerca evento...">
+            <x-select-admin />
+        </x-table-filters>
+    </x-slot:filters>
+
+    <x-slot:actions>
+        <div class="flex justify-end w-full py-6 actions-btn">
     <x-crud-button type="add" class="me-12" href="{{ route('admin.events.create') }}">
     </x-crud-button>
 </div>
+    </x-slot:actions>
+</x-table-toolbar>
+
 <div class="px-8 my-8">
 <x-table-admin 
     :columns="[
