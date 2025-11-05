@@ -1,185 +1,76 @@
-    <x-admin-layout title="Aggiungi un nuovo partner">
-        <div class="flex flex-col items-center w-full overflow-hidden">
-            <div class="w-full py-12">
-                <div class="w-full">
-                    <div>
-                        <div class="flex justify-between">
-                        </div>
+<x-admin-layout title="Aggiungi Nuovo Partner" :breadcrumbs="[
+    'Dashboard' => route('admin.dashboard'),
+    'Partner' => route('admin.partners.index'),
+    ]">
+    <div class="flex flex-col items-center w-full py-10 overflow-hidden">
+        <div class="w-full max-w-5xl px-8">
+            
+            <x-form-admin :action="route('admin.partners.store')" method="POST" title="Crea un nuovo evento" submit-label="Crea Evento"
+                enctype="multipart/form-data">
+                <x-form-section>
+                    <x-input-admin id="name" label="Nome*" type="text" name="name" />
+                    <x-input-admin id="lastname" label="Cognome*" type="text" name="lastname" />
+                    <x-input-admin id="email" label="Indirizzo Email*" type="email" name="email" />
+                    <x-input-admin id="birthday" label="Data di Nascita" type="date" name="birthday" />
+                    <x-input-admin id="contact_phone" label="Recapito Telefonico" type="text" name="contact_phone" />
+                    <div class="visible"></div>
+                    <label for="is_active" class="inline-flex items-center gap-2 cursor-pointer">
+                        <x-checkbox-admin id="is_active" name="is_active" label="Attiva Partner" />
+                        <span class="text-sm font-medium text-foreground">
+                            Attiva Partner
+                        </span>
+                    </label>
+                </x-form-section>
 
-                        <div class="w-full px-6">
-
-                            <div class="flex justify-start">
-
-                                <form action="{{ route('admin.partners.store') }}"
-                                    method="POST" class="w-full max-w-xl">
-                                    @csrf
-                                    <h3 class="mb-5 text-red-500">Partner Info</h3>
-                                    <div class="mb-5">
-                                        <label for="name"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome
-                                            Partner</label>
-                                        <input type="text" id="name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid 
-                                  @enderror"
-                                            name="name">
-                                        @error('name')
-                                            <div class="mt-1 text-sm text-red-500">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="lastname"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cognome
-                                            Partner</label>
-                                        <input type="text" id="lastname"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('lastname') is-invalid 
-                                  @enderror"
-                                            name="lastname">
-                                        @error('lastname')
-                                            <div class="mt-1 text-sm text-red-500">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <label for="email"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Indrizzo
-                                            Email Partner</label>
-                                        <input type="email" id="email"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('email') is-invalid 
-                                  @enderror"
-                                            name="email">
-                                        @error('email')
-                                            <div class="mt-1 text-sm text-red-500">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <h3 class="mb-5 text-red-500">Info Attivita'</h3>
-                                    <div class="mb-5">
-                                        <label for="business_name"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome
-                                            Attivita'</label>
-                                        <input type="text" id="business_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('business_name') is-invalid 
-                                  @enderror"
-                                            name="business_name">
-                                        @error('business_name')
-                                            <div class="mt-1 text-sm text-red-500">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="business_category"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Categoria
-                                        </label>
-                                        <select id="business_category" name="business_category_id"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                                                    block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-                                                  dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('business_category') is-invalid @enderror">
-                                            <option value="">Seleziona una categoria</option>
-                                            @foreach ($busCategory as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ old('business_category') == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('business_category')
-                                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-
-                                    <div class="mb-5">
-                                        <label for="business_address"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Indirizzo Attivita'
-                                        </label>
-                                        <input type="text" id="business_address" name="business_address"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-               dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('business_address') is-invalid @enderror"
-                                            accept="business_address/*">
-                                        @error('business_address')
-                                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <label for="business_description"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Descrizione Attivita'
-                                        </label>
-                                        <input type="text" id="business_description" name="business_description"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-               dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('business_description') is-invalid @enderror">
-                                        @error('business_description')
-                                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <label for="contact_phone"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Numero di Telefono
-                                        </label>
-                                        <input type="text" id="contact_phone" name="contact_phone"
-                                            value="{{ old('contact_phone') }}"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('contact_phone') is-invalid @enderror"
-                                            min="1">
-                                        @error('contact_phone')
-                                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="business_email"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Indrizzo
-                                            Email Attivita'</label>
-                                        <input type="email" id="business_email"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('business_email') is-invalid 
-                                  @enderror"
-                                            name="business_email">
-                                        @error('business_email')
-                                            <div class="mt-1 text-sm text-red-500">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <label class="inline-flex items-center" id="is_active">
-                                            <input type="hidden" name="is_active" value="0">
-                                            <input type="checkbox" name="is_active" value="1"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600">
-                                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Attiva
-                                                Partner</span>
-                                        </label>
-                                    </div>
-
-                                    @if ($errors->any())
-                                        <div class='text-red-700'>
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                                     <x-crud-button type="confirm" :href="route('admin.events.index')" />
-
-                                </form>
-
-                            </div>
-                        </div>
-
-
-    </x-admin-layout>
-
+                
+                <div x-data="{ isAddingBusiness: {{ old('addBusiness') ? 'true' : 'false' }} }" class="pt-6 mt-2 border-t border-border">
+                     <label class="inline-flex items-center justify-center gap-2 cursor-pointer">
+                        <x-checkbox-admin name="addBusiness" x-model="isAddingBusiness" />
+                        <span class="text-sm font-medium text-foreground">
+                            Inserisci Attività Partner
+                        </span>
+                    </label>
+                        <fieldset 
+                        
+        :disabled="!isAddingBusiness" 
+        x-transition:enter="transition-all ease-out duration-500"
+        x-transition:enter-start="opacity-0 max-h-0"
+        x-transition:enter-end="opacity-100 max-h-[600px]"
+        x-transition:leave="transition-all ease-in duration-500"
+        x-transition:leave-start="opacity-100 max-h-[600px]"
+        x-transition:leave-end="opacity-0 max-h-0"
+        class="pt-4 mt-4 overflow-hidden border-t border-border"
+    >
+                    <div x-show="isAddingBusiness" x-transition:enter="transition-all ease-out duration-500"
+                        x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-[600px]"
+                        x-transition:leave="transition-all ease-in duration-500"
+                        x-transition:leave-start="opacity-100 max-h-[600px]" x-transition:leave-end="opacity-0 max-h-0"
+                        class="mt-4 overflow-hidden">
+                        <x-form-section title="Attività Partner">
+                            <x-input-admin id="business_name" type="text" name="business_name"
+                                label="Nome Attività*" />
+                            <x-select-admin label="Categoria" id="business_category_id" name="business_category_id"
+                                :options="$busCategory" placeholder="Seleziona Categoria" />
+                            <x-input-admin id="business_address" type="text" name="business_address"
+                                label="Indirizzo Attività*" />
+                            <x-input-admin id="business_description" type="text" name="business_description"
+                                label="Descrizione Attività" />
+                            <x-input-admin id="business_email" type="email" name="business_email"
+                                label="Indirizzo Email Attività" />
+                            <x-input-admin id="website" type="text" name="website"
+                                label="Sito Web" />
+                            <x-input-admin id="logo" type="file" name="logo"
+                                label="Logo" />
+                        </x-form-section>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="flex flex-row justify-center gap-6">
+                    <x-crud-button type="confirm" />
+                    <x-crud-button type="delete" label="Annulla" href="{{ route('admin.partners.index') }}"/>
+                </div>
+                <div class="text-sm italic text-gray-400">{{ "(*) Dati Obbligatori" }}</div>
+            </x-form-admin>
+        </div>
+    </div>
+</x-admin-layout>

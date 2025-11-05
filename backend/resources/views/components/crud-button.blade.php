@@ -37,11 +37,24 @@
    $finalLabel = $label ?? $btn['label'];
 @endphp
 
-<button 
-    {{ $attributes->class(['btn']) }} type="button" class="btn" style="background-color: {{ $btn['color'] }}; box-shadow: 5px 5px 0px {{ $btn['shadow'] }};">
-    {!! $finalLabel !!}
-    {!! $btn['icon'] !!}
-</button>
+
+@if ($href)
+    {{-- Se ha href → LINK --}}
+    <a href="{{ $href }}"
+       {{ $attributes->merge(['class' => 'btn inline-flex items-center justify-center']) }}
+       style="background-color: {{ $btn['color'] }}; box-shadow: 4px 4px 0 {{ $btn['shadow'] }};">
+        {!! $finalLabel !!}
+        {!! $btn['icon'] !!}
+    </a>
+@else
+    {{-- Altrimenti → SUBMIT --}}
+    <button type="submit"
+       {{ $attributes->merge(['class' => 'btn inline-flex items-center justify-center']) }}
+       style="background-color: {{ $btn['color'] }}; box-shadow: 4px 4px 0 {{ $btn['shadow'] }};">
+        {!! $finalLabel !!}
+        {!! $btn['icon'] !!}
+    </button>
+@endif
 <style>
     .btn {
         position: relative;

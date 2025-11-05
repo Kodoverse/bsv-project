@@ -93,18 +93,19 @@ class AdminPartnerController extends Controller
         ]);
         $partnerInfo->save();
 
-
-        $business = new Business();
-        $business->fill([
-            'name' => $data['business_name'],
-            'business_category_id' => $data['business_category_id'],
-            'address' => $data['business_address'],
-            'description' => $data['business_description'] ?? null,
-            'contact_phone' => $data['contact_phone'] ?? null,
-            'email' => $data['business_email'] ?? null,
-        ]);
-        $business->save();
-
+        if ($request->boolean('addBusiness') || $request->filled('business_name')) {
+            $business = new Business();
+            $business->fill([
+                'name' => $data['business_name'],
+                'business_category_id' => $data['business_category_id'],
+                'partner_id' => $newUser->id,
+                'address' => $data['business_address'],
+                'description' => $data['business_description'] ?? null,
+                'contact_phone' => $data['contact_phone'] ?? null,
+                'email' => $data['business_email'] ?? null,
+            ]);
+            $business->save();
+        }
         return redirect()->route('admin.partners.index')
             ->with('success', 'Partner creato con successo!');
     }

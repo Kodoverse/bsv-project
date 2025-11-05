@@ -12,7 +12,9 @@ export default defineConfig({
         host: "0.0.0.0",
         port: 5174,
         hmr: {
-            host: process.env.VITE_HMR_HOST,
+            host: "192.168.0.115",
+            protocol: "http",
+            port: 5174,
         },
     },
 });

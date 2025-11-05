@@ -5,7 +5,7 @@
 ])
 
 <div
-    class="flex items-center justify-between h-40 px-28 mb-6 rounded
+    class="flex items-center justify-between h-40 px-12 mb-6 rounded
     bg-gradient-to-r dark:bg-gradient-to-br from-[#E65C4F] via-[#F28A4A] to-[#F8C145]
     dark:from-[#8B3A33] dark:via-[#A85F37] dark:to-[#B78B34]
     text-white shadow-md transition-colors duration-300">

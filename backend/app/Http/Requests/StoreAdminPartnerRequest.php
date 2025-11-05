@@ -21,17 +21,34 @@ class StoreAdminPartnerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'business_name' => 'required|string|max:255',
-            'business_category_id' => 'required|exists:business_categories,id',
-            'business_address' => 'required|string',
-            'business_description' => 'nullable|string',
-            'contact_phone' => 'nullable|string|max:20',
-            'business_email' => 'nullable|email',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
+        ];
+
+        if ($this->boolean('addBusiness')) {
+            $rules = array_merge($rules, [
+                'business_name' => 'required|string|max:255',
+                'business_category_id' => 'nullable|exists:business_categories,id',
+                'business_address' => 'required|string',
+                'business_description' => 'nullable|string',
+                'contact_phone' => 'nullable|string|max:20',
+                'business_email' => 'nullable|email',
+            ]);
+        }
+
+        return $rules;
+    }
+
+
+    public function messages(): array
+    {
+        return [
+            'business_name.required' => 'Il nome dell’attività è obbligatorio.',
+            'business_category_id.required' => 'Seleziona una categoria per l’attività.',
+            'business_address.required' => 'L’indirizzo dell’attività è obbligatorio.',
         ];
     }
 }
