@@ -39,7 +39,7 @@
 
 
 @if ($href)
-    {{-- Se ha href → LINK --}}
+    {{-- LINK --}}
     <a href="{{ $href }}"
        {{ $attributes->merge(['class' => 'btn inline-flex items-center justify-center']) }}
        style="background-color: {{ $btn['color'] }}; box-shadow: 4px 4px 0 {{ $btn['shadow'] }};">
@@ -47,14 +47,20 @@
         {!! $btn['icon'] !!}
     </a>
 @else
-    {{-- Altrimenti → SUBMIT --}}
-    <button type="submit"
-       {{ $attributes->merge(['class' => 'btn inline-flex items-center justify-center']) }}
-       style="background-color: {{ $btn['color'] }}; box-shadow: 4px 4px 0 {{ $btn['shadow'] }};">
+    {{-- BUTTON --}}
+    @php
+        // se è usato dentro una modale di conferma, il tipo deve essere 'button'
+        $type = $attributes->has('data-confirm') ? 'button' : 'submit';
+    @endphp
+
+    <button type="{{ $type }}"
+        {{ $attributes->merge(['class' => 'btn inline-flex items-center justify-center']) }}
+        style="background-color: {{ $btn['color'] }}; box-shadow: 4px 4px 0 {{ $btn['shadow'] }};">
         {!! $finalLabel !!}
         {!! $btn['icon'] !!}
     </button>
 @endif
+
 <style>
     .btn {
         position: relative;

@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\StoreEventRequest;
 use App\Models\EventCategory;
 use App\Models\Event;
+use App\Models\EventRegistration;
+use App\Models\Point;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -19,30 +21,51 @@ class EventController extends Controller
         $query = Event::with(['category', 'creator'])
             ->withCount('registrations');
 
-        // Filter by category if provided
-        if ($request->has('category_id')) {
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
+        }
+
+
+        if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
-        // Filter by status if provided
-        if ($request->has('status')) {
+        if ($request->filled('status')) {
             $statuses = explode(',', $request->status);
             $query->whereIn('status', $statuses);
         }
 
-        // Filter by volunteer event if provided
-        if ($request->has('is_volunteer_event')) {
-            $isVolunteer = filter_var($request->is_volunteer_event, FILTER_VALIDATE_BOOLEAN);
-            $query->where('is_volunteer_event', $isVolunteer);
+        if ($request->filled('is_volunteer_event')) {
+            $query->where('is_volunteer_event', (bool) $request->is_volunteer_event);
         }
-
         $events = $query->orderBy('starts_at', 'desc')->paginate(10);
-        return view('admin.events.index', compact('events'));
+        $categories = EventCategory::whereNull('parent_id')->get(['id', 'name']);
+
+
+        //widget stats
+        $totalEvents = Event::count();
+        $totalParticipations = EventRegistration::whereNot('status', 'cancelled')->count();
+        $monthlyParticipations = EventRegistration::whereNot('status', 'cancelled')->whereMonth('registered_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+        $totalRewards = Point::count();       // Costruiamo l’array widget da passare al componente
+        $widgets = [
+            ['label' => 'Totale Eventi', 'value' => $totalEvents, 'variant' => 'accent'],
+            ['label' => 'Partecipazioni Totali', 'value' => $totalParticipations, 'variant' => 'default'],
+            ['label' => 'Partecipazioni Mensili', 'value' => $monthlyParticipations, 'variant' => 'success'],
+            ['label' => 'Rewards Assegnati', 'value' => $totalRewards, 'variant' => 'success'],
+
+        ];
+        return view('admin.events.index', compact('events', 'widgets', 'categories'));
     }
 
     public function create()
     {
-        $categories = EventCategory::whereNotNull('parent_id')->get();
+        $categories = EventCategory::whereNull('parent_id')->get();
         return view('admin.events.create', compact('categories'));
     }
     public function store(StoreEventRequest $request)
@@ -87,6 +110,7 @@ class EventController extends Controller
             'points.user'
         ]);
 
+        $event->is_volunteer_event_label = $event->is_volunteer_event ? 'Sì' : 'No';
         // Transform image URL to full URL
         if ($event->image_url) {
             $event->image_url = $this->getFullImageUrl($event->image_url);

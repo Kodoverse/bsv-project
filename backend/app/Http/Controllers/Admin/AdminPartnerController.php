@@ -19,19 +19,19 @@ class AdminPartnerController extends Controller
     {
         $query = User::where('user_role', 'partner')
             ->with(['partnerInfo']);
-        //TODO: FILTRI DA RIVEDERE
+        // TODO: FILTRI DA RIVEDERE
         // Search filter
-        // if ($request->has('search') && !empty($request->search)) {
-        //     $search = $request->search;
-        //     $query->where(function ($q) use ($search) {
-        //         $q->where('name', 'like', "%{$search}%")
-        //             ->orWhere('email', 'like', "%{$search}%")
-        //             ->orWhereHas('partnerInfo', function ($subQ) use ($search) {
-        //                 $subQ->where('business_name', 'like', "%{$search}%")
-        //                     ->orWhere('business_address', 'like', "%{$search}%");
-        //             });
-        //     });
-        // }
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhereHas('partnerInfo', function ($subQ) use ($search) {
+                        $subQ->where('business_name', 'like', "%{$search}%")
+                            ->orWhere('business_address', 'like', "%{$search}%");
+                    });
+            });
+        }
 
         // Status filter
         if ($request->has('status') && !empty($request->status)) {
@@ -56,10 +56,10 @@ class AdminPartnerController extends Controller
         }
 
         $partners = $query->orderBy('created_at', 'desc')->paginate(15);
-        $statuses = [
-            1 => 'Attivo',
-            2 => 'Non Attivo',
-        ];
+        $statuses = collect([
+            (object) ['id' => 1, 'name' => 'Attivo'],
+            (object) ['id' => 2, 'name' => 'Non Attivo'],
+        ]);
         return view('admin.partners.index', compact('partners', 'statuses'));
     }
 

@@ -1,44 +1,47 @@
-    <x-admin-layout title="{{ $event->title }}">
-        <div class="p-6">
-            <div class="flex gap-6">
-                <div class="flex flex-wrap w-1/2 gap-4 mx-auto justify-content-center">
-                    <div
-                        class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <img alt="">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $event->title }}
-                        </h5>
-                        <p class="font-normal text-gray-700 dark:text-gray-400">{{ $event->description }}</p>
-                        <div class="py-1 text-white"><span class="mx-2">Data inizio:</span>{{ $event->starts_at }}</div>
-                        <div class="py-1 text-white"><span class="mx-2">Data fine:</span>{{ $event->ends_at }}</div>
-                        <div class="py-1 text-white"><span class="mx-2">Numero Massimo
-                                Partecipanti:</span>{{ $event->max_participants }}</div>
-                        <h3 class="text-white">Categoria principale:
-                            {{ $event->category->parent ? $event->category->parent->name : '-' }}
-                        </h3>
+<x-admin-layout title="{{ $event->title }}" :breadcrumbs="[
+    'Dashboard' => route('admin.dashboard'),
+    'Eventi' => route('admin.events.index'),
+]">
 
-                        <h4 class="text-white">Sottocategoria:
-                            {{ $event->category->name }}
-                        </h4>
-                    </div>
-                </div>
-                <div class="registration-table">
-                    @foreach ($event->registrations as $registration)
-                        <div class="text-white">{{ $registration->user }}</div>
-                    @endforeach
-                </div>
+    <x-show-layout
+        :image="$event->image_url"
+        :fallback="asset('images/fallback.png')">
+        <x-slot:actions>
+            @if($event->starts_at > date('') && $event->ends_at > date('Y-m-d h:i:s'))
                 <a href="{{ route('admin.events.edit', $event->id) }}">
-                    <x-crud-button type="edit"/>
-                </a>
-                <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <x-crud-button type="delete"/>
-                </form>
-            </div>
+                <x-crud-button label="QR Scan" />
+            </a>
+            @endif
+            <a href="{{ route('admin.events.edit', $event->id) }}">
+                <x-crud-button type="edit" />
+            </a>
+        </x-slot:actions>
 
-
+        <div class="space-y-2 text-[15px]">
+            <div><strong class="text-[#E65C4F]">Descrizione:</strong> {{ $event->description }}</div>
+            <div><strong class="text-[#E65C4F]">Categoria:</strong> {{ $event->category->name }}</div>
+            <div><strong class="text-[#E65C4F]">Sottocategoria:</strong> {{ $event->category->name }}</div>
+            <div><strong class="text-[#E65C4F]">Num Max Partecipanti:</strong> {{ $event->max_participants }}</div>
+            <div><strong class="text-[#E65C4F]">Evento Volontariato:</strong> {{ $event->is_volunteer_event_label }}</div>
+            <div><strong class="text-[#E65C4F]">Punti Ottenibili:</strong> {{ $event->volunteer_points }}</div>
+            <div><strong class="text-[#E65C4F]">Data Inizio:</strong> {{ $event->starts_at }}</div>
+            <div><strong class="text-[#E65C4F]">Data Fine:</strong> {{ $event->ends_at }}</div>
+            <div><strong class="text-[#E65C4F]">Stato Evento:</strong> {{ $event->status }}</div>
         </div>
+        <x-slot:bottom>
+            
+            <div class="py-6"><h3 class="text-3xl font-bold">Utenti registrati all'evento</h3></div>
+        <x-table-admin 
+            :columns="[
+            'email' => 'Utente', 
+            'status' => 'Stato',
+            'registered_at' => 'Data Registrazione',
+            'notes' => 'Note',
+            ]"
+            :rows="$event->registrations"
+        />
+        </x-slot:bottom>
+    </x-show-layout>
 
-
-    </x-admin-layout>
+</x-admin-layout>
 

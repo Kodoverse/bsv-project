@@ -3,7 +3,7 @@
     'Eventi' => route('admin.events.index'),
 ]">
     <div class="flex flex-col items-center w-full py-10 overflow-hidden">
-        <div class="w-full max-w-5xl md:px-8">
+        <div class="w-full max-w-[1500px] md:px-8">
             <x-form-admin :action="route('admin.events.store')" method="POST" title="Crea un nuovo evento" submit-label="Crea Evento"
                 enctype="multipart/form-data">
                 <x-form-section>
@@ -41,7 +41,7 @@
                     </div>
 
                 <div class="flex flex-row justify-center gap-6">
-                    <x-crud-button type="confirm" />
+                    <x-crud-button type="confirm" label="Crea"/>
                     <x-crud-button type="delete" label="Annulla" href="{{ route('admin.events.index') }}" />
                 </div>
             </x-form-admin>

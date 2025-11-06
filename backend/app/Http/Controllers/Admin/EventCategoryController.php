@@ -10,51 +10,54 @@ class EventCategoryController extends Controller
 {
     public function index()
     {
-        $eventCategories = EventCategory::where("parent_id", null)->get();
+        $eventCategories = EventCategory::where("parent_id", null)->paginate(8);
         return view("admin.event-categories.index", compact("eventCategories"));
     }
-    public function create()
+    public function create(Request $request)
     {
-        return view("admin.event-categories.create");
+        $parent = null;
+        $categories = EventCategory::whereNull('parent_id')->get();
+
+        if ($request->has('parent_id')) {
+            $parent = EventCategory::findOrFail($request->get('parent_id'));
+        }
+
+        return view('admin.event-categories.create', compact('parent', 'categories'));
     }
+
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'primary_color' => 'nullable|string|max:7',
+            'parent_id' => 'nullable|exists:event_categories,id',
         ]);
 
-
-        try {
-            if (!isset($validated['slug'])) {
-                $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
-            }
-
-            EventCategory::create($validated);
-
-            return redirect()
-                ->route('admin.event-categories.index')
-                ->with('success', 'Categoria creata con successo.');
-        } catch (\Throwable $e) {
-            \Log::error('Errore creating EventCategory: ' . $e->getMessage(), [
-                'exception' => $e,
-                'validated' => $validated,
-            ]);
-
-            // Torna indietro con input e messaggio di errore
-            return back()
-                ->withInput()
-                ->withErrors(['error' => 'Si è verificato un errore durante la creazione della categoria. Controlla i log.']);
+        if (!isset($validated['slug'])) {
+            $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
         }
+
+        EventCategory::create($validated);
+
+        return redirect()
+            ->route('admin.event-categories.index')
+            ->with('success', 'Categoria creata con successo.');
+
     }
     public function show(EventCategory $eventCategory)
     {
-        return view("admin.event-categories.show", compact("eventCategory"));
+
+        $events = $eventCategory->events()->paginate(4);
+        return view("admin.event-categories.show", compact("eventCategory", "events"));
+
     }
     public function edit(EventCategory $eventCategory)
     {
-
-        return view("admin.event-categories.edit", compact("eventCategory"));
+        $categories = EventCategory::whereNull('parent_id')
+            ->where('id', '!=', $eventCategory->id)
+            ->get(['id', 'title']);
+        return view('admin.event-categories.edit', compact('eventCategory', 'categories'));
     }
 
     public function update(Request $request, EventCategory $eventCategory)

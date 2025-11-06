@@ -62,14 +62,14 @@
                 @endforeach
 
                 @if ($actions)
-                    <div class="flex items-center justify-center px-6 py-5 text-sm text-center lg:py-4 lg:px-6"
-                        role="cell">
-                        <span class="block mb-1 text-[11px] font-semibold tracking-wide uppercase text-muted lg:hidden">
-                            Azioni
-                        </span>
-                        {{ $actions($row) }}
-                    </div>
-                @endif
+    <div class="flex items-center justify-center px-6 py-5 text-sm text-center lg:py-4 lg:px-6"
+        role="cell">
+        <span class="block mb-1 text-[11px] font-semibold tracking-wide uppercase text-muted lg:hidden">
+            Azioni
+        </span>
+        {!! $actions($row) !!}
+    </div>
+@endif
             </div>
         @empty
             <div class="p-8 text-sm text-center text-muted bg-surface dark:bg-[#1b1d23]/80">
