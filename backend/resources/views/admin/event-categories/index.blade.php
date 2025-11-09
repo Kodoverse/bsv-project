@@ -1,5 +1,13 @@
-<x-admin-layout title="Gestione Categorie Eventi">
+<x-admin-layout title="Gestione Categorie Eventi" :breadcrumbs="[
+    'Dashboard' => route('admin.dashboard'),
+]">
+        <div class="flex flex-col items-center w-full py-10 overflow-hidden">
+        <div class="w-full max-w-[1500px] md:px-8">
+            <div class="flex items-center justify-end gap-4 mb-8">
 
+                <a href="{{ route('admin.event-categories.create') }}">
+                    <x-crud-button type="add"></x-crud-button></a>
+                    </div>
 {{-- <x-widget-group :widgets="[
     ['label' => 'Eventi Associati', 'value' => 27, 'variant' => 'accent'],
     ['label' => 'Categoria Principale', 'value' => 'Cultura', 'variant' => 'default'],
@@ -39,5 +47,6 @@
     <div class="flex justify-center mt-10">
         {{ $eventCategories->links('pagination::tailwind') }}
     </div>
-
+</div>
+</div>
 </x-admin-layout>

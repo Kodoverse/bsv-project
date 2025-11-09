@@ -9,8 +9,9 @@
                 <x-form-section>
                     <x-input-admin id="title" label="Nome*" type="text" name="title" />
                     <x-input-admin id="description" label="Descrizione Evento" type="text" name="description" />
-                    <x-select-admin id="category_id" label="Categoria Evento" name="category_id" :options="$categories"
-                        placeholder="Seleziona la categoria"/>
+                     <x-select-admin id="category_id" name="category_id" :options="$options" :value="$value"
+                            label="Seleziona Categoria Evento" placeholder="Seleziona la categoria"
+                            ></x-select-admin>
                     <x-input-admin id="image" label="Immagine" type="file" name="image" />
                     <x-input-admin id="starts_at" label="Data Inizio Evento" type="datetime-local" name="starts_at" />
                     <x-input-admin id="ends_at" label="Data Fine Evento" type="datetime-local" name="ends_at" />

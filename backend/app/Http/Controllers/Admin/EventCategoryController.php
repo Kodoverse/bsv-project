@@ -29,8 +29,8 @@ class EventCategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'primary_color' => 'nullable|string|max:7',
+            'name' => 'required|string|max:255',
+            'color' => 'nullable|string|max:7',
             'parent_id' => 'nullable|exists:event_categories,id',
         ]);
 
@@ -38,6 +38,9 @@ class EventCategoryController extends Controller
             $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
         }
 
+        if ($request->has('parent_id')) {
+            $validated['parent_id'] = $request->input('parent_id');
+        }
         EventCategory::create($validated);
 
         return redirect()
@@ -52,11 +55,26 @@ class EventCategoryController extends Controller
         return view("admin.event-categories.show", compact("eventCategory", "events"));
 
     }
+    public function showSubcategory(EventCategory $parent, EventCategory $child)
+    {
+        // sicurezza: assicurati che il child appartenga al parent
+        abort_unless($child->parent_id === $parent->id, 404);
+
+        $child->load(['parent', 'events' => fn($q) => $q->withCount('registrations')]);
+
+        $events = $child->events()->paginate(6);
+
+        return view('admin.event-categories.show', [
+            'eventCategory' => $child,
+            'events' => $events,
+        ]);
+    }
+
     public function edit(EventCategory $eventCategory)
     {
         $categories = EventCategory::whereNull('parent_id')
             ->where('id', '!=', $eventCategory->id)
-            ->get(['id', 'title']);
+            ->get(['id', 'name']);
         return view('admin.event-categories.edit', compact('eventCategory', 'categories'));
     }
 
@@ -64,11 +82,13 @@ class EventCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'color' => 'nullable|string|max:7',
+            'parent_id' => 'nullable|exists:categories_id',
         ]);
-        $eventCategory->update($request->all());
-
+        $eventCategory->update($validated);
         return redirect()
-            ->route('admin.event-categories.show', [$eventCategory->id]);
+            ->route('admin.event-categories.show', $eventCategory->id)
+            ->with('success', 'Categoria aggiornata con successo!');
     }
 
     public function destroy(EventCategory $eventCategory)

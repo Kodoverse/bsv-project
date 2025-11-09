@@ -37,8 +37,14 @@ class Event extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(EventCategory::class);
+        return $this->belongsTo(EventCategory::class, 'category_id');
     }
+
+    public function parentCategory()
+    {
+        return $this->category?->parent;
+    }
+
 
     /**
      * Get the user who created this event
@@ -88,7 +94,7 @@ class Event extends Model
      */
     public function scopeFinished($query)
     {
-        return $query->where(function($q) {
+        return $query->where(function ($q) {
             $q->where('status', 'finished')
                 ->orWhere('ends_at', '<', now());
         });
@@ -100,7 +106,7 @@ class Event extends Model
     public function updateStatus(): void
     {
         $now = now();
-        
+
         if ($this->ends_at < $now && $this->status === 'upcoming') {
             $this->update(['status' => 'finished']);
         } elseif ($this->starts_at <= $now && $this->ends_at > $now && $this->status === 'upcoming') {
@@ -114,38 +120,43 @@ class Event extends Model
     public static function updateAllStatuses(): int
     {
         $updated = 0;
-        
+
         // Update upcoming events that have ended
         $endedEvents = Event::where('status', 'upcoming')
             ->where('ends_at', '<', now())
             ->get();
-            
+
         foreach ($endedEvents as $event) {
             $event->update(['status' => 'finished']);
             $updated++;
         }
-        
+
         // Update upcoming events that are now ongoing
         $ongoingEvents = Event::where('status', 'upcoming')
             ->where('starts_at', '<=', now())
             ->where('ends_at', '>', now())
             ->get();
-            
+
         foreach ($ongoingEvents as $event) {
             $event->update(['status' => 'ongoing']);
             $updated++;
         }
-        
+
         // Update ongoing events that have ended
         $finishedOngoingEvents = Event::where('status', 'ongoing')
             ->where('ends_at', '<', now())
             ->get();
-            
+
         foreach ($finishedOngoingEvents as $event) {
             $event->update(['status' => 'finished']);
             $updated++;
         }
-        
+
         return $updated;
+    }
+
+    public function getParentCategoryNameAttribute(): ?string
+    {
+        return $this->category?->parent?->name;
     }
 }

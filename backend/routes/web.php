@@ -94,13 +94,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [AdminUsersController::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [AdminUsersController::class, 'show'])->name('users.show');
         Route::post('/users/{user}/role', [AdminUsersController::class, 'updateUserRole'])->name('users.updateRole');
+
+        Route::get('event-categories/{parent}/subcategory/{child}', [EventCategoryController::class, 'showSubcategory'])->name('event-categories.subcategory.show');
         Route::resource('event-categories', EventCategoryController::class);
         Route::resource('alerts', AdminAlertsController::class);
         Route::resource('settings', AdminSettingsController::class);
         Route::resource('registrations', EventRegistrationController::class);
-
-
-
     });
 
 });

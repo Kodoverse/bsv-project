@@ -65,9 +65,37 @@ class EventController extends Controller
 
     public function create()
     {
-        $categories = EventCategory::whereNull('parent_id')->get();
-        return view('admin.events.create', compact('categories'));
+        $categories = EventCategory::with('children:id,name,parent_id')
+            ->whereNull('parent_id')
+            ->get(['id', 'name']);
+
+        // Creiamo una collection di oggetti già pronti per la select
+        $options = collect();
+
+        foreach ($categories as $category) {
+            // Intestazione del gruppo
+            $options->push((object) [
+                'id' => null, // nessun valore selezionabile
+                'name' => '----> ' . ($category->name) . ' <----',
+                'disabled' => true
+            ]);
+
+            // Sottocategorie selezionabili
+            foreach ($category->children as $child) {
+                $options->push((object) [
+                    'id' => $child->id,
+                    'name' => $child->name,
+                    'disabled' => false
+                ]);
+            }
+        }
+        session()->forget('_old_input');
+        return view('admin.events.create', [
+            'options' => $options,
+            'value' => null,
+        ]);
     }
+
     public function store(StoreEventRequest $request)
     {
 
@@ -81,8 +109,9 @@ class EventController extends Controller
 
         // Remove image from validated data since we're using image_url
         unset($validated['image']);
-        $subcategory = EventCategory::findOrFail($validated['category_id']);
-        $validated['category_id'] = $subcategory->id;
+        $selectedCategory = EventCategory::findOrFail($validated['category_id']);
+
+        $validated['category_id'] = $selectedCategory->id;
 
         $validated['created_by'] = Auth::id();
         $validated['status'] = 'upcoming';
@@ -115,6 +144,7 @@ class EventController extends Controller
         if ($event->image_url) {
             $event->image_url = $this->getFullImageUrl($event->image_url);
         }
+
         return view('admin.events.show', compact('event'));
     }
 

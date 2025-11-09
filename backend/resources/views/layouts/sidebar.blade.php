@@ -15,11 +15,11 @@
     :class="$store.sidebar.open ? 'w-64' : 'w-14'"
 >
     {{-- Toggle --}}
-    <button @click="$store.sidebar.toggleMain()"
+    {{-- <button @click="$store.sidebar.toggleMain()"
         class="hidden text-white transition-all duration-300 bg-accent-red hover:bg-accent-orange rounded-md shadow-md lg:flex lg:absolute items-center justify-center -right-3.5 top-5">
         <i :class="$store.sidebar.open ? 'fa fa-arrow-left' : 'fa fa-arrow-right'" class="w-4 text-center text-white align-middle"
             aria-hidden="true"></i>
-    </button>
+    </button> --}}
 
 
     <div class="flex items-center justify-center py-4 lg:py-2 logo h-1/6">

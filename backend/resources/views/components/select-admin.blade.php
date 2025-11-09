@@ -23,7 +23,9 @@
             </option>
         @endif
         @foreach ($options as $option)
-            <option value="{{ $option->id }}" {{ (string) $option->id === (string) $value ? 'selected' : '' }}>
+            <option value="{{ $option->id }}" {{ (string) $option->id === (string) $value ? 'selected' : '' }}
+                @if(!empty($option->disabled)) disabled @endif
+            >
                 {{ $option->name }}
             </option>
         @endforeach

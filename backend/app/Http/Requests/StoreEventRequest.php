@@ -30,7 +30,7 @@ class StoreEventRequest extends FormRequest
             'ends_at' => 'required|date|after:starts_at',
             'is_volunteer_event' => 'sometimes|boolean',
             'volunteer_points' => 'nullable|integer|min:1',
-            'max_participants' => 'nullable|integer|min:1'
+            'max_participants' => 'nullable|integer|min:1',
         ];
     }
 

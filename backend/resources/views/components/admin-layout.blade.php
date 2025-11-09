@@ -9,9 +9,14 @@
 
 @section('content')
     
-    @isset($title)
-        <x-page-header :title="$title" :subtitle="$subtitle" />
-    @endisset
+@if (!empty($title))
+    <x-page-header 
+        :title="$title"
+        :subtitle="is_object($subtitle) 
+            ? 'Sottocategoria di ' . ($subtitle->name ?? '') 
+            : $subtitle"
+    />
+@endif
 
     @isset($breadcrumbs)
         <x-subnav :breadcrumbs="$breadcrumbs" :backUrl="$backUrl" />
