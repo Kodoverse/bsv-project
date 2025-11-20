@@ -10,8 +10,13 @@
                     <x-crud-button type="edit" />
                 </a>
 
-                <a href="{{ route('admin.event-categories.create', ['parent_id' => $eventCategory->id]) }}">
-                    <x-crud-button type="add"></x-crud-button></a>
+                <a
+                    href="{{ route('admin.event-categories.create', [
+                        'parent_id' => $eventCategory->parent_id ?? $eventCategory->id,
+                    ]) }}">
+                    <x-crud-button type="add" />
+                </a>
+
 
                 <x-confirmation-modal>
                     {{-- Trigger --}}

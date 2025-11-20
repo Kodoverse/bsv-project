@@ -51,15 +51,14 @@ class EventCategoryController extends Controller
     public function show(EventCategory $eventCategory)
     {
 
+
         $events = $eventCategory->events()->paginate(4);
         return view("admin.event-categories.show", compact("eventCategory", "events"));
 
     }
     public function showSubcategory(EventCategory $parent, EventCategory $child)
     {
-        // sicurezza: assicurati che il child appartenga al parent
         abort_unless($child->parent_id === $parent->id, 404);
-
         $child->load(['parent', 'events' => fn($q) => $q->withCount('registrations')]);
 
         $events = $child->events()->paginate(6);
