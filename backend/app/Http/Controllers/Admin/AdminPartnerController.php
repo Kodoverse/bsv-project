@@ -112,7 +112,7 @@ class AdminPartnerController extends Controller
 
     public function show(User $partner)
     {
-        $partner->load(['partnerInfo.businesses', 'products']);
+        $partner->load(['businesses', 'partnerInfo']);
         return view('admin.partners.show', compact('partner'));
     }
 
@@ -179,5 +179,11 @@ class AdminPartnerController extends Controller
             'message' => 'Stato aggiornato con successo',
             'is_active' => $partner->is_active,
         ]);
+    }
+    public function destroy(User $partner)
+    {
+        $partner = User::findOrFail($partner->id);
+        $partner->delete();
+        return redirect()->route('admin.partners.index');
     }
 }
