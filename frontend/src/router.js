@@ -13,6 +13,7 @@ import ShoppingPage from "./pages/ShoppingPage.vue";
 import axios from "axios";
 import { store } from "./store.js";
 import BusinessProducts from "./pages/BusinessProducts.vue";
+import SettingsPage from "./pages/SettingsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,6 +42,11 @@ const router = createRouter({
       path: "/aboutus",
       name: "aboutus",
       component: AboutUsPage,
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: SettingsPage,
     },
     {
       path: "/profile",
