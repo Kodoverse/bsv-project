@@ -49,8 +49,8 @@ Route::middleware(['auth'])->get('/admin', [AdminController::class, 'dashboardSt
 //rotte partner
 Route::prefix('partner')->name('partner.')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/', [PartnerDashboardController::class, 'partnerDashboardStats'])
-        ->name('dashboard');
+    // Route::get('/', [PartnerDashboardController::class, 'partnerDashboardStats'])
+    //     ->name('dashboard');
 
     Route::resource('products', ProductController::class)
         ->names('products');
@@ -105,11 +105,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['web', 'auth'])->group(function () {
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
-    Route::post('/comments', [CommentController::class, 'addComment']);
-    Route::post('/comments/{commentId}/like', [CommentController::class, 'toggleLike']);
-    Route::post('/article/{articleId}/like', [ArticleController::class, 'toggleLikeArticle']);
-    Route::put('/comments/{comment}', [CommentController::class, 'update']);
+
 
 });
 
