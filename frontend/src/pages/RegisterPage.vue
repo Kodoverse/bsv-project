@@ -199,7 +199,7 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        await axios.get("http://localhost:8000/sanctum/csrf-cookie", {
+        await axios.get("http://localhost:8001/sanctum/csrf-cookie", {
           withCredentials: true,
         });
 
@@ -211,7 +211,7 @@ export default {
               "Content-Type": "application/json",
             },
           },
-          console.log(this.formData)
+          console.log(this.formData),
         );
         if (response.data.success) {
           this.$router.push("/login");

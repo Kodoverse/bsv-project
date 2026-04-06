@@ -19,7 +19,7 @@ export default {
     getData() {
       this.current_page = this.$route.name;
       axios
-        .get("http://127.0.0.1:8000/api/sections", {
+        .get("http://127.0.0.1:8001/api/sections", {
           params: {
             title: this.current_page,
           },

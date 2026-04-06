@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import ArticlesPage from "./pages/ArticlesPage.vue";
 import Home from "./pages/Home.vue";
 import LoginPage from "./pages/LoginPage.vue";
-import RegisterPage from "./pages/RegisterPage.vue";  
+import RegisterPage from "./pages/RegisterPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import AboutUsPage from "./pages/AboutUsPage.vue";
 import SingleArticle from "./pages/SingleArticle.vue";
@@ -69,29 +69,31 @@ const router = createRouter({
       component: PartnerDashboard,
       meta: { requiresAuth: true, requiresPartner: true },
     },
-  {
-    path: "/shop",
-    name: "shopping",
-    component: ShoppingPage,
-  },
-  {
-    path: "/business/:id",
-    name: "business-detail",
-    component: ShoppingPage,
-    props: true,
-  },
+    {
+      path: "/shop",
+      name: "shopping",
+      component: ShoppingPage,
+    },
+    {
+      path: "/business/:id",
+      name: "business-detail",
+      component: ShoppingPage,
+      props: true,
+    },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
   // Always check authentication status
   try {
-    const response = await axios.get("http://localhost:8000/api/user", { withCredentials: true });
+    const response = await axios.get("http://localhost:8001/api/user", {
+      withCredentials: true,
+    });
     if (response.status === 200) {
       // Update store with user data
       store.CurrentUser = response.data;
       store.isLoggedIn = true;
-      
+
       // Check admin access for admin routes
       if (to.meta.requiresAdmin && !store.hasAdminPrivileges) {
         // Redirect to appropriate dashboard based on user role
@@ -102,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
         }
         return;
       }
-      
+
       // Check partner access for partner routes
       if (to.meta.requiresPartner && !store.isPartner) {
         // Redirect to appropriate dashboard based on user role
@@ -113,9 +115,9 @@ router.beforeEach(async (to, from, next) => {
         }
         return;
       }
-      
+
       // Redirect logged-in users away from login/register pages
-      if ((to.name === 'login' || to.name === 'register') && store.isLoggedIn) {
+      if ((to.name === "login" || to.name === "register") && store.isLoggedIn) {
         if (store.hasAdminPrivileges) {
           next("/admin");
         } else if (store.isPartner) {
@@ -125,7 +127,7 @@ router.beforeEach(async (to, from, next) => {
         }
         return;
       }
-      
+
       next();
     } else {
       store.CurrentUser = null;
